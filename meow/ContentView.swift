@@ -10,7 +10,7 @@ import GridStack
 struct ContentView: View {
     var body: some View {
         NavigationView {
-            GridStack(minCellWidth: 110, spacing: 2, numItems: 26) { index, cellWidth in
+            GridStack(minCellWidth: 110, spacing: 2, numItems: 27) { index, cellWidth in
                 Cat(dataIndex: index).frame(width: cellWidth, height: cellWidth, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
             }
             .navigationTitle(Text("title"))
