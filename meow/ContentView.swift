@@ -7,7 +7,11 @@
 
 import SwiftUI
 import GridStack
+import SwiftUIX
+
 struct ContentView: View {
+    @State private var showingSheet = false
+    //TODO selected index to show different background color
     var body: some View {
         NavigationView {
             GridStack(minCellWidth: 110, spacing: 2, numItems: 27) { index, cellWidth in
@@ -17,8 +21,16 @@ struct ContentView: View {
             .navigationBarItems(trailing:
                 HStack {
                     Button("🐱") {
-                        print("About tapped!")
-                    }
+                        self.showingSheet = true
+                    }.sheet(isPresented: $showingSheet, onDismiss: {
+                        print("Dismiss")
+                    }, content: {
+                        AppActivityView(activityItems: [
+                                            NSLocalizedString("title", comment: "") + " - " + NSLocalizedString("subtitle", comment: ""),
+                                            URL(string: "https://itunes.apple.com/app/id826362662")!,
+                                            UIImage(named:"AppIcon40x40") ?? UIImage()])
+                    })
+                    
                 }
             )
             .background(NavigationConfigurator { nc in
@@ -33,6 +45,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .preferredColorScheme(.dark)
             .previewDevice("iPhone 11")
             
     }

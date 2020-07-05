@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Cat: View {
     var dataIndex: Int
-    
+    var selected = false
     var body: some View {
 
         Button(action: {
@@ -22,13 +22,11 @@ struct Cat: View {
                     .padding(.horizontal, 8)
                     .font(.caption)
                     .foregroundColor(Color(hex: 0xe76a66))
-                    .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color(hex: 0xFFF6F7)))
+                    .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color("lightPink")))
             }
-            .background(RoundedRectangle(cornerRadius: 30, style: .continuous).fill(Color(hex: 0xffffe0)))   //selected: Color.clear
+            .background(RoundedRectangle(cornerRadius: 30, style: .continuous).fill( selected ? Color("lightYellow"): Color.clear))   //selected: Color.clear
         })
         .padding(.all, 2)
-            
-        
     }
 }
 

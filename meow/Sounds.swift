@@ -10,10 +10,10 @@ import AVFoundation
 class Sounds {
     static var audioPlayer:AVAudioPlayer?
     static func playSounds(soundfile: String) {
-        if ( audioPlayer?.isPlaying == true ) {
+        //if ( audioPlayer?.isPlaying == true ) {
             audioPlayer?.stop()
-            return
-        }
+            //return
+        //}
         if let path = Bundle.main.path(forResource: soundfile, ofType: "mp3"){
             do{
                 audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))

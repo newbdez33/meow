@@ -45,6 +45,7 @@
 		850F687324B1F03E009DC99B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 850F687524B1F03E009DC99B /* Localizable.strings */; };
 		850F687924B204F5009DC99B /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850F687824B204F5009DC99B /* Sounds.swift */; };
 		850F688124B20D59009DC99B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 850F688324B20D59009DC99B /* InfoPlist.strings */; };
+		850F688824B21907009DC99B /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = 850F688724B21907009DC99B /* SwiftUIX */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,6 +100,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				850F687024B1C4A3009DC99B /* GridStack in Frameworks */,
+				850F688824B21907009DC99B /* SwiftUIX in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,6 +210,7 @@
 			name = meow;
 			packageProductDependencies = (
 				850F686F24B1C4A3009DC99B /* GridStack */,
+				850F688724B21907009DC99B /* SwiftUIX */,
 			);
 			productName = meow;
 			productReference = 850F67E824B0C510009DC99B /* meow.app */;
@@ -240,6 +243,7 @@
 			mainGroup = 850F67DF24B0C510009DC99B;
 			packageReferences = (
 				850F686E24B1C4A3009DC99B /* XCRemoteSwiftPackageReference "GridStack" */,
+				850F688624B21907009DC99B /* XCRemoteSwiftPackageReference "SwiftUIX" */,
 			);
 			productRefGroup = 850F67E924B0C510009DC99B /* Products */;
 			projectDirPath = "";
@@ -525,6 +529,14 @@
 				minimumVersion = 0.4.1;
 			};
 		};
+		850F688624B21907009DC99B /* XCRemoteSwiftPackageReference "SwiftUIX" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftUIX/SwiftUIX";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -532,6 +544,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 850F686E24B1C4A3009DC99B /* XCRemoteSwiftPackageReference "GridStack" */;
 			productName = GridStack;
+		};
+		850F688724B21907009DC99B /* SwiftUIX */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 850F688624B21907009DC99B /* XCRemoteSwiftPackageReference "SwiftUIX" */;
+			productName = SwiftUIX;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
