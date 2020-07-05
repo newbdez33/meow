@@ -6,12 +6,23 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 @main
 struct meowApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+        }
+    }
+}
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func applicationDidFinishLaunching(_ application: UIApplication) {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, options: .mixWithOthers)
+        } catch {
+            print(error)
         }
     }
 }
