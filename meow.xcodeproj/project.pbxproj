@@ -43,6 +43,7 @@
 		850F686D24B1B09B009DC99B /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850F686C24B1B09B009DC99B /* Color.swift */; };
 		850F687024B1C4A3009DC99B /* GridStack in Frameworks */ = {isa = PBXBuildFile; productRef = 850F686F24B1C4A3009DC99B /* GridStack */; };
 		850F687324B1F03E009DC99B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 850F687524B1F03E009DC99B /* Localizable.strings */; };
+		850F687924B204F5009DC99B /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850F687824B204F5009DC99B /* Sounds.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,6 +86,7 @@
 		850F687424B1F03E009DC99B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		850F687624B1F06A009DC99B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		850F687724B1F073009DC99B /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		850F687824B204F5009DC99B /* Sounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sounds.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +124,7 @@
 				850F67EB24B0C510009DC99B /* App.swift */,
 				850F67ED24B0C510009DC99B /* ContentView.swift */,
 				850F686924B1AB18009DC99B /* Cat.swift */,
+				850F687824B204F5009DC99B /* Sounds.swift */,
 				850F67EF24B0C511009DC99B /* Assets.xcassets */,
 				850F67F424B0C511009DC99B /* Info.plist */,
 				850F683024B1AAEC009DC99B /* resources */,
@@ -290,6 +293,7 @@
 			files = (
 				850F67EE24B0C510009DC99B /* ContentView.swift in Sources */,
 				850F686D24B1B09B009DC99B /* Color.swift in Sources */,
+				850F687924B204F5009DC99B /* Sounds.swift in Sources */,
 				850F67EC24B0C510009DC99B /* App.swift in Sources */,
 				850F686A24B1AB18009DC99B /* Cat.swift in Sources */,
 			);
