@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import AVFoundation
+import GoogleMobileAds
 
 @main
 struct meowApp: App {
@@ -15,14 +15,7 @@ struct meowApp: App {
             ContentView()
         }
     }
-}
-
-class AppDelegate: NSObject, UIApplicationDelegate {
-    func applicationDidFinishLaunching(_ application: UIApplication) {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, options: .mixWithOthers)
-        } catch {
-            print(error)
-        }
+    init () {
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
     }
 }

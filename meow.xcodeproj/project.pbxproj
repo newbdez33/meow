@@ -41,11 +41,19 @@
 		850F686824B1AAEC009DC99B /* m_023.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 850F684C24B1AAEC009DC99B /* m_023.mp3 */; };
 		850F686A24B1AB18009DC99B /* Cat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850F686924B1AB18009DC99B /* Cat.swift */; };
 		850F686D24B1B09B009DC99B /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850F686C24B1B09B009DC99B /* Color.swift */; };
-		850F687024B1C4A3009DC99B /* GridStack in Frameworks */ = {isa = PBXBuildFile; productRef = 850F686F24B1C4A3009DC99B /* GridStack */; };
 		850F687324B1F03E009DC99B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 850F687524B1F03E009DC99B /* Localizable.strings */; };
 		850F687924B204F5009DC99B /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850F687824B204F5009DC99B /* Sounds.swift */; };
 		850F688124B20D59009DC99B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 850F688324B20D59009DC99B /* InfoPlist.strings */; };
-		850F688824B21907009DC99B /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = 850F688724B21907009DC99B /* SwiftUIX */; };
+		850F688A24B2CB1E009DC99B /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850F688924B2CB1E009DC99B /* Banner.swift */; };
+		850F688D24B2CBC2009DC99B /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 850F688C24B2CBC2009DC99B /* GoogleMobileAds.framework */; };
+		850F688F24B2CE90009DC99B /* GoogleAppMeasurement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 850F688E24B2CE90009DC99B /* GoogleAppMeasurement.framework */; };
+		850F689324B2CEE1009DC99B /* GoogleUtilities.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 850F689024B2CEE1009DC99B /* GoogleUtilities.xcframework */; };
+		850F689424B2CEE1009DC99B /* PromisesObjC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 850F689124B2CEE1009DC99B /* PromisesObjC.xcframework */; };
+		850F689524B2CEE1009DC99B /* nanopb.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 850F689224B2CEE1009DC99B /* nanopb.xcframework */; };
+		858F807D24B354010026935F /* GridStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858F807A24B354010026935F /* GridStack.swift */; };
+		858F807E24B354010026935F /* GridCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858F807B24B354010026935F /* GridCalculator.swift */; };
+		858F807F24B354010026935F /* Array+chunked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858F807C24B354010026935F /* Array+chunked.swift */; };
+		858F808124B354700026935F /* AppActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858F808024B3546F0026935F /* AppActivityView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +100,16 @@
 		850F688224B20D59009DC99B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		850F688424B20D5E009DC99B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		850F688524B20D5F009DC99B /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		850F688924B2CB1E009DC99B /* Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
+		850F688C24B2CBC2009DC99B /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
+		850F688E24B2CE90009DC99B /* GoogleAppMeasurement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAppMeasurement.framework; sourceTree = "<group>"; };
+		850F689024B2CEE1009DC99B /* GoogleUtilities.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = GoogleUtilities.xcframework; sourceTree = "<group>"; };
+		850F689124B2CEE1009DC99B /* PromisesObjC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = PromisesObjC.xcframework; sourceTree = "<group>"; };
+		850F689224B2CEE1009DC99B /* nanopb.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = nanopb.xcframework; sourceTree = "<group>"; };
+		858F807A24B354010026935F /* GridStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridStack.swift; sourceTree = "<group>"; };
+		858F807B24B354010026935F /* GridCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridCalculator.swift; sourceTree = "<group>"; };
+		858F807C24B354010026935F /* Array+chunked.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+chunked.swift"; sourceTree = "<group>"; };
+		858F808024B3546F0026935F /* AppActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppActivityView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,8 +117,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				850F687024B1C4A3009DC99B /* GridStack in Frameworks */,
-				850F688824B21907009DC99B /* SwiftUIX in Frameworks */,
+				850F689324B2CEE1009DC99B /* GoogleUtilities.xcframework in Frameworks */,
+				850F688D24B2CBC2009DC99B /* GoogleMobileAds.framework in Frameworks */,
+				850F689424B2CEE1009DC99B /* PromisesObjC.xcframework in Frameworks */,
+				850F688F24B2CE90009DC99B /* GoogleAppMeasurement.framework in Frameworks */,
+				850F689524B2CEE1009DC99B /* nanopb.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,11 +147,15 @@
 		850F67EA24B0C510009DC99B /* meow */ = {
 			isa = PBXGroup;
 			children = (
+				850F688B24B2CB95009DC99B /* vender */,
 				850F686B24B1B08A009DC99B /* extensions */,
+				858F807924B354010026935F /* gridstack */,
 				850F67EB24B0C510009DC99B /* App.swift */,
 				850F67ED24B0C510009DC99B /* ContentView.swift */,
+				858F808024B3546F0026935F /* AppActivityView.swift */,
 				850F686924B1AB18009DC99B /* Cat.swift */,
 				850F687824B204F5009DC99B /* Sounds.swift */,
+				850F688924B2CB1E009DC99B /* Banner.swift */,
 				850F67EF24B0C511009DC99B /* Assets.xcassets */,
 				850F67F424B0C511009DC99B /* Info.plist */,
 				850F683024B1AAEC009DC99B /* resources */,
@@ -192,6 +217,28 @@
 			path = extensions;
 			sourceTree = "<group>";
 		};
+		850F688B24B2CB95009DC99B /* vender */ = {
+			isa = PBXGroup;
+			children = (
+				850F689024B2CEE1009DC99B /* GoogleUtilities.xcframework */,
+				850F689224B2CEE1009DC99B /* nanopb.xcframework */,
+				850F689124B2CEE1009DC99B /* PromisesObjC.xcframework */,
+				850F688E24B2CE90009DC99B /* GoogleAppMeasurement.framework */,
+				850F688C24B2CBC2009DC99B /* GoogleMobileAds.framework */,
+			);
+			path = vender;
+			sourceTree = "<group>";
+		};
+		858F807924B354010026935F /* gridstack */ = {
+			isa = PBXGroup;
+			children = (
+				858F807A24B354010026935F /* GridStack.swift */,
+				858F807B24B354010026935F /* GridCalculator.swift */,
+				858F807C24B354010026935F /* Array+chunked.swift */,
+			);
+			path = gridstack;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -209,8 +256,6 @@
 			);
 			name = meow;
 			packageProductDependencies = (
-				850F686F24B1C4A3009DC99B /* GridStack */,
-				850F688724B21907009DC99B /* SwiftUIX */,
 			);
 			productName = meow;
 			productReference = 850F67E824B0C510009DC99B /* meow.app */;
@@ -242,8 +287,6 @@
 			);
 			mainGroup = 850F67DF24B0C510009DC99B;
 			packageReferences = (
-				850F686E24B1C4A3009DC99B /* XCRemoteSwiftPackageReference "GridStack" */,
-				850F688624B21907009DC99B /* XCRemoteSwiftPackageReference "SwiftUIX" */,
 			);
 			productRefGroup = 850F67E924B0C510009DC99B /* Products */;
 			projectDirPath = "";
@@ -304,8 +347,13 @@
 				850F67EE24B0C510009DC99B /* ContentView.swift in Sources */,
 				850F686D24B1B09B009DC99B /* Color.swift in Sources */,
 				850F687924B204F5009DC99B /* Sounds.swift in Sources */,
+				858F807F24B354010026935F /* Array+chunked.swift in Sources */,
+				850F688A24B2CB1E009DC99B /* Banner.swift in Sources */,
+				858F807D24B354010026935F /* GridStack.swift in Sources */,
 				850F67EC24B0C510009DC99B /* App.swift in Sources */,
+				858F808124B354700026935F /* AppActivityView.swift in Sources */,
 				850F686A24B1AB18009DC99B /* Cat.swift in Sources */,
+				858F807E24B354010026935F /* GridCalculator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,6 +439,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -446,6 +495,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -462,13 +512,19 @@
 				DEVELOPMENT_ASSET_PATHS = "\"meow/Preview Content\"";
 				DEVELOPMENT_TEAM = 72T2SXUWHC;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/meow/vender",
+				);
 				INFOPLIST_FILE = meow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.salmonapps.meow;
+				MARKETING_VERSION = 2.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.salmonapps.Meow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -484,13 +540,19 @@
 				DEVELOPMENT_ASSET_PATHS = "\"meow/Preview Content\"";
 				DEVELOPMENT_TEAM = 72T2SXUWHC;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/meow/vender",
+				);
 				INFOPLIST_FILE = meow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.salmonapps.meow;
+				MARKETING_VERSION = 2.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.salmonapps.Meow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -519,38 +581,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		850F686E24B1C4A3009DC99B /* XCRemoteSwiftPackageReference "GridStack" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pietropizzi/GridStack";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.4.1;
-			};
-		};
-		850F688624B21907009DC99B /* XCRemoteSwiftPackageReference "SwiftUIX" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftUIX/SwiftUIX";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		850F686F24B1C4A3009DC99B /* GridStack */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 850F686E24B1C4A3009DC99B /* XCRemoteSwiftPackageReference "GridStack" */;
-			productName = GridStack;
-		};
-		850F688724B21907009DC99B /* SwiftUIX */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 850F688624B21907009DC99B /* XCRemoteSwiftPackageReference "SwiftUIX" */;
-			productName = SwiftUIX;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 850F67E024B0C510009DC99B /* Project object */;
 }
