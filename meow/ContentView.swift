@@ -45,6 +45,7 @@ struct ContentView: View {
                 })
             }
         }
+        .navigationViewStyle(StackNavigationViewStyle())
         .edgesIgnoringSafeArea(.bottom)
         .onAppear {
             do {
