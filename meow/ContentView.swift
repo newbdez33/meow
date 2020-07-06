@@ -11,11 +11,16 @@ import SwiftUIX
 
 struct ContentView: View {
     @State private var showingSheet = false
-    //TODO selected index to show different background color
+    @State private var selectedIndex = -1
     var body: some View {
         NavigationView {
             GridStack(minCellWidth: 110, spacing: 2, numItems: 27) { index, cellWidth in
-                Cat(dataIndex: index).frame(width: cellWidth, height: cellWidth, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                Button(action: {
+                    Sounds.playSounds(soundfile: String(format: "m_%03d", index+1))
+                    selectedIndex = index
+                }, label: {
+                    Cat(dataIndex: index, selected: index == selectedIndex).frame(width: cellWidth, height: cellWidth, alignment: .center)
+                })
             }
             .navigationTitle(Text("title"))
             .navigationBarItems(trailing:
