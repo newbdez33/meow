@@ -7,6 +7,9 @@
 
 import SwiftUI
 import GoogleMobileAds
+import AppTrackingTransparency
+import AdSupport
+
 
 @main
 struct meowApp: App {
@@ -17,5 +20,13 @@ struct meowApp: App {
     }
     init () {
         GADMobileAds.sharedInstance().start(completionHandler: nil)
+        requestIDFA()
+    }
+    
+    func requestIDFA() {
+      ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
+        // Tracking authorization completed. Start loading ads here.
+        // loadAd()
+      })
     }
 }

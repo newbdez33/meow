@@ -45,15 +45,16 @@
 		850F687924B204F5009DC99B /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850F687824B204F5009DC99B /* Sounds.swift */; };
 		850F688124B20D59009DC99B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 850F688324B20D59009DC99B /* InfoPlist.strings */; };
 		850F688A24B2CB1E009DC99B /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850F688924B2CB1E009DC99B /* Banner.swift */; };
-		850F688D24B2CBC2009DC99B /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 850F688C24B2CBC2009DC99B /* GoogleMobileAds.framework */; };
-		850F688F24B2CE90009DC99B /* GoogleAppMeasurement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 850F688E24B2CE90009DC99B /* GoogleAppMeasurement.framework */; };
-		850F689324B2CEE1009DC99B /* GoogleUtilities.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 850F689024B2CEE1009DC99B /* GoogleUtilities.xcframework */; };
-		850F689424B2CEE1009DC99B /* PromisesObjC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 850F689124B2CEE1009DC99B /* PromisesObjC.xcframework */; };
-		850F689524B2CEE1009DC99B /* nanopb.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 850F689224B2CEE1009DC99B /* nanopb.xcframework */; };
 		858F807D24B354010026935F /* GridStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858F807A24B354010026935F /* GridStack.swift */; };
 		858F807E24B354010026935F /* GridCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858F807B24B354010026935F /* GridCalculator.swift */; };
 		858F807F24B354010026935F /* Array+chunked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858F807C24B354010026935F /* Array+chunked.swift */; };
 		858F808124B354700026935F /* AppActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858F808024B3546F0026935F /* AppActivityView.swift */; };
+		85970E7125136FB10031DB2E /* nanopb.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85970E6B25136FB10031DB2E /* nanopb.xcframework */; };
+		85970E7225136FB10031DB2E /* GoogleAppMeasurement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85970E6C25136FB10031DB2E /* GoogleAppMeasurement.framework */; };
+		85970E7325136FB10031DB2E /* PromisesObjC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85970E6D25136FB10031DB2E /* PromisesObjC.xcframework */; };
+		85970E7425136FB10031DB2E /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85970E6E25136FB10031DB2E /* GoogleMobileAds.framework */; };
+		85970E7525136FB10031DB2E /* UserMessagingPlatform.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85970E6F25136FB10031DB2E /* UserMessagingPlatform.framework */; };
+		85970E7625136FB10031DB2E /* GoogleUtilities.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85970E7025136FB10031DB2E /* GoogleUtilities.xcframework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -101,15 +102,16 @@
 		850F688424B20D5E009DC99B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		850F688524B20D5F009DC99B /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		850F688924B2CB1E009DC99B /* Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
-		850F688C24B2CBC2009DC99B /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
-		850F688E24B2CE90009DC99B /* GoogleAppMeasurement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAppMeasurement.framework; sourceTree = "<group>"; };
-		850F689024B2CEE1009DC99B /* GoogleUtilities.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = GoogleUtilities.xcframework; sourceTree = "<group>"; };
-		850F689124B2CEE1009DC99B /* PromisesObjC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = PromisesObjC.xcframework; sourceTree = "<group>"; };
-		850F689224B2CEE1009DC99B /* nanopb.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = nanopb.xcframework; sourceTree = "<group>"; };
 		858F807A24B354010026935F /* GridStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridStack.swift; sourceTree = "<group>"; };
 		858F807B24B354010026935F /* GridCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridCalculator.swift; sourceTree = "<group>"; };
 		858F807C24B354010026935F /* Array+chunked.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+chunked.swift"; sourceTree = "<group>"; };
 		858F808024B3546F0026935F /* AppActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppActivityView.swift; sourceTree = "<group>"; };
+		85970E6B25136FB10031DB2E /* nanopb.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = nanopb.xcframework; sourceTree = "<group>"; };
+		85970E6C25136FB10031DB2E /* GoogleAppMeasurement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAppMeasurement.framework; sourceTree = "<group>"; };
+		85970E6D25136FB10031DB2E /* PromisesObjC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = PromisesObjC.xcframework; sourceTree = "<group>"; };
+		85970E6E25136FB10031DB2E /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
+		85970E6F25136FB10031DB2E /* UserMessagingPlatform.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UserMessagingPlatform.framework; sourceTree = "<group>"; };
+		85970E7025136FB10031DB2E /* GoogleUtilities.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = GoogleUtilities.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,11 +119,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				850F689324B2CEE1009DC99B /* GoogleUtilities.xcframework in Frameworks */,
-				850F688D24B2CBC2009DC99B /* GoogleMobileAds.framework in Frameworks */,
-				850F689424B2CEE1009DC99B /* PromisesObjC.xcframework in Frameworks */,
-				850F688F24B2CE90009DC99B /* GoogleAppMeasurement.framework in Frameworks */,
-				850F689524B2CEE1009DC99B /* nanopb.xcframework in Frameworks */,
+				85970E7325136FB10031DB2E /* PromisesObjC.xcframework in Frameworks */,
+				85970E7225136FB10031DB2E /* GoogleAppMeasurement.framework in Frameworks */,
+				85970E7525136FB10031DB2E /* UserMessagingPlatform.framework in Frameworks */,
+				85970E7425136FB10031DB2E /* GoogleMobileAds.framework in Frameworks */,
+				85970E7125136FB10031DB2E /* nanopb.xcframework in Frameworks */,
+				85970E7625136FB10031DB2E /* GoogleUtilities.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,11 +223,7 @@
 		850F688B24B2CB95009DC99B /* vender */ = {
 			isa = PBXGroup;
 			children = (
-				850F689024B2CEE1009DC99B /* GoogleUtilities.xcframework */,
-				850F689224B2CEE1009DC99B /* nanopb.xcframework */,
-				850F689124B2CEE1009DC99B /* PromisesObjC.xcframework */,
-				850F688E24B2CE90009DC99B /* GoogleAppMeasurement.framework */,
-				850F688C24B2CBC2009DC99B /* GoogleMobileAds.framework */,
+				85970E6A25136FB10031DB2E /* GoogleMobileAdsSdkiOS-7.65.0 */,
 			);
 			path = vender;
 			sourceTree = "<group>";
@@ -237,6 +236,19 @@
 				858F807C24B354010026935F /* Array+chunked.swift */,
 			);
 			path = gridstack;
+			sourceTree = "<group>";
+		};
+		85970E6A25136FB10031DB2E /* GoogleMobileAdsSdkiOS-7.65.0 */ = {
+			isa = PBXGroup;
+			children = (
+				85970E6B25136FB10031DB2E /* nanopb.xcframework */,
+				85970E6C25136FB10031DB2E /* GoogleAppMeasurement.framework */,
+				85970E6D25136FB10031DB2E /* PromisesObjC.xcframework */,
+				85970E6E25136FB10031DB2E /* GoogleMobileAds.framework */,
+				85970E6F25136FB10031DB2E /* UserMessagingPlatform.framework */,
+				85970E7025136FB10031DB2E /* GoogleUtilities.xcframework */,
+			);
+			path = "GoogleMobileAdsSdkiOS-7.65.0";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -516,6 +528,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/meow/vender",
+					"$(PROJECT_DIR)/meow/vender/GoogleMobileAdsSdkiOS-7.65.0",
 				);
 				INFOPLIST_FILE = meow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -545,6 +558,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/meow/vender",
+					"$(PROJECT_DIR)/meow/vender/GoogleMobileAdsSdkiOS-7.65.0",
 				);
 				INFOPLIST_FILE = meow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
