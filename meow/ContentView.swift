@@ -38,9 +38,7 @@ struct ContentView: View {
                                     .frame(height: 26)
                             })
                             .accessibilityLabel(Text("tip_button"))
-                            .sheet(isPresented: $showingTip) {
-                                TipSheet()
-                            }
+                            .accessibilityIdentifier("tipButton")
                         }
                         if ads.isPrivacyOptionsRequired {
                             Button(action: {
@@ -79,6 +77,9 @@ struct ContentView: View {
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .edgesIgnoringSafeArea(.bottom)
+        .sheet(isPresented: $showingTip) {
+            TipSheet()
+        }
         .onAppear {
             do {
                 try AVAudioSession.sharedInstance().setCategory(.playback, options: .mixWithOthers)

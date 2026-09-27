@@ -38,12 +38,11 @@ Goal: ads fill again on a current SDK, with the consent flow Google requires.
       with a single request ("Banner loaded"). The banner requests its ad in
       `didMoveToWindow`, because SwiftUI's first transient instance produced
       an "Invalid ad width or height" request when loading in `makeUIView`.
-- [ ] Owner, AdMob console: publish a GDPR (EEA/UK) privacy message for the
-      Meow app under Privacy & messaging. The simulator run logged
-      "no form(s) configured for the input app ID
-      ca-app-pub-1295607594822275~6286907117"; non-EEA users still get ads,
-      EEA/UK users get none until the message exists. The message needs the
-      privacy policy URL from item 2, so this waits for item 2.
+- [x] AdMob console, 2026-09-27: "Meow - European regulations" published
+      under Privacy & messaging for app ~6286907117 with privacy policy URL
+      https://meow.jacky.jp/privacy/, English plus Chinese (zh-CN) and
+      Japanese, Consent / Manage options / Do not consent all on. AdMob says
+      the message can take up to an hour to reach the app.
 
 ## 2. App website at `https://meow.jacky.jp/` (approved and deployed 2026-09-27)
 
@@ -125,15 +124,37 @@ Done 2026-09-27:
 - Until the products exist in App Store Connect the sheet shows "Can't reach
   the App Store".
 
-Owner, App Store Connect: create both non-consumable products (names, price
-tiers, review screenshot, localizations) and attach them to the 2.1 version.
-This can be done through the App Store Connect API with the existing team
-key if preferred.
+App Store Connect, 2026-09-27: both non-consumable products exist in
+"Prepare for Submission": `com.salmonapps.Meow.can` (Apple ID 6816646536,
+$5.99 base, all 175 countries) and `com.salmonapps.Meow.coffee` (Apple ID
+6816647301, $2.99 base, all countries), each with English (U.S.), Chinese
+(Simplified) and Japanese display names. Still needed before "Add for
+Review": a review screenshot per product (take it from the 2.1 build's tip
+sheet), then attach both to the 2.1 version submission.
 
 ## 4. Release
 
-- [ ] README: replace "Fix Admob" with a pointer to this file.
-- [ ] Archive, upload 2.1 (4), fill App Store Connect (URLs above, IAP,
-      what's new), submit.
-- [ ] After approval: AdMob app-ads.txt status verified, ads filling on a
-      real device, EEA message live.
+- [x] README points to this file (done with item 1).
+- [x] 2026-09-27: `ITSAppUsesNonExemptEncryption = NO` in Info.plist; the
+      remove-ads sheet is now presented from the content view rather than the
+      toolbar button (more reliable); `meowUITests/TipSheetScreenshotTests`
+      opens the sheet against `meow.storekit` and, with
+      `TEST_RUNNER_MEOW_SCREENSHOT_DIR` set, writes the review screenshot.
+- [x] 2026-09-27: Release archive signed through the team API key
+      (`xcodebuild archive -allowProvisioningUpdates` with
+      `AuthKey_9LULAK77BN`), exported with `destination: upload` and uploaded
+      as 2.1 (4). The symbol upload warns about missing dSYMs for Google's
+      binary frameworks; that is expected and harmless.
+- [x] 2026-09-27, App Store Connect through the API: version 2.1 created
+      (`e5573e0d-7dec-4b20-8a7f-b85ebadb556f`, release after approval);
+      en-US and zh-Hans marketing/support URLs point at meow.jacky.jp, What's
+      New written in both; privacy policy URLs on the 2.1 app info point at
+      `/privacy/` and `/privacy/zh.html`; both purchases have the tip-sheet
+      review screenshot and are READY_TO_SUBMIT (the coffee's availability had
+      to be set again through the API, the web form had not saved it).
+- [ ] App Privacy nutrition labels: never published for this app, and
+      required because the binary declares `NSUserTrackingUsageDescription`.
+- [ ] Select build 4 on version 2.1 once processing finishes, then create
+      the review submission with the version and both purchases.
+- [ ] After approval: AdMob app-ads.txt "Check for updates", ads filling on
+      a real device, EEA message live.
