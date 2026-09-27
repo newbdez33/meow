@@ -171,6 +171,14 @@ TestFlight build and said it is fine.
       Review" on each purchase page, since `reviewSubmissionItems` has no
       purchase relationship); submitted through the API. Version and both
       purchases are WAITING_FOR_REVIEW, release type after approval.
+- [x] 2026-09-27 20:15 JST, TestFlight: build 4 is in the new internal group
+      "Internal" (`4ae4991f-19dc-4f75-b695-c9d0390eba4b`) with the owner's
+      testers newbdez33jp@gmail.com and newbdez33@gmail.com (created with
+      `POST /v1/betaTesters` inside the group; the existing tester records
+      from other apps cannot be reused, and the legacy "App Store Connect
+      Users" group rejects tester assignment). "What to Test" notes in en-US
+      and zh-Hans (`betaBuildLocalizations.whatsNew`). No beta review needed
+      for internal testing.
 - [ ] After approval: AdMob app-ads.txt "Check for updates" (the marketing
       URL only reaches the store with 2.1), ads filling on a real device, the
       EEA message showing in the EU, both purchases visible in the sheet.
