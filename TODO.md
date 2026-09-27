@@ -214,3 +214,9 @@ TestFlight build and said it is fine.
       EEA message showing in the EU, both purchases visible in the sheet.
 - [ ] Optional: lower the AdMob payout threshold from $1,500 so the
       $1,463.81 balance pays out.
+
+## 5. Android version (in progress, started 2026-09-27)
+
+Goal: the same app on Google Play as `jp.jacky.meow`. Design in
+`docs/specs/2026-09-27-android-design.md`, tasks in
+`docs/plans/2026-09-27-android.md`, sources in `android/`.

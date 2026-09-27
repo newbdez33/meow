@@ -90,10 +90,12 @@ android/
 - Toolchain matches Menkyo: Android Gradle Plugin 9.1.0, Kotlin 2.4.0 with
   the Compose compiler plugin, JDK 21, `compileSdk`/`targetSdk` 36,
   `minSdk` 24. Compose BOM, Material 3, `activity-compose`,
-  `lifecycle-runtime-compose` from Compose BOM 2026.09.00 (Material 3
-  1.4.0, UI 1.12.1); `play-services-ads 25.5.0` (2026-09-17, minimum API
-  24); `user-messaging-platform 4.0.0` (2025-10-31); `billing-ktx 9.1.0`
-  (requires target 35 or later). All current stable as of 2026-09-27.
+  `lifecycle-runtime-compose 2.10.0` from Compose BOM 2026.06.01 (Material 3
+  1.4.0, UI 1.11.4; the 2026.08+ BOMs and lifecycle 2.11 compile against
+  API 37, which needs AGP 9.2 and a platform this SDK does not have);
+  `play-services-ads 25.5.0` (2026-09-17, minimum API 24);
+  `user-messaging-platform 4.0.0` (2025-10-31); `billing-ktx 9.1.0`
+  (requires target 35 or later). Verified building on 2026-09-27.
 - Build types: `debug` uses Google's sample AdMob app id
   `ca-app-pub-3940256099942544~3347511713` and sample banner unit
   `ca-app-pub-3940256099942544/6300978111`, and an empty Play licensing key.
