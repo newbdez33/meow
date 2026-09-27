@@ -77,7 +77,7 @@ android/
       billing/PurchaseVerifier.kt    RSA-SHA1 check against the Play key
       billing/TipSheet.kt            the remove-ads bottom sheet
     src/main/res/raw/m_001.mp3 … m_027.mp3
-    src/main/res/drawable-nodpi/c01.png … c27.png, nav_cat.png, nav_cup.png,
+    src/main/res/drawable-nodpi/c01.png … c27.png, nav_cat.png, nav_can.png,
                                 tip_can.png, tip_mug.png
     src/main/res/mipmap-anydpi-v26/ic_launcher.xml (+ foreground/background)
     src/main/res/values/strings.xml, values-zh-rCN/, values-ja/   generated
@@ -119,7 +119,8 @@ One activity, one screen, mirroring `ContentView.swift`:
   (`app_name`: "Meow" / "猫叫模拟器" / "ニャー"). Actions, right to
   left as on iOS: the cat (`nav_cat`) opens the system share sheet; the
   raised hand (Material icon) appears only while
-  `isPrivacyOptionsRequired`; the cup (`nav_cup`) opens the tip sheet and is
+  `isPrivacyOptionsRequired`; the can (`nav_can`, the button iOS 2.1 build 5
+  settled on after the owner rejected the cup) opens the tip sheet and is
   hidden once `isAdFree`. Each action has a content description from the
   existing strings.
 - **Grid**: `LazyVerticalGrid(GridCells.Adaptive(110.dp))`, 2 dp spacing,
@@ -238,7 +239,7 @@ A translation of `Store.swift` and `TipSheet.swift` onto Play Billing.
   `BuildConfig.PLAY_LICENSE_KEY` and checks `SHA1withRSA`. An empty key
   (debug builds) verifies nothing, so debug builds are never ad-free —
   purchases are exercised only through Play-installed internal-test builds.
-- **TipSheet**: Material 3 `ModalBottomSheet` behind the cup. Content, top
+- **TipSheet**: Material 3 `ModalBottomSheet` behind the can. Content, top
   to bottom, as on iOS: a hero composed of `tip_mug`, one of five cats
   (c02, c01, c04, c19, c21; a different one each time the sheet opens, tap
   to cycle) and `tip_can`; `tip_title`; `tip_body`; then either
@@ -272,8 +273,9 @@ A translation of `Store.swift` and `TipSheet.swift` onto Play Billing.
   reviews the contact sheet; a cat the owner rejects is regenerated, and
   the fallback for any that cannot be matched is the existing 128 px file
   upscaled to 512 (soft, but the same cat).
-- **Toolbar and tip art**: `nav_cat` and `nav_cup` exported at 128 px from
-  the 1254 px originals in `design/imagegen/` (drawn at 26 dp);
+- **Toolbar and tip art**: `nav_cat` (from `nav-cat.png`) and `nav_can` (from
+  `tip-can.png`) exported at 128 px from the 1254 px originals in
+  `design/imagegen/` (drawn at 26 dp);
   `tip_can` and `tip_mug` at 512 px (the sheet's hero).
 - **App icon**: the iOS icon is a flat white cat on plain green
   (`meow/Assets.xcassets/AppIcon.appiconset/ItunesArtwork@2x.png`, 1024 px).
@@ -282,8 +284,19 @@ A translation of `Store.swift` and `TipSheet.swift` onto Play Billing.
   into the 66 dp safe zone; a monochrome layer is not made. The 512 px
   `meow/appstore/android/playstore-icon.png` is the Play Store icon.
 - **Store graphics**: a 1024×500 feature graphic from the image tool (cats
-  on the app's pink), phone and tablet screenshots from the API 36 emulator
-  in each language.
+  on the app's coral), and phone and tablet screenshots from the API 36
+  emulators in each language, composed the way the owner approved for the
+  App Store on 2026-09-27: `tool/render_store_screenshots.swift` gains two
+  Android canvases (1242×2208 and 1600×2560, because Google Play refuses a
+  screenshot longer than twice its width) and a device-list argument, with
+  the iPhone/iPad output unchanged; the captions come from
+  `design/store/play/copy.json`, the iOS captions with the one line that
+  mentions children reworded. The captures come from a debug-only
+  screenshot mode, the Android form of the iOS `-MeowNoAds` launch argument
+  and `meow.storekit`: `adb shell am start … --ez meowNoAds true --es
+  meowStore preview` skips the consent flow and the banner and swaps in a
+  `PreviewBillingGateway` that shows both prices; release builds ignore
+  both extras.
 
 ## Testing
 
@@ -304,14 +317,14 @@ A translation of `Store.swift` and `TipSheet.swift` onto Play Billing.
     files contain 27 captions and the overrides.
 - **Compose UI test** on the API 36 emulator: the grid shows 27 cells; a
   tap highlights that cell, clears the previous one and calls the fake
-  `SoundPlayer` with the right index; the cup is absent when ad-free.
+  `SoundPlayer` with the right index; the can is absent when ad-free.
 - **Build checks**: `assembleDebug`, `testDebugUnitTest`, `bundleRelease`,
   `bundletool validate` and a debug-signed universal APK from the exact
   AAB installed and cold-started on the wiped emulator, as Menkyo does.
 - **Acceptance**: the emulator is automatically an AdMob test device, so a
   debug build must show "Test Ad" after the consent form; an internal-test
   build on the owner's Galaxy S22 Ultra must show a real banner, complete a
-  license-tester purchase of each treat, hide the banner and the cup, and
+  license-tester purchase of each treat, hide the banner and the can, and
   survive a relaunch; the three languages are checked on the emulator.
 
 ## Release and store setup
@@ -339,9 +352,11 @@ outward step marked **(go)** below.
    advertising) plus nothing of the app's own, since taps and sounds never
    leave the device and Play handles purchases; privacy policy
    `https://meow.jacky.jp/privacy/`.
-2. **Play Console, store listing** in zh-CN, en-US and ja-JP: title, short
-   and full descriptions adapted from the `hosting/` pages, icon, feature
-   graphic, screenshots. Contact email `newbdez33@gmail.com`, website
+2. **Play Console, store listing** in zh-CN, en-US and ja-JP: names
+   猫叫模拟器 / Meow / ニャー：猫の鳴き声 (the App Store names), short
+   descriptions, full descriptions adapted from the App Store 2.1 copy the
+   owner rewrote (read through the App Store Connect API) with the store,
+   device and children wording changed, icon, feature graphic, screenshots. Contact email `newbdez33@gmail.com`, website
    `https://meow.jacky.jp/`.
 3. **Play Console, products**: the two in-app products above, with names,
    descriptions and prices in the three languages; copy the app's licensing
