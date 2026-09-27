@@ -1,0 +1,23 @@
+{
+  "images": [
+    {
+      "filename": "navCat.png",
+      "idiom": "universal",
+      "scale": "1x"
+    },
+    {
+      "filename": "navCat@2x.png",
+      "idiom": "universal",
+      "scale": "2x"
+    },
+    {
+      "filename": "navCat@3x.png",
+      "idiom": "universal",
+      "scale": "3x"
+    }
+  ],
+  "info": {
+    "author": "xcode",
+    "version": 1
+  }
+}

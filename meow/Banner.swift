@@ -50,9 +50,10 @@ private struct BannerViewContainer: UIViewRepresentable {
 
 struct Banner: View {
     @EnvironmentObject private var ads: AdsController
+    @EnvironmentObject private var store: Store
 
     var body: some View {
-        if ads.canRequestAds {
+        if ads.canRequestAds && !store.isAdFree {
             HStack {
                 Spacer()
                 BannerViewContainer(adUnitID: AdsController.bannerAdUnitID)
@@ -67,5 +68,6 @@ struct Banner_Previews: PreviewProvider {
     static var previews: some View {
         Banner()
             .environmentObject(AdsController())
+            .environmentObject(Store())
     }
 }

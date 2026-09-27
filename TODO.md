@@ -92,29 +92,43 @@ Design:
   privacy policy URL `https://meow.jacky.jp/privacy/` on the 2.1 version; then
   AdMob "Check for updates" for app-ads.txt (up to 24 h).
 
-## 3. "Buy the author a coffee" removes ads (design, awaiting approval)
+## 3. Treats that remove the ads (built 2026-09-27)
 
-Goal: a one-time purchase that hides the banner forever on the buyer's
-Apple ID.
+Goal: one-time purchases that hide the banner forever on the buyer's
+Apple ID, with a cheaper and a dearer option.
 
-Design:
+Done 2026-09-27:
 
-- StoreKit 2, one non-consumable product `com.salmonapps.Meow.coffee`.
-- `Store` observable: loads the product, `purchase()`, `restore()`
-  (`AppStore.sync()`), listens to `Transaction.updates`, and derives
-  `isAdFree` from `Transaction.currentEntitlements` at every launch. No
-  server, no receipt storage, no UserDefaults.
-- UI: a ☕ button beside the existing 🐱 share button opens a sheet: title,
-  one-line thanks, the localized price, Buy, Restore purchases. After a
-  purchase the banner disappears and the consent/ATT flow is skipped on later
-  launches. Strings in en / zh-Hans / ja.
-- Testing: a `meow.storekit` configuration for the simulator, plus a small
-  `meowTests` target using StoreKitTest that covers purchase → `isAdFree`,
-  restore, and the fresh-launch entitlement read.
-- Owner, App Store Connect: create the non-consumable product (name, price
-  tier, review screenshot, localizations) and attach it to the 2.1 version.
-  This can be done through the App Store Connect API with the existing team
-  key if preferred.
+- StoreKit 2 `Store` with two non-consumable products, either of which
+  removes the ads: `com.salmonapps.Meow.coffee` (a coffee for the author,
+  planned $2.99) and `com.salmonapps.Meow.can` (a can for the author's cat,
+  planned $5.99, shown first as the upsell). Entitlement comes from
+  `Transaction.currentEntitlements` at every launch; no server, no
+  UserDefaults.
+- `TipSheet` behind the mug icon in the navigation bar: a hero composed at
+  runtime from `tipMug`, one of five app cats (black c02, gray c01, orange
+  c04, tabby c19, orange-with-bowl c21; a different one each time the sheet
+  opens, tap to switch) and `tipCan` (vector sources in
+  `design/tip-cat.html`), title, one paragraph, the can button (with
+  `tipCanIcon` and the "cat's pick" note), the coffee button (with `tipMug`),
+  restore. Half-height sheet on iOS 16+. Strings `tip_*` in en / zh-Hans / ja.
+- The navigation bar's cup and cat buttons use `navCup` and `navCat`, made
+  with the Codex CLI image generation tool; originals and prompt are in
+  `design/imagegen/`.
+- The banner and the consent/ATT flow skip when `isAdFree`; the cup icon
+  disappears after a purchase.
+- `meowTests/StoreTests` (StoreKitTest against `meow.storekit`): fresh install
+  offers both treats, coffee removes ads, can removes ads, an earlier can
+  purchase is honoured on relaunch, restore finds a coffee bought elsewhere.
+  Five tests pass on the iOS 27 simulator. Debug simulator and Release device
+  builds pass.
+- Until the products exist in App Store Connect the sheet shows "Can't reach
+  the App Store".
+
+Owner, App Store Connect: create both non-consumable products (names, price
+tiers, review screenshot, localizations) and attach them to the 2.1 version.
+This can be done through the App Store Connect API with the existing team
+key if preferred.
 
 ## 4. Release
 

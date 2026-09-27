@@ -35,3 +35,14 @@
 "t26" = "抱怨一下";
 "t27" = "你懂得";
 "privacy_options" = "隐私设置";
+"tip_button" = "去掉广告";
+"tip_title" = "去掉广告";
+"tip_body" = "猫叫模拟器免费，靠广告养着。请作者喝杯咖啡，或者给作者家的猫买个罐罐，广告就永久消失，同一 Apple ID 的所有设备都适用。";
+"tip_can" = "给猫买个罐罐 %@";
+"tip_can_note" = "猫推荐";
+"tip_coffee" = "请作者喝杯咖啡 %@";
+"tip_restore" = "恢复购买";
+"tip_thanks" = "谢谢！广告已经关掉了。";
+"tip_unavailable" = "现在连不上 App Store，请稍后再试。";
+"tip_failed" = "购买没有完成，请稍后再试。";
+"share_button" = "分享 App";

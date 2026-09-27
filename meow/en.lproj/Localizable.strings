@@ -35,3 +35,14 @@
 "t26" = "Complain";
 "t27" = "God bless you";
 "privacy_options" = "Privacy options";
+"tip_button" = "Remove the ads";
+"tip_title" = "Remove the ads";
+"tip_body" = "Meow is free and lives on ads. Treat the author, or the author's cat, and the ads are gone for good on every device with your Apple ID.";
+"tip_can" = "A can for the cat: %@";
+"tip_can_note" = "The cat's pick";
+"tip_coffee" = "A coffee for the author: %@";
+"tip_restore" = "Restore purchase";
+"tip_thanks" = "Thank you! The ads are gone.";
+"tip_unavailable" = "Can't reach the App Store right now. Try again later.";
+"tip_failed" = "The purchase didn't go through. Try again later.";
+"share_button" = "Share the app";

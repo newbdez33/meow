@@ -52,7 +52,21 @@
 		85A0000525136FB10031DB2E /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 85A0000325136FB10031DB2E /* GoogleMobileAds */; };
 		85A0000625136FB10031DB2E /* GoogleUserMessagingPlatform in Frameworks */ = {isa = PBXBuildFile; productRef = 85A0000425136FB10031DB2E /* GoogleUserMessagingPlatform */; };
 		85A0000825136FB10031DB2E /* AdsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0000725136FB10031DB2E /* AdsController.swift */; };
+		85B0000525136FB10031DB2E /* StoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B0000425136FB10031DB2E /* StoreTests.swift */; };
+		85B0000F25136FB10031DB2E /* meow.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 85B0000E25136FB10031DB2E /* meow.storekit */; };
+		85B0001125136FB10031DB2E /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B0001025136FB10031DB2E /* Store.swift */; };
+		85B0001325136FB10031DB2E /* TipSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B0001225136FB10031DB2E /* TipSheet.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		85B0000A25136FB10031DB2E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 850F67E024B0C510009DC99B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 850F67E724B0C510009DC99B;
+			remoteInfo = meow;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		850F67E824B0C510009DC99B /* meow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = meow.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,6 +118,11 @@
 		858F807C24B354010026935F /* Array+chunked.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+chunked.swift"; sourceTree = "<group>"; };
 		858F808024B3546F0026935F /* AppActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppActivityView.swift; sourceTree = "<group>"; };
 		85A0000725136FB10031DB2E /* AdsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsController.swift; sourceTree = "<group>"; };
+		85B0000225136FB10031DB2E /* meowTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = meowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		85B0000425136FB10031DB2E /* StoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreTests.swift; sourceTree = "<group>"; };
+		85B0000E25136FB10031DB2E /* meow.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = meow.storekit; sourceTree = "<group>"; };
+		85B0001025136FB10031DB2E /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		85B0001225136FB10031DB2E /* TipSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipSheet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +135,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		85B0000725136FB10031DB2E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -123,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				850F67EA24B0C510009DC99B /* meow */,
+				85B0000325136FB10031DB2E /* meowTests */,
 				850F67E924B0C510009DC99B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -131,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				850F67E824B0C510009DC99B /* meow.app */,
+				85B0000225136FB10031DB2E /* meowTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -147,8 +175,11 @@
 				850F687824B204F5009DC99B /* Sounds.swift */,
 				850F688924B2CB1E009DC99B /* Banner.swift */,
 				85A0000725136FB10031DB2E /* AdsController.swift */,
+				85B0001225136FB10031DB2E /* TipSheet.swift */,
+				85B0001025136FB10031DB2E /* Store.swift */,
 				850F67EF24B0C511009DC99B /* Assets.xcassets */,
 				850F67F424B0C511009DC99B /* Info.plist */,
+				85B0000E25136FB10031DB2E /* meow.storekit */,
 				850F683024B1AAEC009DC99B /* resources */,
 				850F67F124B0C511009DC99B /* Preview Content */,
 				850F687524B1F03E009DC99B /* Localizable.strings */,
@@ -218,6 +249,14 @@
 			path = gridstack;
 			sourceTree = "<group>";
 		};
+		85B0000325136FB10031DB2E /* meowTests */ = {
+			isa = PBXGroup;
+			children = (
+				85B0000425136FB10031DB2E /* StoreTests.swift */,
+			);
+			path = meowTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -242,6 +281,24 @@
 			productReference = 850F67E824B0C510009DC99B /* meow.app */;
 			productType = "com.apple.product-type.application";
 		};
+		85B0000125136FB10031DB2E /* meowTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 85B0000B25136FB10031DB2E /* Build configuration list for PBXNativeTarget "meowTests" */;
+			buildPhases = (
+				85B0000625136FB10031DB2E /* Sources */,
+				85B0000725136FB10031DB2E /* Frameworks */,
+				85B0000825136FB10031DB2E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				85B0000925136FB10031DB2E /* PBXTargetDependency */,
+			);
+			name = meowTests;
+			productName = meowTests;
+			productReference = 85B0000225136FB10031DB2E /* meowTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -253,6 +310,10 @@
 				TargetAttributes = {
 					850F67E724B0C510009DC99B = {
 						CreatedOnToolsVersion = 12.0;
+					};
+					85B0000125136FB10031DB2E = {
+						CreatedOnToolsVersion = 27.0;
+						TestTargetID = 850F67E724B0C510009DC99B;
 					};
 				};
 			};
@@ -276,6 +337,7 @@
 			projectRoot = "";
 			targets = (
 				850F67E724B0C510009DC99B /* meow */,
+				85B0000125136FB10031DB2E /* meowTests */,
 			);
 		};
 /* End PBXProject section */
@@ -320,6 +382,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		85B0000825136FB10031DB2E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				85B0000F25136FB10031DB2E /* meow.storekit in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -333,6 +403,8 @@
 				858F807F24B354010026935F /* Array+chunked.swift in Sources */,
 				850F688A24B2CB1E009DC99B /* Banner.swift in Sources */,
 				85A0000825136FB10031DB2E /* AdsController.swift in Sources */,
+				85B0001325136FB10031DB2E /* TipSheet.swift in Sources */,
+				85B0001125136FB10031DB2E /* Store.swift in Sources */,
 				858F807D24B354010026935F /* GridStack.swift in Sources */,
 				850F67EC24B0C510009DC99B /* App.swift in Sources */,
 				858F808124B354700026935F /* AppActivityView.swift in Sources */,
@@ -341,7 +413,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		85B0000625136FB10031DB2E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				85B0000525136FB10031DB2E /* StoreTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		85B0000925136FB10031DB2E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 850F67E724B0C510009DC99B /* meow */;
+			targetProxy = 85B0000A25136FB10031DB2E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		850F687524B1F03E009DC99B /* Localizable.strings */ = {
@@ -537,6 +625,44 @@
 			};
 			name = Release;
 		};
+		85B0000C25136FB10031DB2E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = 72T2SXUWHC;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 2.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.salmonapps.MeowTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/meow.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/meow";
+			};
+			name = Debug;
+		};
+		85B0000D25136FB10031DB2E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = 72T2SXUWHC;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 2.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.salmonapps.MeowTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/meow.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/meow";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -554,6 +680,15 @@
 			buildConfigurations = (
 				850F67F824B0C511009DC99B /* Debug */,
 				850F67F924B0C511009DC99B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		85B0000B25136FB10031DB2E /* Build configuration list for PBXNativeTarget "meowTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				85B0000C25136FB10031DB2E /* Debug */,
+				85B0000D25136FB10031DB2E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
