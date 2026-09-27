@@ -201,9 +201,14 @@ TestFlight build and said it is fine.
       after re-running `StoreScreenshotTests`; the composed PNGs replaced the
       raw captures on version 2.1 (three per language for iPhone 6.9" and
       iPad 13").
-- [ ] Owner tries 2.1 (5) in TestFlight. On the owner's OK: attach build 5 to
-      version 2.1, create a review submission with the version and both
-      purchases (Add for Review on each purchase page), submit.
+- [x] 2026-09-27 20:49 JST: the owner OK'd 2.1 (5) in TestFlight. Build 5
+      attached to 2.1; review submission `642a51bc-e85a-4cd9-85fb-0f1148a04360`
+      holds the version and both purchases and is WAITING_FOR_REVIEW. On the
+      owner's request the purchases also got their 1024x1024 images
+      (`design/iap-icons/`, the generated can and mug on the blush
+      background, uploaded through `inAppPurchaseImages`); that needed the
+      first submission of the evening cancelled and redone, because images
+      cannot be added while a purchase is pending review.
 - [ ] After approval: AdMob app-ads.txt "Check for updates" (the marketing
       URL only reaches the store with 2.1), ads filling on a real device, the
       EEA message showing in the EU, both purchases visible in the sheet.
