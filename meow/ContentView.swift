@@ -7,9 +7,9 @@
 
 import SwiftUI
 import AVFoundation
-import AppTrackingTransparency
 
 struct ContentView: View {
+    @EnvironmentObject private var ads: AdsController
     @State private var showingSheet = false
     @State private var selectedIndex = -1
     var body: some View {
@@ -26,6 +26,15 @@ struct ContentView: View {
                 .navigationTitle(Text("title"))
                 .navigationBarItems(trailing:
                     HStack {
+                        if ads.isPrivacyOptionsRequired {
+                            Button(action: {
+                                guard let viewController = UIApplication.shared.keyRootViewController else { return }
+                                Task { await ads.presentPrivacyOptions(from: viewController) }
+                            }, label: {
+                                Image(systemName: "hand.raised")
+                            })
+                            .accessibilityLabel(Text("privacy_options"))
+                        }
                         Button("🐱") {
                             self.showingSheet = true
                         }.sheet(isPresented: $showingSheet, onDismiss: {
@@ -36,7 +45,7 @@ struct ContentView: View {
                                                 URL(string: "https://itunes.apple.com/app/id826362662")!,
                                                 UIImage(named:"AppIcon40x40") ?? UIImage()])
                         })
-                        
+
                     }
                 )
                 .background(NavigationConfigurator { nc in
@@ -53,11 +62,10 @@ struct ContentView: View {
             } catch {
                 print(error)
             }
-            
-            ATTrackingManager.requestTrackingAuthorization { (status) in
-                print(status)
-            }
-
+        }
+        .task {
+            guard let viewController = UIApplication.shared.keyRootViewController else { return }
+            await ads.start(from: viewController)
         }
     }
 }
@@ -65,9 +73,10 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environmentObject(AdsController())
             .preferredColorScheme(.dark)
             .previewDevice("iPhone 11")
-            
+
     }
 }
 

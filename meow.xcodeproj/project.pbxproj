@@ -49,12 +49,9 @@
 		858F807E24B354010026935F /* GridCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858F807B24B354010026935F /* GridCalculator.swift */; };
 		858F807F24B354010026935F /* Array+chunked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858F807C24B354010026935F /* Array+chunked.swift */; };
 		858F808124B354700026935F /* AppActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858F808024B3546F0026935F /* AppActivityView.swift */; };
-		85970E7125136FB10031DB2E /* nanopb.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85970E6B25136FB10031DB2E /* nanopb.xcframework */; };
-		85970E7225136FB10031DB2E /* GoogleAppMeasurement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85970E6C25136FB10031DB2E /* GoogleAppMeasurement.framework */; };
-		85970E7325136FB10031DB2E /* PromisesObjC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85970E6D25136FB10031DB2E /* PromisesObjC.xcframework */; };
-		85970E7425136FB10031DB2E /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85970E6E25136FB10031DB2E /* GoogleMobileAds.framework */; };
-		85970E7525136FB10031DB2E /* UserMessagingPlatform.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85970E6F25136FB10031DB2E /* UserMessagingPlatform.framework */; };
-		85970E7625136FB10031DB2E /* GoogleUtilities.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85970E7025136FB10031DB2E /* GoogleUtilities.xcframework */; };
+		85A0000525136FB10031DB2E /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 85A0000325136FB10031DB2E /* GoogleMobileAds */; };
+		85A0000625136FB10031DB2E /* GoogleUserMessagingPlatform in Frameworks */ = {isa = PBXBuildFile; productRef = 85A0000425136FB10031DB2E /* GoogleUserMessagingPlatform */; };
+		85A0000825136FB10031DB2E /* AdsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0000725136FB10031DB2E /* AdsController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -106,12 +103,7 @@
 		858F807B24B354010026935F /* GridCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridCalculator.swift; sourceTree = "<group>"; };
 		858F807C24B354010026935F /* Array+chunked.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+chunked.swift"; sourceTree = "<group>"; };
 		858F808024B3546F0026935F /* AppActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppActivityView.swift; sourceTree = "<group>"; };
-		85970E6B25136FB10031DB2E /* nanopb.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = nanopb.xcframework; sourceTree = "<group>"; };
-		85970E6C25136FB10031DB2E /* GoogleAppMeasurement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAppMeasurement.framework; sourceTree = "<group>"; };
-		85970E6D25136FB10031DB2E /* PromisesObjC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = PromisesObjC.xcframework; sourceTree = "<group>"; };
-		85970E6E25136FB10031DB2E /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
-		85970E6F25136FB10031DB2E /* UserMessagingPlatform.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UserMessagingPlatform.framework; sourceTree = "<group>"; };
-		85970E7025136FB10031DB2E /* GoogleUtilities.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = GoogleUtilities.xcframework; sourceTree = "<group>"; };
+		85A0000725136FB10031DB2E /* AdsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,12 +111,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				85970E7325136FB10031DB2E /* PromisesObjC.xcframework in Frameworks */,
-				85970E7225136FB10031DB2E /* GoogleAppMeasurement.framework in Frameworks */,
-				85970E7525136FB10031DB2E /* UserMessagingPlatform.framework in Frameworks */,
-				85970E7425136FB10031DB2E /* GoogleMobileAds.framework in Frameworks */,
-				85970E7125136FB10031DB2E /* nanopb.xcframework in Frameworks */,
-				85970E7625136FB10031DB2E /* GoogleUtilities.xcframework in Frameworks */,
+				85A0000525136FB10031DB2E /* GoogleMobileAds in Frameworks */,
+				85A0000625136FB10031DB2E /* GoogleUserMessagingPlatform in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,7 +138,6 @@
 		850F67EA24B0C510009DC99B /* meow */ = {
 			isa = PBXGroup;
 			children = (
-				850F688B24B2CB95009DC99B /* vender */,
 				850F686B24B1B08A009DC99B /* extensions */,
 				858F807924B354010026935F /* gridstack */,
 				850F67EB24B0C510009DC99B /* App.swift */,
@@ -159,6 +146,7 @@
 				850F686924B1AB18009DC99B /* Cat.swift */,
 				850F687824B204F5009DC99B /* Sounds.swift */,
 				850F688924B2CB1E009DC99B /* Banner.swift */,
+				85A0000725136FB10031DB2E /* AdsController.swift */,
 				850F67EF24B0C511009DC99B /* Assets.xcassets */,
 				850F67F424B0C511009DC99B /* Info.plist */,
 				850F683024B1AAEC009DC99B /* resources */,
@@ -220,14 +208,6 @@
 			path = extensions;
 			sourceTree = "<group>";
 		};
-		850F688B24B2CB95009DC99B /* vender */ = {
-			isa = PBXGroup;
-			children = (
-				85970E6A25136FB10031DB2E /* GoogleMobileAdsSdkiOS-7.65.0 */,
-			);
-			path = vender;
-			sourceTree = "<group>";
-		};
 		858F807924B354010026935F /* gridstack */ = {
 			isa = PBXGroup;
 			children = (
@@ -236,19 +216,6 @@
 				858F807C24B354010026935F /* Array+chunked.swift */,
 			);
 			path = gridstack;
-			sourceTree = "<group>";
-		};
-		85970E6A25136FB10031DB2E /* GoogleMobileAdsSdkiOS-7.65.0 */ = {
-			isa = PBXGroup;
-			children = (
-				85970E6B25136FB10031DB2E /* nanopb.xcframework */,
-				85970E6C25136FB10031DB2E /* GoogleAppMeasurement.framework */,
-				85970E6D25136FB10031DB2E /* PromisesObjC.xcframework */,
-				85970E6E25136FB10031DB2E /* GoogleMobileAds.framework */,
-				85970E6F25136FB10031DB2E /* UserMessagingPlatform.framework */,
-				85970E7025136FB10031DB2E /* GoogleUtilities.xcframework */,
-			);
-			path = "GoogleMobileAdsSdkiOS-7.65.0";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -268,6 +235,8 @@
 			);
 			name = meow;
 			packageProductDependencies = (
+				85A0000325136FB10031DB2E /* GoogleMobileAds */,
+				85A0000425136FB10031DB2E /* GoogleUserMessagingPlatform */,
 			);
 			productName = meow;
 			productReference = 850F67E824B0C510009DC99B /* meow.app */;
@@ -299,6 +268,8 @@
 			);
 			mainGroup = 850F67DF24B0C510009DC99B;
 			packageReferences = (
+				85A0000125136FB10031DB2E /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				85A0000225136FB10031DB2E /* XCRemoteSwiftPackageReference "swift-package-manager-google-user-messaging-platform" */,
 			);
 			productRefGroup = 850F67E924B0C510009DC99B /* Products */;
 			projectDirPath = "";
@@ -361,6 +332,7 @@
 				850F687924B204F5009DC99B /* Sounds.swift in Sources */,
 				858F807F24B354010026935F /* Array+chunked.swift in Sources */,
 				850F688A24B2CB1E009DC99B /* Banner.swift in Sources */,
+				85A0000825136FB10031DB2E /* AdsController.swift in Sources */,
 				858F807D24B354010026935F /* GridStack.swift in Sources */,
 				850F67EC24B0C510009DC99B /* App.swift in Sources */,
 				858F808124B354700026935F /* AppActivityView.swift in Sources */,
@@ -447,7 +419,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -504,7 +476,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -521,22 +493,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"meow/Preview Content\"";
 				DEVELOPMENT_TEAM = 72T2SXUWHC;
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/meow/vender",
-					"$(PROJECT_DIR)/meow/vender/GoogleMobileAdsSdkiOS-7.65.0",
-				);
 				INFOPLIST_FILE = meow/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.salmonapps.Meow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -551,22 +518,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"meow/Preview Content\"";
 				DEVELOPMENT_TEAM = 72T2SXUWHC;
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/meow/vender",
-					"$(PROJECT_DIR)/meow/vender/GoogleMobileAdsSdkiOS-7.65.0",
-				);
 				INFOPLIST_FILE = meow/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.salmonapps.Meow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -597,6 +559,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		85A0000125136FB10031DB2E /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 13.10.0;
+			};
+		};
+		85A0000225136FB10031DB2E /* XCRemoteSwiftPackageReference "swift-package-manager-google-user-messaging-platform" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-user-messaging-platform.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		85A0000325136FB10031DB2E /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 85A0000125136FB10031DB2E /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
+		};
+		85A0000425136FB10031DB2E /* GoogleUserMessagingPlatform */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 85A0000225136FB10031DB2E /* XCRemoteSwiftPackageReference "swift-package-manager-google-user-messaging-platform" */;
+			productName = GoogleUserMessagingPlatform;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 850F67E024B0C510009DC99B /* Project object */;
 }
