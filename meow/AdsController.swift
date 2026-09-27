@@ -25,6 +25,10 @@ final class AdsController: ObservableObject {
 
     /// Runs once per launch from the first screen. Safe to call again; later calls are ignored while one is running.
     func start(from viewController: UIViewController) async {
+        #if DEBUG
+        // Store screenshots are taken without ads or prompts: `xcodebuild test` passes this argument.
+        if ProcessInfo.processInfo.arguments.contains("-MeowNoAds") { return }
+        #endif
         guard !isStarting else { return }
         isStarting = true
         defer { isStarting = false }

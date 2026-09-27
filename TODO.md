@@ -179,6 +179,22 @@ TestFlight build and said it is fine.
       Users" group rejects tester assignment). "What to Test" notes in en-US
       and zh-Hans (`betaBuildLocalizations.whatsNew`). No beta review needed
       for internal testing.
+- [x] 2026-09-27 evening, after the owner tried build 4: the review
+      submission was cancelled (build 4 had the toolbar the owner rejected;
+      the version is back in an editable state). Toolbar buttons are separate
+      glass circles on iOS 26 (`ToolbarSpacer`) and the remove-ads button is
+      the can (`navCan`; `navCup` removed). What's New no longer mentions the
+      ads library or the consent screen; descriptions rewritten in en-US and
+      zh-Hans; a Japanese store listing added (name 「ニャー：猫の鳴き声」,
+      subtitle, description, keywords, What's New, URLs to `/ja.html` and
+      `/privacy/ja.html`). New screenshots from `meowUITests/StoreScreenshotTests`
+      (launch argument `-MeowNoAds`, DEBUG only): iPhone 6.9" 1320x2868 and iPad
+      13" 2064x2752, three per language (grid, a selected cat, the remove-ads
+      sheet); the 2020 screenshots were deleted. Build 5 uploaded and put in the
+      Internal TestFlight group with notes.
+- [ ] Owner tries 2.1 (5) in TestFlight. On the owner's OK: attach build 5 to
+      version 2.1, create a review submission with the version and both
+      purchases (Add for Review on each purchase page), submit.
 - [ ] After approval: AdMob app-ads.txt "Check for updates" (the marketing
       URL only reaches the store with 2.1), ads filling on a real device, the
       EEA message showing in the EU, both purchases visible in the sheet.
