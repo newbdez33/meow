@@ -2,6 +2,4 @@
 
 new Swift UI version
 
-### TODO
-
-Fix Admob
+Work in progress is tracked in [TODO.md](TODO.md).

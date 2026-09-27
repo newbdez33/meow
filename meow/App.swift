@@ -6,27 +6,15 @@
 //
 
 import SwiftUI
-import GoogleMobileAds
-import AppTrackingTransparency
-import AdSupport
-
 
 @main
 struct meowApp: App {
+    @StateObject private var ads = AdsController()
+
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(ads)
         }
-    }
-    init () {
-        GADMobileAds.sharedInstance().start(completionHandler: nil)
-        requestIDFA()
-    }
-    
-    func requestIDFA() {
-      ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
-        // Tracking authorization completed. Start loading ads here.
-        // loadAd()
-      })
     }
 }
