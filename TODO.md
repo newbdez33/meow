@@ -152,9 +152,23 @@ sheet), then attach both to the 2.1 version submission.
       `/privacy/` and `/privacy/zh.html`; both purchases have the tip-sheet
       review screenshot and are READY_TO_SUBMIT (the coffee's availability had
       to be set again through the API, the web form had not saved it).
-- [ ] App Privacy nutrition labels: never published for this app, and
-      required because the binary declares `NSUserTrackingUsageDescription`.
-- [ ] Select build 4 on version 2.1 once processing finishes, then create
-      the review submission with the version and both purchases.
-- [ ] After approval: AdMob app-ads.txt "Check for updates", ads filling on
-      a real device, EEA message live.
+- [x] 2026-09-27: App Privacy labels published (through the web form):
+      Coarse Location (third-party advertising, not linked, no tracking);
+      Device ID (third-party advertising + analytics, linked, tracking);
+      Product Interaction (third-party advertising + analytics, not linked, no
+      tracking); Advertising Data (third-party advertising, linked, tracking);
+      Crash / Performance / Other Diagnostic Data (app functionality, not
+      linked, no tracking). Age rating on the 2.1 app info gained the eight
+      2025 answers through the API (`advertising: true`, everything else
+      none/false).
+- [x] 2026-09-27 20:05 JST: build 4 attached to 2.1 through the API; review
+      submission `e2e10b1e-601b-4177-bc0d-916fe1742856` holds the version
+      (added through the API) and both purchases (added with "Add for
+      Review" on each purchase page, since `reviewSubmissionItems` has no
+      purchase relationship); submitted through the API. Version and both
+      purchases are WAITING_FOR_REVIEW, release type after approval.
+- [ ] After approval: AdMob app-ads.txt "Check for updates" (the marketing
+      URL only reaches the store with 2.1), ads filling on a real device, the
+      EEA message showing in the EU, both purchases visible in the sheet.
+- [ ] Optional: lower the AdMob payout threshold from $1,500 so the
+      $1,463.81 balance pays out.
