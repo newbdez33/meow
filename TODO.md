@@ -220,3 +220,14 @@ TestFlight build and said it is fine.
 Goal: the same app on Google Play as `jp.jacky.meow`. Design in
 `docs/specs/2026-09-27-android-design.md`, tasks in
 `docs/plans/2026-09-27-android.md`, sources in `android/`.
+
+- [x] 2026-09-27: Play Console app 4976190229557343886 created (zh-CN default,
+      free, automatic protection off) with every App content declaration
+      done; AdMob Android app `~8527399220` with banner unit `/4197186257`,
+      added to the shared EEA message; upload key generated in
+      `~/.android/meow-upload/` (see `android/README.md` for the ids and
+      fingerprints).
+- [x] 2026-09-27: 1.0 (1) release bundle built (`app-release.aab`, SHA-256
+      `f5cee09beb7cb1e190d59338b9cb4db9de2ea43babc1cc748ed09373600b295d`), bundletool-validated, the
+      one native library is 16 KB aligned, and the minified build cold-starts
+      on the API 36 emulator after a Room keep rule for WorkManager.
