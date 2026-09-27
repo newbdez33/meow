@@ -48,10 +48,10 @@ android {
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             signingConfig = signingConfigs.getByName("release")
-            // Real values arrive in Task 14 (Play licensing key) and Task 15 (AdMob ids).
+            // The AdMob ids arrive in Task 15. The Play licensing key is public (Play Console > Monetization setup).
             manifestPlaceholders["admobAppId"] = "ADMOB_APP_ID_PENDING"
             buildConfigField("String", "BANNER_AD_UNIT_ID", "\"ADMOB_BANNER_UNIT_PENDING\"")
-            buildConfigField("String", "PLAY_LICENSE_KEY", "\"\"")
+            buildConfigField("String", "PLAY_LICENSE_KEY", "\"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2xobxWn5frR866t52gilSN1QK3qTlCrN7TiT0WGNKaCrv7B2bTsyY42xkC7BGGygqKSfBuZm68aqzS+f/PsBFWnm6wH9MLvHVDW/grg7SKUAF7y02Gc6SCrAcPZPU8c/+RmDL0IyeMhWfOr1w+0r0QZ2AKsheiHxctfaMgDClnO0cJUooEXozvPnnhJNDx2CbXzhslfTVqJLLK6421f1T77hRjJXy88hldo7HdjoKOmaKn7nnJl+JmGEaGL9llXhaC5oENZ4Az044R7dm1HwCzGaIUTl7zDRqG69rNhyUOEahNpdl0b6kYfLHUW31Iu1vdLEnyEXpyTfTzdwGiKqKQIDAQAB\"")
             buildConfigField("boolean", "CONSENT_DEBUG_EEA", "false")
         }
     }
