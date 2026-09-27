@@ -1,0 +1,29 @@
+{
+  "en": {
+    "appName": "Meow",
+    "appleLocale": "en-US",
+    "shots": [
+      ["27 cats, 27 moods", "Tap one and it meows back.", "1-grid"],
+      ["Tease the cat, amuse the kid", "Snoring, hissing, a hungry kitten, a lion.", "2-selected"],
+      ["Free, with one small ad", "A can for the cat removes it for good.", "3-remove-ads"]
+    ]
+  },
+  "zh-Hans": {
+    "appName": "猫叫模拟器",
+    "appleLocale": "zh-Hans",
+    "shots": [
+      ["27 只猫，27 种心情", "点一下，它就喵给你听。", "1-grid"],
+      ["逗猫，逗娃", "打呼噜、发怒、撒娇、狮子远亲……", "2-selected"],
+      ["免费，只有一条小广告", "给猫买个罐罐，广告永久消失。", "3-remove-ads"]
+    ]
+  },
+  "ja": {
+    "appName": "ニャー",
+    "appleLocale": "ja",
+    "shots": [
+      ["27匹の猫、27通りの気分", "タップすると、にゃあと鳴き返します。", "1-grid"],
+      ["猫をからかう、子どもをあやす", "いびき、怒り声、甘え声、ライオン。", "2-selected"],
+      ["無料、小さな広告がひとつ", "猫に缶詰をおごると、広告は永久に消えます。", "3-remove-ads"]
+    ]
+  }
+}

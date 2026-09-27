@@ -192,6 +192,15 @@ TestFlight build and said it is fine.
       13" 2064x2752, three per language (grid, a selected cat, the remove-ads
       sheet); the 2020 screenshots were deleted. Build 5 uploaded and put in the
       Internal TestFlight group with notes.
+- [x] 2026-09-27: store screenshots composed the menkyo way and approved by
+      the owner: `tool/render_store_screenshots.swift` + `design/store-copy.json`
+      put each capture in a rounded frame under the app name, a title and a
+      caption on blush / butter / coral backgrounds (system rounded, 圆体-简,
+      Hiragino Maru Gothic). Regenerate with
+      `swift tool/render_store_screenshots.swift design/store-copy.json <captures> <out>`
+      after re-running `StoreScreenshotTests`; the composed PNGs replaced the
+      raw captures on version 2.1 (three per language for iPhone 6.9" and
+      iPad 13").
 - [ ] Owner tries 2.1 (5) in TestFlight. On the owner's OK: attach build 5 to
       version 2.1, create a review submission with the version and both
       purchases (Add for Review on each purchase page), submit.
