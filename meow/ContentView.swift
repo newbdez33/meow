@@ -10,7 +10,9 @@ import AVFoundation
 
 struct ContentView: View {
     @EnvironmentObject private var ads: AdsController
+    @EnvironmentObject private var store: Store
     @State private var showingSheet = false
+    @State private var showingTip = false
     @State private var selectedIndex = -1
     var body: some View {
         NavigationView {
@@ -26,6 +28,20 @@ struct ContentView: View {
                 .navigationTitle(Text("title"))
                 .navigationBarItems(trailing:
                     HStack {
+                        if !store.isAdFree {
+                            Button(action: {
+                                showingTip = true
+                            }, label: {
+                                Image("navCup")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 26)
+                            })
+                            .accessibilityLabel(Text("tip_button"))
+                            .sheet(isPresented: $showingTip) {
+                                TipSheet()
+                            }
+                        }
                         if ads.isPrivacyOptionsRequired {
                             Button(action: {
                                 guard let viewController = UIApplication.shared.keyRootViewController else { return }
@@ -35,9 +51,16 @@ struct ContentView: View {
                             })
                             .accessibilityLabel(Text("privacy_options"))
                         }
-                        Button("🐱") {
+                        Button(action: {
                             self.showingSheet = true
-                        }.sheet(isPresented: $showingSheet, onDismiss: {
+                        }, label: {
+                            Image("navCat")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 26)
+                        })
+                        .accessibilityLabel(Text("share_button"))
+                        .sheet(isPresented: $showingSheet, onDismiss: {
                             print("Dismiss")
                         }, content: {
                             AppActivityView(activityItems: [
@@ -64,7 +87,8 @@ struct ContentView: View {
             }
         }
         .task {
-            guard let viewController = UIApplication.shared.keyRootViewController else { return }
+            await store.load()
+            guard !store.isAdFree, let viewController = UIApplication.shared.keyRootViewController else { return }
             await ads.start(from: viewController)
         }
     }
@@ -74,6 +98,7 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
             .environmentObject(AdsController())
+            .environmentObject(Store())
             .preferredColorScheme(.dark)
             .previewDevice("iPhone 11")
 

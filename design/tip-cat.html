@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tip sheet artwork reference</title>
+<style>
+  body { margin: 0; padding: 24px; font-family: -apple-system, system-ui, sans-serif; }
+  p { color: #6e6e73; font-size: 14px; max-width: 64ch; }
+  .row { display: flex; align-items: flex-end; gap: 28px; flex-wrap: wrap; margin-bottom: 32px; }
+  .hero { position: relative; display: flex; align-items: flex-end; height: 100px; }
+  .hero img { position: relative; display: block; }
+  .hero .shadow { position: absolute; left: 50%; bottom: 0; width: 150px; height: 9px; margin-left: -75px; border-radius: 50%; background: rgba(0,0,0,.12); }
+  .hero .mug { width: 60px; height: 60px; margin-bottom: 3px; z-index: 1; }
+  .hero .cat { width: 68px; height: 68px; margin: 0 -4px 11px; }
+  .hero .can { width: 54px; height: 54px; margin-bottom: 3px; z-index: 1; }
+  .icons img { width: 60px; height: 60px; display: block; }
+</style>
+</head>
+<body>
+<p>Reference for the tip sheet artwork. The app composes the hero at runtime from <code>tipMug</code>, one of five cats from the app (c02 black, c01 gray, c04 orange, c19 tabby, c21 orange with a bowl) and <code>tipCan</code>. The mug and the can, and the navigation bar icons <code>navCup</code> and <code>navCat</code>, were generated with the Codex CLI image generation tool; the untouched originals and prompts live in <code>design/imagegen/</code>.</p>
+<div class="row">
+  <div class="hero"><div class="shadow"></div><img class="mug" src="../meow/Assets.xcassets/tipMug.imageset/tipMug@2x.png" alt=""><img class="cat" src="../hosting/public/assets/cats/c02.png" alt=""><img class="can" src="../meow/Assets.xcassets/tipCan.imageset/tipCan@2x.png" alt=""></div>
+  <div class="hero"><div class="shadow"></div><img class="mug" src="../meow/Assets.xcassets/tipMug.imageset/tipMug@2x.png" alt=""><img class="cat" src="../hosting/public/assets/cats/c01.png" alt=""><img class="can" src="../meow/Assets.xcassets/tipCan.imageset/tipCan@2x.png" alt=""></div>
+  <div class="hero"><div class="shadow"></div><img class="mug" src="../meow/Assets.xcassets/tipMug.imageset/tipMug@2x.png" alt=""><img class="cat" src="../hosting/public/assets/cats/c04.png" alt=""><img class="can" src="../meow/Assets.xcassets/tipCan.imageset/tipCan@2x.png" alt=""></div>
+  <div class="hero"><div class="shadow"></div><img class="mug" src="../meow/Assets.xcassets/tipMug.imageset/tipMug@2x.png" alt=""><img class="cat" src="../hosting/public/assets/cats/c19.png" alt=""><img class="can" src="../meow/Assets.xcassets/tipCan.imageset/tipCan@2x.png" alt=""></div>
+  <div class="hero"><div class="shadow"></div><img class="mug" src="../meow/Assets.xcassets/tipMug.imageset/tipMug@2x.png" alt=""><img class="cat" src="../hosting/public/assets/cats/c21.png" alt=""><img class="can" src="../meow/Assets.xcassets/tipCan.imageset/tipCan@2x.png" alt=""></div>
+</div>
+<div class="row icons">
+  <img src="../meow/Assets.xcassets/navCup.imageset/navCup@3x.png" alt="navCup">
+  <img src="../meow/Assets.xcassets/navCat.imageset/navCat@3x.png" alt="navCat">
+  <img src="../meow/Assets.xcassets/tipMug.imageset/tipMug@2x.png" alt="tipMug">
+  <img src="../meow/Assets.xcassets/tipCan.imageset/tipCan@2x.png" alt="tipCan">
+</div>
+</body>
+</html>

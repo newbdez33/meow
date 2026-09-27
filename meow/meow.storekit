@@ -1,0 +1,72 @@
+{
+  "identifier" : "3E1C4B7A-6D2F-4A9B-8C5E-1F2A3B4C5D6E",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "2.99",
+      "familyShareable" : false,
+      "internalID" : "7A2B3C4D-5E6F-4071-8293-A4B5C6D7E8F9",
+      "localizations" : [
+        {
+          "description" : "Removes the ads for good.",
+          "displayName" : "A coffee for the author",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "永久去掉广告。",
+          "displayName" : "请作者喝杯咖啡",
+          "locale" : "zh_CN"
+        },
+        {
+          "description" : "広告が永久に消えます。",
+          "displayName" : "作者にコーヒー",
+          "locale" : "ja_JP"
+        }
+      ],
+      "productID" : "com.salmonapps.Meow.coffee",
+      "referenceName" : "Coffee",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "5.99",
+      "familyShareable" : false,
+      "internalID" : "9C4D5E6F-7A8B-4C0D-9E1F-2A3B4C5D6E70",
+      "localizations" : [
+        {
+          "description" : "Removes the ads for good. The cat says thanks.",
+          "displayName" : "A can for the author's cat",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "永久去掉广告，猫也谢谢你。",
+          "displayName" : "给作者家的猫买个罐罐",
+          "locale" : "zh_CN"
+        },
+        {
+          "description" : "広告が永久に消えます。猫もお礼を言っています。",
+          "displayName" : "作者の猫に缶詰",
+          "locale" : "ja_JP"
+        }
+      ],
+      "productID" : "com.salmonapps.Meow.can",
+      "referenceName" : "Can",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "826362662",
+    "_developerTeamID" : "72T2SXUWHC",
+    "_failTransactionsEnabled" : false,
+    "_locale" : "en_US",
+    "_storefront" : "USA"
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}
