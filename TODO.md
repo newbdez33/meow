@@ -134,6 +134,10 @@ sheet), then attach both to the 2.1 version submission.
 
 ## 4. Release
 
+Rule from the owner (2026-09-27): every build goes to TestFlight first; the
+App Store review submission is created only after the owner has tried the
+TestFlight build and said it is fine.
+
 - [x] README points to this file (done with item 1).
 - [x] 2026-09-27: `ITSAppUsesNonExemptEncryption = NO` in Info.plist; the
       remove-ads sheet is now presented from the content view rather than the
