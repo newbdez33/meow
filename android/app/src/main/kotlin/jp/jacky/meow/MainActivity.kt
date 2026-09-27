@@ -13,15 +13,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         sounds = MediaPlayerSoundPlayer(this)
+        val app = application as MeowApplication
         setContent {
             MeowTheme {
-                MeowScreen(
-                    state = MeowUiState(),
-                    onPlay = sounds::play,
-                    onShare = { shareApp(this) },
-                    onTip = {},
-                    onPrivacyOptions = {},
-                )
+                MeowApp(store = app.store, sounds = sounds, activity = this)
             }
         }
     }
