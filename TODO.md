@@ -45,10 +45,16 @@ Goal: ads fill again on a current SDK, with the consent flow Google requires.
       EEA/UK users get none until the message exists. The message needs the
       privacy policy URL from item 2, so this waits for item 2.
 
-## 2. App website at `https://meow.jacky.jp/` (design, awaiting approval)
+## 2. App website at `https://meow.jacky.jp/` (approved and deployed 2026-09-27)
 
 Goal: a developer website AdMob and the App Store can point to, serving
 `app-ads.txt` and a privacy policy.
+
+Done 2026-09-27: `hosting/` holds the site (English at `/`, `/zh.html`,
+`/ja.html`, privacy policy under `/privacy/`, `/app-ads.txt`, a playable
+nine-cat demo). Deployed as Worker `meow-site` with the custom domain
+attached through the Workers Domains API; see `hosting/README.md`. Live
+checks: `/`, `/privacy/`, `/app-ads.txt` return 200 with the publisher line.
 
 Facts that shape the design:
 

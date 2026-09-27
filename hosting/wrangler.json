@@ -1,0 +1,14 @@
+{
+  "name": "meow-site",
+  "account_id": "69b20790d259a1817f268a2c782ec7d1",
+  "compatibility_date": "2026-09-27",
+  "workers_dev": false,
+  "preview_urls": false,
+  "send_metrics": false,
+  "observability": {"enabled": false},
+  "assets": {
+    "directory": "./public",
+    "html_handling": "none",
+    "not_found_handling": "none"
+  }
+}
