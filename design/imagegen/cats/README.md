@@ -9,5 +9,6 @@ came back with a white smear (c06, c08) or a tiny off-centre bat (c24), and four
 (the arched Halloween cat) all changed its pose or body shape, so those four stay on the iOS
 drawing. After the owner's review, c23 (the ghost had lost its black tail) was generated a third
 time with one sentence appended to the prompt describing the tail, and c16 (the cat in the pumpkin
-had come back with a different face) was generated again with ../cats-exact-prompt.txt, the
-stricter 1:1 wording, plus one sentence describing the reference.
+had come back with a different face) and c10 (the cat in the litter tray had come back small) were
+generated again with ../cats-exact-prompt.txt, the stricter 1:1 wording, plus one sentence
+describing the reference.
