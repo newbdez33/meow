@@ -38,12 +38,11 @@ Goal: ads fill again on a current SDK, with the consent flow Google requires.
       with a single request ("Banner loaded"). The banner requests its ad in
       `didMoveToWindow`, because SwiftUI's first transient instance produced
       an "Invalid ad width or height" request when loading in `makeUIView`.
-- [ ] Owner, AdMob console: publish a GDPR (EEA/UK) privacy message for the
-      Meow app under Privacy & messaging. The simulator run logged
-      "no form(s) configured for the input app ID
-      ca-app-pub-1295607594822275~6286907117"; non-EEA users still get ads,
-      EEA/UK users get none until the message exists. The message needs the
-      privacy policy URL from item 2, so this waits for item 2.
+- [x] AdMob console, 2026-09-27: "Meow - European regulations" published
+      under Privacy & messaging for app ~6286907117 with privacy policy URL
+      https://meow.jacky.jp/privacy/, English plus Chinese (zh-CN) and
+      Japanese, Consent / Manage options / Do not consent all on. AdMob says
+      the message can take up to an hour to reach the app.
 
 ## 2. App website at `https://meow.jacky.jp/` (approved and deployed 2026-09-27)
 
@@ -125,15 +124,93 @@ Done 2026-09-27:
 - Until the products exist in App Store Connect the sheet shows "Can't reach
   the App Store".
 
-Owner, App Store Connect: create both non-consumable products (names, price
-tiers, review screenshot, localizations) and attach them to the 2.1 version.
-This can be done through the App Store Connect API with the existing team
-key if preferred.
+App Store Connect, 2026-09-27: both non-consumable products exist in
+"Prepare for Submission": `com.salmonapps.Meow.can` (Apple ID 6816646536,
+$5.99 base, all 175 countries) and `com.salmonapps.Meow.coffee` (Apple ID
+6816647301, $2.99 base, all countries), each with English (U.S.), Chinese
+(Simplified) and Japanese display names. Still needed before "Add for
+Review": a review screenshot per product (take it from the 2.1 build's tip
+sheet), then attach both to the 2.1 version submission.
 
 ## 4. Release
 
-- [ ] README: replace "Fix Admob" with a pointer to this file.
-- [ ] Archive, upload 2.1 (4), fill App Store Connect (URLs above, IAP,
-      what's new), submit.
-- [ ] After approval: AdMob app-ads.txt status verified, ads filling on a
-      real device, EEA message live.
+Rule from the owner (2026-09-27): every build goes to TestFlight first; the
+App Store review submission is created only after the owner has tried the
+TestFlight build and said it is fine.
+
+- [x] README points to this file (done with item 1).
+- [x] 2026-09-27: `ITSAppUsesNonExemptEncryption = NO` in Info.plist; the
+      remove-ads sheet is now presented from the content view rather than the
+      toolbar button (more reliable); `meowUITests/TipSheetScreenshotTests`
+      opens the sheet against `meow.storekit` and, with
+      `TEST_RUNNER_MEOW_SCREENSHOT_DIR` set, writes the review screenshot.
+- [x] 2026-09-27: Release archive signed through the team API key
+      (`xcodebuild archive -allowProvisioningUpdates` with
+      `AuthKey_9LULAK77BN`), exported with `destination: upload` and uploaded
+      as 2.1 (4). The symbol upload warns about missing dSYMs for Google's
+      binary frameworks; that is expected and harmless.
+- [x] 2026-09-27, App Store Connect through the API: version 2.1 created
+      (`e5573e0d-7dec-4b20-8a7f-b85ebadb556f`, release after approval);
+      en-US and zh-Hans marketing/support URLs point at meow.jacky.jp, What's
+      New written in both; privacy policy URLs on the 2.1 app info point at
+      `/privacy/` and `/privacy/zh.html`; both purchases have the tip-sheet
+      review screenshot and are READY_TO_SUBMIT (the coffee's availability had
+      to be set again through the API, the web form had not saved it).
+- [x] 2026-09-27: App Privacy labels published (through the web form):
+      Coarse Location (third-party advertising, not linked, no tracking);
+      Device ID (third-party advertising + analytics, linked, tracking);
+      Product Interaction (third-party advertising + analytics, not linked, no
+      tracking); Advertising Data (third-party advertising, linked, tracking);
+      Crash / Performance / Other Diagnostic Data (app functionality, not
+      linked, no tracking). Age rating on the 2.1 app info gained the eight
+      2025 answers through the API (`advertising: true`, everything else
+      none/false).
+- [x] 2026-09-27 20:05 JST: build 4 attached to 2.1 through the API; review
+      submission `e2e10b1e-601b-4177-bc0d-916fe1742856` holds the version
+      (added through the API) and both purchases (added with "Add for
+      Review" on each purchase page, since `reviewSubmissionItems` has no
+      purchase relationship); submitted through the API. Version and both
+      purchases are WAITING_FOR_REVIEW, release type after approval.
+- [x] 2026-09-27 20:15 JST, TestFlight: build 4 is in the new internal group
+      "Internal" (`4ae4991f-19dc-4f75-b695-c9d0390eba4b`) with the owner's
+      testers newbdez33jp@gmail.com and newbdez33@gmail.com (created with
+      `POST /v1/betaTesters` inside the group; the existing tester records
+      from other apps cannot be reused, and the legacy "App Store Connect
+      Users" group rejects tester assignment). "What to Test" notes in en-US
+      and zh-Hans (`betaBuildLocalizations.whatsNew`). No beta review needed
+      for internal testing.
+- [x] 2026-09-27 evening, after the owner tried build 4: the review
+      submission was cancelled (build 4 had the toolbar the owner rejected;
+      the version is back in an editable state). Toolbar buttons are separate
+      glass circles on iOS 26 (`ToolbarSpacer`) and the remove-ads button is
+      the can (`navCan`; `navCup` removed). What's New no longer mentions the
+      ads library or the consent screen; descriptions rewritten in en-US and
+      zh-Hans; a Japanese store listing added (name 「ニャー：猫の鳴き声」,
+      subtitle, description, keywords, What's New, URLs to `/ja.html` and
+      `/privacy/ja.html`). New screenshots from `meowUITests/StoreScreenshotTests`
+      (launch argument `-MeowNoAds`, DEBUG only): iPhone 6.9" 1320x2868 and iPad
+      13" 2064x2752, three per language (grid, a selected cat, the remove-ads
+      sheet); the 2020 screenshots were deleted. Build 5 uploaded and put in the
+      Internal TestFlight group with notes.
+- [x] 2026-09-27: store screenshots composed the menkyo way and approved by
+      the owner: `tool/render_store_screenshots.swift` + `design/store-copy.json`
+      put each capture in a rounded frame under the app name, a title and a
+      caption on blush / butter / coral backgrounds (system rounded, 圆体-简,
+      Hiragino Maru Gothic). Regenerate with
+      `swift tool/render_store_screenshots.swift design/store-copy.json <captures> <out>`
+      after re-running `StoreScreenshotTests`; the composed PNGs replaced the
+      raw captures on version 2.1 (three per language for iPhone 6.9" and
+      iPad 13").
+- [x] 2026-09-27 20:49 JST: the owner OK'd 2.1 (5) in TestFlight. Build 5
+      attached to 2.1; review submission `642a51bc-e85a-4cd9-85fb-0f1148a04360`
+      holds the version and both purchases and is WAITING_FOR_REVIEW. On the
+      owner's request the purchases also got their 1024x1024 images
+      (`design/iap-icons/`, the generated can and mug on the blush
+      background, uploaded through `inAppPurchaseImages`); that needed the
+      first submission of the evening cancelled and redone, because images
+      cannot be added while a purchase is pending review.
+- [ ] After approval: AdMob app-ads.txt "Check for updates" (the marketing
+      URL only reaches the store with 2.1), ads filling on a real device, the
+      EEA message showing in the EU, both purchases visible in the sheet.
+- [ ] Optional: lower the AdMob payout threshold from $1,500 so the
+      $1,463.81 balance pays out.

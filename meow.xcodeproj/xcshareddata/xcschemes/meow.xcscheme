@@ -38,6 +38,16 @@
                ReferencedContainer = "container:meow.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "85C0000125136FB10031DB2E"
+               BuildableName = "meowUITests.xctest"
+               BlueprintName = "meowUITests"
+               ReferencedContainer = "container:meow.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
