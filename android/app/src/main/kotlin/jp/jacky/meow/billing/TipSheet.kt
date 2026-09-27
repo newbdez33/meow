@@ -210,7 +210,8 @@ fun TipSheet(store: Store, activity: Activity, onDismiss: () -> Unit) {
         }
     }
 
-    ModalBottomSheet(onDismissRequest = onDismiss, sheetState = rememberModalBottomSheetState()) {
+    // Fully expanded from the start, so both treats and the restore button are visible without scrolling.
+    ModalBottomSheet(onDismissRequest = onDismiss, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)) {
         TipSheetContent(
             state = TipUiState(
                 isAdFree = isAdFree,
