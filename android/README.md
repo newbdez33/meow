@@ -60,4 +60,4 @@ keeps that constructor).
 
 | Build | Track | State |
 | --- | --- | --- |
-| 1.0 (1), AAB SHA-256 `f5cee09beb7cb1e190d59338b9cb4db9de2ea43babc1cc748ed09373600b295d` | not uploaded yet | built 2026-09-27, bundletool-validated, cold start ok on the API 36 emulator |
+| 1.0 (1), AAB SHA-256 `f5cee09beb7cb1e190d59338b9cb4db9de2ea43babc1cc748ed09373600b295d` | Internal testing | built 2026-09-27, bundletool-validated, cold start ok on the API 36 emulator; published to internal testers 2026-09-28 00:08 (tester list "Menkyo internal testers" = newbdez33@gmail.com), join link https://play.google.com/apps/internaltest/4701236019639669858 |

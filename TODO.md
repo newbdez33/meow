@@ -231,3 +231,13 @@ Goal: the same app on Google Play as `jp.jacky.meow`. Design in
       `f5cee09beb7cb1e190d59338b9cb4db9de2ea43babc1cc748ed09373600b295d`), bundletool-validated, the
       one native library is 16 KB aligned, and the minified build cold-starts
       on the API 36 emulator after a Room keep rule for WorkManager.
+- [x] 2026-09-28: privacy pages redeployed with the Android paragraphs
+      (Worker version 74e08903); 1.0 (1) published to the Internal testing
+      track at 00:08 (tester list "Menkyo internal testers" =
+      newbdez33@gmail.com, join link
+      https://play.google.com/apps/internaltest/4701236019639669858); one-time
+      products `jp.jacky.meow.can` (USD 5.99) and `jp.jacky.meow.coffee`
+      (USD 2.99) active in all 173 countries with zh/en/ja names; the owner's
+      account was already a license tester (RESPOND_NORMALLY).
+- [ ] Device acceptance of build 1 on the owner's Galaxy S22 Ultra (the ten
+      checks in Task 18 of the plan), then the owner's go for production.
