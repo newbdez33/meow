@@ -14,6 +14,7 @@ HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parent
 PUBLIC = HERE / "public"
 APP_STORE = "https://apps.apple.com/app/id826362662"
+GOOGLE_PLAY = "https://play.google.com/store/apps/details?id=jp.jacky.meow"
 SITE = "https://meow.jacky.jp/"
 MAIL = "newbdez33@gmail.com"
 DEMO_CATS = 9
@@ -26,13 +27,14 @@ PAGES = {
         "badge": "zh",
         "privacy": "privacy/zh.html",
         "title": "猫叫模拟器 · 27 种猫叫，点一下就喵",
-        "description": "猫叫模拟器是 iPhone 和 iPad 上的猫叫音效应用：27 只猫，27 种心情，点一下就喵给你听。逗猫、逗娃，免费下载。",
+        "description": "猫叫模拟器是 iPhone、iPad 和 Android 上的猫叫音效应用：27 只猫，27 种心情，点一下就喵给你听。逗猫、逗娃，免费下载。",
         "nav_label": "语言",
         "h1": "猫叫模拟器",
         "tagline": "逗猫逗娃的神器",
         "lede": "27 只猫，27 种心情。点一下，它就喵给你听。逗家里的猫，哄怀里的娃，或者就是自己乐一乐。",
         "badge_alt": "在 App Store 下载",
-        "note": "免费下载，iPhone 和 iPad 都能用。",
+        "play_alt": "在 Google Play 下载",
+        "note": "免费下载，iPhone、iPad 和 Android 都能用。",
         "hint": "先在这里试试：点一只猫。",
         "demo_note": "这里有 9 只，App 里有全部 27 只。",
         "demo_label": "试玩",
@@ -45,7 +47,7 @@ PAGES = {
         "closing": "现在就去逗猫吧。",
         "privacy_label": "隐私政策",
         "contact_label": "联系作者",
-        "legal": "Apple 和 Apple 标志是 Apple Inc. 在美国及其他国家和地区注册的商标。App Store 是 Apple Inc. 的服务标志。",
+        "legal": "Apple 和 Apple 标志是 Apple Inc. 在美国及其他国家和地区注册的商标。App Store 是 Apple Inc. 的服务标志。Google Play 和 Google Play 徽标是 Google LLC 的商标。",
     },
     "en": {
         "file": "index.html",
@@ -54,13 +56,14 @@ PAGES = {
         "badge": "en",
         "privacy": "privacy/",
         "title": "Meow · 27 cat sounds, one tap away",
-        "description": "Meow is a cat-sound app for iPhone and iPad: 27 cats, 27 moods, each one meows when you tap it. Tease your cat or amuse the kids. Free download.",
+        "description": "Meow is a cat-sound app for iPhone, iPad and Android: 27 cats, 27 moods, each one meows when you tap it. Tease your cat or amuse the kids. Free download.",
         "nav_label": "Language",
         "h1": "Meow",
         "tagline": "Your kitty kit",
         "lede": "27 cats, 27 moods. Tap one and it meows back. Tease the cat, amuse the kid, or just make yourself laugh.",
         "badge_alt": "Download on the App Store",
-        "note": "Free on iPhone and iPad.",
+        "play_alt": "Get it on Google Play",
+        "note": "Free on iPhone, iPad and Android.",
         "hint": "Try it here: tap a cat.",
         "demo_note": "Nine cats here, all 27 in the app.",
         "demo_label": "Try it",
@@ -73,7 +76,7 @@ PAGES = {
         "closing": "Go tease a cat.",
         "privacy_label": "Privacy policy",
         "contact_label": "Contact",
-        "legal": "Apple and the Apple logo are trademarks of Apple Inc., registered in the U.S. and other countries. App Store is a service mark of Apple Inc.",
+        "legal": "Apple and the Apple logo are trademarks of Apple Inc., registered in the U.S. and other countries. App Store is a service mark of Apple Inc. Google Play and the Google Play logo are trademarks of Google LLC.",
     },
     "ja": {
         "file": "ja.html",
@@ -82,13 +85,14 @@ PAGES = {
         "badge": "ja",
         "privacy": "privacy/ja.html",
         "title": "ニャー · 27種類の猫の鳴き声、タップひとつで",
-        "description": "ニャーは iPhone と iPad の猫の鳴き声アプリ。27匹の猫、27通りの気分、タップすると鳴き返します。猫をからかったり、子どもをあやしたり。無料。",
+        "description": "ニャーは iPhone、iPad、Android の猫の鳴き声アプリ。27匹の猫、27通りの気分、タップすると鳴き返します。猫をからかったり、子どもをあやしたり。無料。",
         "nav_label": "言語",
         "h1": "ニャー",
         "tagline": "猫と遊ぶ",
         "lede": "27匹の猫、27通りの気分。タップすると、にゃあと鳴き返します。うちの猫をからかったり、子どもをあやしたり、ひとりで笑ったり。",
         "badge_alt": "App Store からダウンロード",
-        "note": "iPhone と iPad で無料。",
+        "play_alt": "Google Play で手に入れよう",
+        "note": "iPhone、iPad、Android で無料。",
         "hint": "ここで試せます。猫をタップ。",
         "demo_note": "ここには9匹、アプリには27匹すべて。",
         "demo_label": "おためし",
@@ -101,7 +105,7 @@ PAGES = {
         "closing": "さあ、猫と遊ぼう。",
         "privacy_label": "プライバシーポリシー",
         "contact_label": "お問い合わせ",
-        "legal": "Apple、Appleのロゴは、米国およびその他の国で登録されたApple Inc.の商標です。App StoreはApple Inc.のサービスマークです。",
+        "legal": "Apple、Appleのロゴは、米国およびその他の国で登録されたApple Inc.の商標です。App StoreはApple Inc.のサービスマークです。Google Play および Google Play ロゴは Google LLC の商標です。",
     },
 }
 
@@ -159,7 +163,9 @@ def lang_nav(lang, page):
 
 def badge(page):
     return (f'<a class="badge" href="{APP_STORE}">'
-            f'<img src="assets/badges/app-store-{page["badge"]}.svg" alt="{e(page["badge_alt"])}" width="120" height="40"></a>')
+            f'<img src="assets/badges/app-store-{page["badge"]}.svg" alt="{e(page["badge_alt"])}" width="120" height="40"></a>'
+            f'<a class="badge" href="{GOOGLE_PLAY}">'
+            f'<img src="assets/badges/google-play-{page["badge"]}.png" alt="{e(page["play_alt"])}" width="135" height="40"></a>')
 
 
 def render(lang, page):
