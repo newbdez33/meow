@@ -67,20 +67,24 @@ class Store(
         val pending = CompletableDeferred<Outcome>()
         inFlight = pending
         try {
-            if (!billing.launchPurchase(activity, treat.productId)) return PurchaseResult.Failed
+            // A sheet that does not open (ITEM_ALREADY_OWNED comes back from launchBillingFlow itself, before any
+            // listener call) and an error update both mean: ask Play what the account really owns.
+            if (!billing.launchPurchase(activity, treat.productId)) return afterRecheck()
             val outcome = pending.await()
             return when (outcome.result) {
                 UpdateResult.OK -> if (outcome.counted) PurchaseResult.Success else PurchaseResult.Pending
                 UpdateResult.CANCELLED -> PurchaseResult.Cancelled
-                UpdateResult.ERROR -> {
-                    // ITEM_ALREADY_OWNED and friends: ask Play what the account really owns.
-                    refresh()
-                    if (_isAdFree.value) PurchaseResult.Success else PurchaseResult.Failed
-                }
+                UpdateResult.ERROR -> afterRecheck()
             }
         } finally {
             inFlight = null
         }
+    }
+
+    /** Re-reads the entitlement; a purchase that already exists makes the tap a success. */
+    private suspend fun afterRecheck(): PurchaseResult {
+        refresh()
+        return if (_isAdFree.value) PurchaseResult.Success else PurchaseResult.Failed
     }
 
     private suspend fun countsAsAdFree(purchases: List<PurchaseInfo>): Boolean {

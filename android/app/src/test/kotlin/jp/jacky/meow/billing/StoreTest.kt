@@ -146,6 +146,18 @@ class StoreTest {
     }
 
     @Test
+    fun aSheetThatFailsToOpenForAnOwnedTreatSucceeds() = runTest {
+        // launchBillingFlow itself answers ITEM_ALREADY_OWNED (a purchase made on another device, cache lagging):
+        // the sheet never opens, but the account owns the can, so the tap must end ad-free, not "didn't go through".
+        val billing = FakeBillingGateway(backgroundScope).apply { nextLaunch = null }
+        val store = store(billing)
+        store.load()
+        billing.owned!!.add(purchase(Store.CAN_PRODUCT_ID, acknowledged = true))
+        assertEquals(PurchaseResult.Success, store.purchase(store.can.value!!, activity))
+        assertTrue(store.isAdFree.value)
+    }
+
+    @Test
     fun anErrorUpdateRechecksTheEntitlement() = runTest {
         // ITEM_ALREADY_OWNED after a refund lag: Play says error, but the account does own the can.
         val billing = FakeBillingGateway(backgroundScope).apply {
