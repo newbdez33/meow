@@ -209,6 +209,25 @@ TestFlight build and said it is fine.
       background, uploaded through `inAppPurchaseImages`); that needed the
       first submission of the evening cancelled and redone, because images
       cannot be added while a purchase is pending review.
+- [x] 2026-09-28: addressed review guideline 2.3.7 by removing the third
+      screenshot, which contained "Free" and purchase prices, from all six
+      language/device sets in App Store Connect. Each set now has the grid
+      and selected-cat images. Updated the capture test and copy manifest
+      so regeneration keeps the same two images.
+- [x] 2026-09-28: verified ATT after resetting tracking authorization on
+      orange-j (iPhone 17 Pro, iOS 27) with a development-signed Release build
+      of 2.1 (5), using the submitted app source without app-code changes.
+      The owner tapped the icon; ATT appeared over Meow, and the app remained
+      usable after declining tracking. The opt-in `TrackingReviewTests`
+      passed on the physical device and an iPad Air M3 simulator (iPadOS 27).
+      A continuous 29-second recording is saved in
+      `~/Downloads/Meow-App-Review-2026-09-28/ATT-orange-j.mp4`.
+- [x] 2026-09-28 19:33 JST, on the owner's request: sent the App Review
+      reply covering ATT and screenshot pricing, with `ATT-orange-j.mp4`.
+      Added the same recording to App Review Information and saved the
+      reproduction steps in Notes. Resubmitted the existing 2.1 (5) and both
+      purchases under `642a51bc-e85a-4cd9-85fb-0f1148a04360`; App Store Connect
+      confirms all three items are WAITING_FOR_REVIEW.
 - [ ] After approval: AdMob app-ads.txt "Check for updates" (the marketing
       URL only reaches the store with 2.1), ads filling on a real device, the
       EEA message showing in the EU, both purchases visible in the sheet.
