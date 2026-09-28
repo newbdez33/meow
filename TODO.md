@@ -239,5 +239,21 @@ Goal: the same app on Google Play as `jp.jacky.meow`. Design in
       products `jp.jacky.meow.can` (USD 5.99) and `jp.jacky.meow.coffee`
       (USD 2.99) active in all 173 countries with zh/en/ja names; the owner's
       account was already a license tester (RESPOND_NORMALLY).
-- [ ] Device acceptance of build 1 on the owner's Galaxy S22 Ultra (the ten
-      checks in Task 18 of the plan), then the owner's go for production.
+- [x] 2026-09-28: device acceptance on the owner's Galaxy S22 Ultra (Android
+      16, driven over adb through the Windows box `jx`), evidence in
+      `android/build/acceptance-1/` (ignored). Build 1: cold start, banner
+      ("Test Ad" 4 s after launch), three cats play, sheet prices ¥940/¥470,
+      can purchase with the always-approves test card removes the ads and the
+      can, still gone after a force-stop, share sheet with the Play link,
+      ja-JP/zh-CN per-app locales, light theme — all pass. The owner spotted
+      that the banner sat under the grid instead of at its top as on iOS, so
+      build 1.0 (2) moved it (commit 1d46ea9) and went to the internal track
+      at 16:14. Build 2: after refunding the can order (entitlement removed)
+      the banner is back as the grid's first row and does not reload when
+      scrolled away; the coffee purchase then removes the ads for good and
+      stays in place. Two findings, neither a code fault: the owner's home
+      Wi-Fi DNS blocks Google's consent and ad hosts (the app correctly shows
+      no ads then; the phone used dns.google for the test), and a per-app
+      locale change needs a cold start to show (Settings offers none anyway
+      because the app declares no `localeConfig`).
+- [ ] The owner's go for the production rollout (Task 20).
