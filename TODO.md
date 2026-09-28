@@ -272,5 +272,9 @@ Goal: the same app on Google Play as `jp.jacky.meow`. Design in
 - [ ] Watch the review: Publishing overview → Production "Available on Google
       Play", then https://play.google.com/store/apps/details?id=jp.jacky.meow
       returns 200; a rejection lands in newbdez33@gmail.com and on the Policy
-      status page. Then Task 21: AdMob store link, deploy the Google Play
-      badges already built into `hosting/public/`, final records.
+      status page. Then Task 21: AdMob store link and the final records.
+- [x] 2026-09-28 17:35 JST: the Google Play badges went live on
+      https://meow.jacky.jp/ (en, zh, ja; hero and footer) on the owner's
+      instruction, ahead of the store page; the badge links to
+      https://play.google.com/store/apps/details?id=jp.jacky.meow, which
+      answers 404 until Google publishes the app.
