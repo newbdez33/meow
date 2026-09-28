@@ -165,7 +165,7 @@ def badge(page):
     return (f'<a class="badge" href="{APP_STORE}">'
             f'<img src="assets/badges/app-store-{page["badge"]}.svg" alt="{e(page["badge_alt"])}" width="120" height="40"></a>'
             f'<a class="badge" href="{GOOGLE_PLAY}">'
-            f'<img src="assets/badges/google-play-{page["badge"]}.png" alt="{e(page["play_alt"])}" width="135" height="40"></a>')
+            f'<img src="assets/badges/google-play-{page["badge"]}.png" alt="{e(page["play_alt"])}" width="134" height="40"></a>')
 
 
 def render(lang, page):
