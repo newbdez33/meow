@@ -256,4 +256,13 @@ Goal: the same app on Google Play as `jp.jacky.meow`. Design in
       no ads then; the phone used dns.google for the test), and a per-app
       locale change needs a cold start to show (Settings offers none anyway
       because the app declares no `localeConfig`).
-- [ ] The owner's go for the production rollout (Task 20).
+- [x] 2026-09-28 16:45 JST: after the owner's go, build 1.0 (2) was put on the
+      Production track (all 176 countries / regions plus "rest of world") and
+      the 13 pending changes (release, countries, three store listings, the
+      app-content declarations, the category) were sent for review from the
+      Publishing overview; Google says reviews usually finish within 7 days.
+- [ ] Watch the review: Publishing overview → Production "Available on Google
+      Play", then https://play.google.com/store/apps/details?id=jp.jacky.meow
+      returns 200; a rejection lands in newbdez33@gmail.com and on the Policy
+      status page. Then Task 21: AdMob store link, Google Play badges on the
+      website, final records.

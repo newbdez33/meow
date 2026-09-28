@@ -60,5 +60,5 @@ keeps that constructor).
 
 | Build | Track | State |
 | --- | --- | --- |
-| 1.0 (2), AAB SHA-256 `2e5088cebaa507c5039e553a0f05d34d596f59814bc2a11145b7b51feb740d16` | Internal testing | built 2026-09-28: the banner is the grid's first row as on iOS (build 1 had it under the grid); bundletool-validated, cold start ok on the API 36 emulator; published to internal testers 2026-09-28 16:14 and accepted on the owner's Galaxy S22 Ultra (see `TODO.md` item 5) |
+| 1.0 (2), AAB SHA-256 `2e5088cebaa507c5039e553a0f05d34d596f59814bc2a11145b7b51feb740d16` | Production (in review) | built 2026-09-28: the banner is the grid's first row as on iOS (build 1 had it under the grid); bundletool-validated, cold start ok on the API 36 emulator; published to internal testers 2026-09-28 16:14 and accepted on the owner's Galaxy S22 Ultra (see `TODO.md` item 5); sent for review on the Production track (all countries) 2026-09-28 16:45 JST |
 | 1.0 (1), AAB SHA-256 `f5cee09beb7cb1e190d59338b9cb4db9de2ea43babc1cc748ed09373600b295d` | Internal testing | built 2026-09-27, bundletool-validated, cold start ok on the API 36 emulator; published to internal testers 2026-09-28 00:08 (tester list "Menkyo internal testers" = newbdez33@gmail.com), join link https://play.google.com/apps/internaltest/4701236019639669858 |
