@@ -261,8 +261,16 @@ Goal: the same app on Google Play as `jp.jacky.meow`. Design in
       the 13 pending changes (release, countries, three store listings, the
       app-content declarations, the category) were sent for review from the
       Publishing overview; Google says reviews usually finish within 7 days.
+- [x] 2026-09-28: whole-branch review (fresh reviewer): 0 critical, 2
+      important, 9 minor. Fixed: `Store.purchase` now re-reads the
+      entitlement when the Play sheet does not open (`launchBillingFlow`
+      answers ITEM_ALREADY_OWNED for a purchase made on another device), so
+      the tap ends ad-free instead of "didn't go through" — not in build 2,
+      ships with the next build (bump `versionCode` to 3); and the privacy
+      policy's scope sentence now names Android (deployed). The nine minors
+      are listed in the plan ledger for the owner to pick from.
 - [ ] Watch the review: Publishing overview → Production "Available on Google
       Play", then https://play.google.com/store/apps/details?id=jp.jacky.meow
       returns 200; a rejection lands in newbdez33@gmail.com and on the Policy
-      status page. Then Task 21: AdMob store link, Google Play badges on the
-      website, final records.
+      status page. Then Task 21: AdMob store link, deploy the Google Play
+      badges already built into `hosting/public/`, final records.
