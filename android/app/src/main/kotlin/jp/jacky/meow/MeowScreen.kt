@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material.icons.Icons
@@ -39,7 +40,10 @@ data class MeowUiState(
     val isPrivacyOptionsRequired: Boolean = false,
 )
 
-/** The whole main screen (ContentView.swift): coral top bar, the cat grid, and a slot for the banner below it. */
+/**
+ * The whole main screen (ContentView.swift): coral top bar and the cat grid, whose first row is the
+ * banner slot (GridStack.swift puts Banner() first), so the banner scrolls away with the cats.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MeowScreen(
@@ -97,6 +101,7 @@ fun MeowScreen(
                     .fillMaxWidth()
                     .testTag("grid"),
             ) {
+                item(span = { GridItemSpan(maxLineSpan) }) { banner() }
                 itemsIndexed(Cats.all) { index, cat ->
                     CatCell(
                         cat = cat,
@@ -109,7 +114,6 @@ fun MeowScreen(
                     )
                 }
             }
-            banner()
         }
     }
 }

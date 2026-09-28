@@ -12,6 +12,7 @@ import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import jp.jacky.meow.ads.AdsController
 import jp.jacky.meow.ads.Banner
+import jp.jacky.meow.ads.rememberBannerAdView
 import jp.jacky.meow.billing.Store
 import jp.jacky.meow.billing.TipSheet
 import kotlinx.coroutines.launch
@@ -28,6 +29,7 @@ fun MeowApp(ads: AdsController, store: Store, sounds: SoundPlayer, activity: Act
     val isPrivacyOptionsRequired by ads.isPrivacyOptionsRequired.collectAsStateWithLifecycle()
     var showTip by rememberSaveable { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
+    val bannerAdView = rememberBannerAdView(BuildConfig.BANNER_AD_UNIT_ID, enabled = canRequestAds && !isAdFree)
 
     LaunchedEffect(Unit) {
         store.load()
@@ -44,7 +46,7 @@ fun MeowApp(ads: AdsController, store: Store, sounds: SoundPlayer, activity: Act
         onShare = { shareApp(activity) },
         onTip = { showTip = true },
         onPrivacyOptions = { scope.launch { ads.presentPrivacyOptions(activity) } },
-        banner = { Banner(adUnitId = BuildConfig.BANNER_AD_UNIT_ID, visible = canRequestAds && !isAdFree) },
+        banner = { Banner(bannerAdView) },
     )
     if (showTip) {
         TipSheet(store = store, activity = activity, onDismiss = { showTip = false })

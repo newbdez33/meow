@@ -140,9 +140,11 @@ One activity, one screen, mirroring `ContentView.swift`:
   surface for the light or dark system theme; nothing else changes in dark
   mode.
 - **Layout**: `Scaffold` handles the status and navigation bar insets
-  (edge-to-edge is mandatory at target 35+). Content is a column: the grid
-  takes the remaining height, the banner slot sits below it, above the
-  navigation bar inset.
+  (edge-to-edge is mandatory at target 35+). The grid fills the content
+  area and its first row, spanning every column, is the banner slot, as in
+  `GridStack.swift`, so the banner sits under the top bar and scrolls away
+  with the cats; one `AdView` per screen outlives that row, so scrolling
+  it off and back on does not request another ad.
 - **Share** (`Share.kt`): `ACTION_SEND`, `text/plain`,
   `"<app_name> - <subtitle> https://play.google.com/store/apps/details?id=jp.jacky.meow"`,
   through `Intent.createChooser`.
