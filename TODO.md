@@ -279,9 +279,11 @@ Goal: the same app on Google Play as `jp.jacky.meow`. Design in
       units) that held the store link; its store details were cleared so the
       real app could take the link. `app-ads.txt` on meow.jacky.jp already
       carries the publisher line.
+- [x] 2026-09-29: the empty duplicate AdMob app `~1072875607` is hidden
+      (Apps → App visibility → Hide; "Show" brings it back). The Android
+      "Meow simulator" in AdMob is now only `~8527399220`.
 - [ ] Owner, AdMob: confirm the ad-serving review finished and app-ads.txt
-      shows verified for the Android app after the crawler runs; remove the
-      empty duplicate app `~1072875607` if it bothers you (it serves nothing).
+      shows verified for the Android app after the crawler runs.
 - [ ] Next Android build: bump `versionCode` to 3 (carries the `Store.purchase`
       fix) and consider the review's nine minors:
       1. `MediaPlayerSoundPlayer` exposes no `isPlaying`, so the fast-tap test
