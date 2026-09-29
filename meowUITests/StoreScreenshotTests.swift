@@ -8,7 +8,7 @@
 import StoreKitTest
 import XCTest
 
-/// Takes the App Store screenshots: the grid, the grid with a cat selected, and the remove-ads sheet,
+/// Takes the App Store screenshots: the grid and the grid with a cat selected,
 /// once per store language, without ads or prompts. Run it on the device whose size the store wants:
 ///
 ///     TEST_RUNNER_MEOW_SCREENSHOT_DIR=/path/iphone xcodebuild test -only-testing:meowUITests/StoreScreenshotTests ...
@@ -44,11 +44,6 @@ final class StoreScreenshotTests: XCTestCase {
             sleep(1)
             try save(app, folder, "\(language)-2-selected")
 
-            tipButton.tap()
-            let canButton = app.buttons.matching(NSPredicate(format: "label CONTAINS[c] '5.99'")).firstMatch
-            XCTAssertTrue(canButton.waitForExistence(timeout: 20), "\(language): the treats did not load")
-            sleep(1)
-            try save(app, folder, "\(language)-3-remove-ads")
             app.terminate()
         }
     }
