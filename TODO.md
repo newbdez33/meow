@@ -283,7 +283,26 @@ Goal: the same app on Google Play as `jp.jacky.meow`. Design in
       shows verified for the Android app after the crawler runs; remove the
       empty duplicate app `~1072875607` if it bothers you (it serves nothing).
 - [ ] Next Android build: bump `versionCode` to 3 (carries the `Store.purchase`
-      fix) and consider the review's nine minors.
+      fix) and consider the review's nine minors:
+      1. `MediaPlayerSoundPlayer` exposes no `isPlaying`, so the fast-tap test
+         proves only "never throws"; audible playback was checked by hand.
+      2. `android/tool/import_strings.py` does not escape a leading `@`/`?`
+         or quote leading/trailing whitespace (no current string affected).
+      3. `TipSheet`: two simultaneous taps on the two buttons make the second
+         purchase fail with "didn't go through" while the first Play sheet is
+         open; a one-line `isPurchasing` guard in `buy`.
+      4. Status-bar icons are dark on the coral bar in the light theme;
+         `SystemBarStyle.dark(Color.TRANSPARENT)` would match iOS.
+      5. With ads off the banner grid item is a zero-height row (4 dp top gap
+         against 2 dp at the sides).
+      6. `rememberBannerAdView` creates the `AdView` and calls `loadAd`
+         inside `remember`; an abandoned composition would leak one request.
+      7. A per-app locale change re-renders only after a cold start
+         (unreachable without `localeConfig`).
+      8. Doc drift: spec still says "Version 1.0 (1)", `CatCell` uses 11 sp
+         where the spec says 12 sp, the reconnection wording predates
+         `enableAutoServiceReconnection()`.
+      9. (settled with the badge trim) the Play badge's width/height hint.
 - [x] 2026-09-28 17:35 JST: the Google Play badges went live on
       https://meow.jacky.jp/ (en, zh, ja; hero and footer) on the owner's
       instruction, ahead of the store page; the badge links to
