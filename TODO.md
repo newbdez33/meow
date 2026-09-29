@@ -1,9 +1,13 @@
 # TODO
 
-Working list for bringing Meow (`com.salmonapps.Meow`, App Store id 826362662)
-back to a shippable, revenue-earning state. Items are done one at a time, in
-order. Each item has a short design; the owner approves it before the work
-starts. Check boxes are ticked only after verification.
+Release history and remaining work for Meow (`com.salmonapps.Meow`, App Store
+id 826362662). The owner confirmed App Review approval for version 2.1 (5)
+on 2026-09-29. Historical implementation notes follow; open check boxes track
+the remaining checks.
+
+Items are done one at a time, in order. Each item has a short design; the
+owner approves it before the work starts. Check boxes are ticked only after
+verification.
 
 Audit summary (2026-09-27): the live build 2.0.0 (2020-09-17) ships Google
 Mobile Ads SDK 7.65.0, which Google sunset on 2023-06-30, so ad requests no
@@ -228,6 +232,9 @@ TestFlight build and said it is fine.
       reproduction steps in Notes. Resubmitted the existing 2.1 (5) and both
       purchases under `642a51bc-e85a-4cd9-85fb-0f1148a04360`; App Store Connect
       confirms all three items are WAITING_FOR_REVIEW.
+- [x] 2026-09-29: the owner confirmed that version 2.1 (5) passed App Review.
+      Updated the repository README with the app features, development
+      setup, tests, and screenshot workflow.
 - [ ] After approval: AdMob app-ads.txt "Check for updates" (the marketing
       URL only reaches the store with 2.1), ads filling on a real device, the
       EEA message showing in the EU, both purchases visible in the sheet.
