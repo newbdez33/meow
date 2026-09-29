@@ -35,7 +35,9 @@ adb shell am start -n jp.jacky.meow/.MainActivity --ez meowNoAds true --es meowS
 
 The upload key is `~/.android/meow-upload/upload.jks` (alias `meow-upload`, RSA 4096, valid to
 2054-02-12), read through the ignored `key.properties`; the password sits next to it in
-`store-password.txt` and the public certificate in `upload-certificate.pem`. Play App Signing
+`store-password.txt` and the public certificate in `upload-certificate.pem`, and a copy of
+`key.properties` is kept there too (copy it into `android/` in a fresh checkout; `local.properties`
+only needs `sdk.dir`). Play App Signing
 holds the app signing key. Upload certificate fingerprints:
 SHA-1 `BD:26:C0:F9:CC:0F:47:3F:17:8F:29:0B:52:44:0A:2A:4F:36:98:42`,
 SHA-256 `90:A1:48:46:38:88:72:83:0F:1C:9B:04:DC:0F:8B:A6:B1:2C:C1:72:5D:ED:57:97:C6:4C:0C:66:1F:60:64:A6`.
