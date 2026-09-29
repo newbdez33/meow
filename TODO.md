@@ -269,10 +269,21 @@ Goal: the same app on Google Play as `jp.jacky.meow`. Design in
       ships with the next build (bump `versionCode` to 3); and the privacy
       policy's scope sentence now names Android (deployed). The nine minors
       are listed in the plan ledger for the owner to pick from.
-- [ ] Watch the review: Publishing overview → Production "Available on Google
-      Play", then https://play.google.com/store/apps/details?id=jp.jacky.meow
-      returns 200; a rejection lands in newbdez33@gmail.com and on the Policy
-      status page. Then Task 21: AdMob store link and the final records.
+- [x] 2026-09-29: live on Google Play — Google approved build 1.0 (2) within
+      a day; https://play.google.com/store/apps/details?id=jp.jacky.meow
+      answers 200 in en, ja and zh-CN with the listing text. AdMob: the Play
+      listing is linked to the shipped app `~8527399220` and verified
+      (ad-serving review "typically 2-3 days"; ads are limited until then).
+      The owner had confirmed the auto-detected app as a *new* AdMob app,
+      which made a second Android "Meow simulator" (`~1072875607`, no ad
+      units) that held the store link; its store details were cleared so the
+      real app could take the link. `app-ads.txt` on meow.jacky.jp already
+      carries the publisher line.
+- [ ] Owner, AdMob: confirm the ad-serving review finished and app-ads.txt
+      shows verified for the Android app after the crawler runs; remove the
+      empty duplicate app `~1072875607` if it bothers you (it serves nothing).
+- [ ] Next Android build: bump `versionCode` to 3 (carries the `Store.purchase`
+      fix) and consider the review's nine minors.
 - [x] 2026-09-28 17:35 JST: the Google Play badges went live on
       https://meow.jacky.jp/ (en, zh, ja; hero and footer) on the owner's
       instruction, ahead of the store page; the badge links to
