@@ -8,7 +8,8 @@ No Worker script, no analytics, no external fonts or scripts.
 - `/app-ads.txt`: the AdMob publisher record (the same line as
   `https://jacky.jp/app-ads.txt`).
 - `assets/cats/`, `assets/sounds/` (nine demo sounds) and `assets/icon.png`
-  are copied from the app; `assets/badges/` are Apple's App Store badges.
+  are copied from the app; `assets/badges/` holds Apple's App Store badges
+  and Google's Play badges.
 - `_redirects` rewrites `/` and `/privacy/` to their index files with HTTP 200.
   HTML handling is `none`, so every page is served only at its `.html` path
   and the local preview (`python3 -m http.server`) behaves the same way.

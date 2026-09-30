@@ -240,3 +240,99 @@ TestFlight build and said it is fine.
       EEA message showing in the EU, both purchases visible in the sheet.
 - [ ] Optional: lower the AdMob payout threshold from $1,500 so the
       $1,463.81 balance pays out.
+
+## 5. Android version (in progress, started 2026-09-27)
+
+Goal: the same app on Google Play as `jp.jacky.meow`. Design in
+`docs/specs/2026-09-27-android-design.md`, tasks in
+`docs/plans/2026-09-27-android.md`, sources in `android/`.
+
+- [x] 2026-09-27: Play Console app 4976190229557343886 created (zh-CN default,
+      free, automatic protection off) with every App content declaration
+      done; AdMob Android app `~8527399220` with banner unit `/4197186257`,
+      added to the shared EEA message; upload key generated in
+      `~/.android/meow-upload/` (see `android/README.md` for the ids and
+      fingerprints).
+- [x] 2026-09-27: 1.0 (1) release bundle built (`app-release.aab`, SHA-256
+      `f5cee09beb7cb1e190d59338b9cb4db9de2ea43babc1cc748ed09373600b295d`), bundletool-validated, the
+      one native library is 16 KB aligned, and the minified build cold-starts
+      on the API 36 emulator after a Room keep rule for WorkManager.
+- [x] 2026-09-28: privacy pages redeployed with the Android paragraphs
+      (Worker version 74e08903); 1.0 (1) published to the Internal testing
+      track at 00:08 (tester list "Menkyo internal testers" =
+      newbdez33@gmail.com, join link
+      https://play.google.com/apps/internaltest/4701236019639669858); one-time
+      products `jp.jacky.meow.can` (USD 5.99) and `jp.jacky.meow.coffee`
+      (USD 2.99) active in all 173 countries with zh/en/ja names; the owner's
+      account was already a license tester (RESPOND_NORMALLY).
+- [x] 2026-09-28: device acceptance on the owner's Galaxy S22 Ultra (Android
+      16, driven over adb through the Windows box `jx`), evidence in
+      `android/build/acceptance-1/` (ignored). Build 1: cold start, banner
+      ("Test Ad" 4 s after launch), three cats play, sheet prices ¥940/¥470,
+      can purchase with the always-approves test card removes the ads and the
+      can, still gone after a force-stop, share sheet with the Play link,
+      ja-JP/zh-CN per-app locales, light theme — all pass. The owner spotted
+      that the banner sat under the grid instead of at its top as on iOS, so
+      build 1.0 (2) moved it (commit 1d46ea9) and went to the internal track
+      at 16:14. Build 2: after refunding the can order (entitlement removed)
+      the banner is back as the grid's first row and does not reload when
+      scrolled away; the coffee purchase then removes the ads for good and
+      stays in place. Two findings, neither a code fault: the owner's home
+      Wi-Fi DNS blocks Google's consent and ad hosts (the app correctly shows
+      no ads then; the phone used dns.google for the test), and a per-app
+      locale change needs a cold start to show (Settings offers none anyway
+      because the app declares no `localeConfig`).
+- [x] 2026-09-28 16:45 JST: after the owner's go, build 1.0 (2) was put on the
+      Production track (all 176 countries / regions plus "rest of world") and
+      the 13 pending changes (release, countries, three store listings, the
+      app-content declarations, the category) were sent for review from the
+      Publishing overview; Google says reviews usually finish within 7 days.
+- [x] 2026-09-28: whole-branch review (fresh reviewer): 0 critical, 2
+      important, 9 minor. Fixed: `Store.purchase` now re-reads the
+      entitlement when the Play sheet does not open (`launchBillingFlow`
+      answers ITEM_ALREADY_OWNED for a purchase made on another device), so
+      the tap ends ad-free instead of "didn't go through" — not in build 2,
+      ships with the next build (bump `versionCode` to 3); and the privacy
+      policy's scope sentence now names Android (deployed). The nine minors
+      are listed in the plan ledger for the owner to pick from.
+- [x] 2026-09-29: live on Google Play — Google approved build 1.0 (2) within
+      a day; https://play.google.com/store/apps/details?id=jp.jacky.meow
+      answers 200 in en, ja and zh-CN with the listing text. AdMob: the Play
+      listing is linked to the shipped app `~8527399220` and verified
+      (ad-serving review "typically 2-3 days"; ads are limited until then).
+      The owner had confirmed the auto-detected app as a *new* AdMob app,
+      which made a second Android "Meow simulator" (`~1072875607`, no ad
+      units) that held the store link; its store details were cleared so the
+      real app could take the link. `app-ads.txt` on meow.jacky.jp already
+      carries the publisher line.
+- [x] 2026-09-29: the empty duplicate AdMob app `~1072875607` is hidden
+      (Apps → App visibility → Hide; "Show" brings it back). The Android
+      "Meow simulator" in AdMob is now only `~8527399220`.
+- [ ] Owner, AdMob: confirm the ad-serving review finished and app-ads.txt
+      shows verified for the Android app after the crawler runs.
+- [ ] Next Android build: bump `versionCode` to 3 (carries the `Store.purchase`
+      fix) and consider the review's nine minors:
+      1. `MediaPlayerSoundPlayer` exposes no `isPlaying`, so the fast-tap test
+         proves only "never throws"; audible playback was checked by hand.
+      2. `android/tool/import_strings.py` does not escape a leading `@`/`?`
+         or quote leading/trailing whitespace (no current string affected).
+      3. `TipSheet`: two simultaneous taps on the two buttons make the second
+         purchase fail with "didn't go through" while the first Play sheet is
+         open; a one-line `isPurchasing` guard in `buy`.
+      4. Status-bar icons are dark on the coral bar in the light theme;
+         `SystemBarStyle.dark(Color.TRANSPARENT)` would match iOS.
+      5. With ads off the banner grid item is a zero-height row (4 dp top gap
+         against 2 dp at the sides).
+      6. `rememberBannerAdView` creates the `AdView` and calls `loadAd`
+         inside `remember`; an abandoned composition would leak one request.
+      7. A per-app locale change re-renders only after a cold start
+         (unreachable without `localeConfig`).
+      8. Doc drift: spec still says "Version 1.0 (1)", `CatCell` uses 11 sp
+         where the spec says 12 sp, the reconnection wording predates
+         `enableAutoServiceReconnection()`.
+      9. (settled with the badge trim) the Play badge's width/height hint.
+- [x] 2026-09-28 17:35 JST: the Google Play badges went live on
+      https://meow.jacky.jp/ (en, zh, ja; hero and footer) on the owner's
+      instruction, ahead of the store page; the badge links to
+      https://play.google.com/store/apps/details?id=jp.jacky.meow, which
+      answers 404 until Google publishes the app.

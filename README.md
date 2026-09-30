@@ -4,8 +4,12 @@ A cat soundboard for iPhone and iPad, built with SwiftUI. Tap one of 27 cats
 to hear its sound: purring, snoring, hissing, a kitten, or even a lion.
 
 [App Store](https://apps.apple.com/app/id826362662) ·
+[Google Play](https://play.google.com/store/apps/details?id=jp.jacky.meow) ·
 [Website and sound demo](https://meow.jacky.jp/) ·
 [Privacy policy](https://meow.jacky.jp/privacy/)
+
+The Android version, a native Kotlin + Jetpack Compose port, lives in
+[android/](android/README.md).
 
 Version **2.1 (build 5)** has passed App Review, confirmed on September 29,
 2026. Release history and remaining checks are in [TODO.md](TODO.md).
