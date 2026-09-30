@@ -59,6 +59,7 @@
 		85C0000525136FB10031DB2E /* TipSheetScreenshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C0000425136FB10031DB2E /* TipSheetScreenshotTests.swift */; };
 		85C0000F25136FB10031DB2E /* meow.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 85B0000E25136FB10031DB2E /* meow.storekit */; };
 		85C0001125136FB10031DB2E /* StoreScreenshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C0001025136FB10031DB2E /* StoreScreenshotTests.swift */; };
+		85C0001325136FB10031DB2E /* TrackingReviewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C0001225136FB10031DB2E /* TrackingReviewTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,6 +137,7 @@
 		85C0000225136FB10031DB2E /* meowUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = meowUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		85C0000425136FB10031DB2E /* TipSheetScreenshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipSheetScreenshotTests.swift; sourceTree = "<group>"; };
 		85C0001025136FB10031DB2E /* StoreScreenshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreScreenshotTests.swift; sourceTree = "<group>"; };
+		85C0001225136FB10031DB2E /* TrackingReviewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingReviewTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -284,6 +286,7 @@
 			children = (
 				85C0000425136FB10031DB2E /* TipSheetScreenshotTests.swift */,
 				85C0001025136FB10031DB2E /* StoreScreenshotTests.swift */,
+				85C0001225136FB10031DB2E /* TrackingReviewTests.swift */,
 			);
 			path = meowUITests;
 			sourceTree = "<group>";
@@ -489,6 +492,7 @@
 			files = (
 				85C0000525136FB10031DB2E /* TipSheetScreenshotTests.swift in Sources */,
 				85C0001125136FB10031DB2E /* StoreScreenshotTests.swift in Sources */,
+				85C0001325136FB10031DB2E /* TrackingReviewTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
