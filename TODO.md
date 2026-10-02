@@ -311,7 +311,9 @@ Goal: the same app on Google Play as `jp.jacky.meow`. Design in
 - [ ] Owner, AdMob: confirm the ad-serving review finished and app-ads.txt
       shows verified for the Android app after the crawler runs.
 - [ ] Next Android build: bump `versionCode` to 3 (carries the `Store.purchase`
-      fix) and consider the review's nine minors:
+      fix and the direct `androidx.fragment:fragment:1.9.1` dependency that
+      answers Play Console's "fragment:1.1.0 is outdated" notice of
+      2026-10-02) and consider the review's nine minors:
       1. `MediaPlayerSoundPlayer` exposes no `isPlaying`, so the fast-tap test
          proves only "never throws"; audible playback was checked by hand.
       2. `android/tool/import_strings.py` does not escape a leading `@`/`?`

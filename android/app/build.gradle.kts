@@ -91,6 +91,10 @@ dependencies {
     implementation("com.google.android.gms:play-services-ads:25.5.0")
     implementation("com.google.android.ump:user-messaging-platform:4.0.0")
     implementation("com.android.billingclient:billing-ktx:9.1.0")
+    // Not used directly: play-services-basement (pulled in by the three Google
+    // libraries above) still declares fragment 1.1.0, which Play Console flags
+    // as an outdated SDK. A direct dependency makes Gradle resolve a current one.
+    implementation("androidx.fragment:fragment:1.9.1")
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.11.0")
