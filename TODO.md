@@ -338,3 +338,16 @@ Goal: the same app on Google Play as `jp.jacky.meow`. Design in
       instruction, ahead of the store page; the badge links to
       https://play.google.com/store/apps/details?id=jp.jacky.meow, which
       answers 404 until Google publishes the app.
+
+## 6. Home-screen widget (idea, added 2026-10-03, design not yet approved)
+
+Goal: a small home-screen widget showing a white cat head on a green
+background, styled like an app icon. The owner picks one of the app's cat
+sounds when adding the widget; tapping the widget plays that sound.
+
+- [ ] Design for the owner to approve: iOS, Android or both; the artwork (a
+      new white-cat-head-on-green image); how the sound is picked (iOS: an
+      `AppIntentConfiguration` widget; Android: a configuration activity);
+      whether the sound plays without opening the app (iOS 17+:
+      `AudioPlaybackIntent` on a widget `Button`; Android: a click that
+      plays the sound from a broadcast receiver or service).
