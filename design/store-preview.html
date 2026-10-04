@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-Hans">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Meow · 商店截图</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; color: #2c2323; background: #fffaf7; font-family: ui-rounded, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "PingFang SC", sans-serif; }
+  .wrap { max-width: 1560px; margin: auto; padding: 36px clamp(20px,4vw,64px) 52px; }
+  header { display: flex; align-items: center; gap: 24px; margin-bottom: 30px; }
+  header img { width: 100px; height: 100px; object-fit: contain; }
+  .eyebrow { color: #b74743; font-size: 13px; letter-spacing: .12em; font-weight: 700; }
+  h1 { font-size: clamp(25px,3vw,38px); margin: 7px 0 10px; line-height: 1.2; }
+  p { margin: 0; line-height: 1.65; color: #6a5d5b; }
+  .controls { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin: 28px 0 16px; }
+  nav { display: flex; padding: 5px; flex-wrap: wrap; gap: 4px; border-radius: 20px; background: #f1e9e5; }
+  button, select { font: inherit; color: inherit; border: 0; cursor: pointer; }
+  nav button { padding: 11px 17px; border-radius: 15px; background: transparent; font-size: 14px; }
+  nav button[aria-pressed="true"] { background: #fff; box-shadow: 0 2px 8px #2c232315; font-weight: 700; }
+  select { background: #fff; padding: 13px 35px 13px 15px; border: 1px solid #dfd2cc; border-radius: 14px; }
+  :focus-visible { outline: 3px solid #b74743; outline-offset: 4px; }
+  .meta { display: flex; justify-content: space-between; gap: 16px; font-size: 13px; margin: 20px 0; color: #74625e; }
+  .grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 22px; align-items: start; }
+  figure { margin: 0; min-width: 0; }
+  .shot { display: block; border-radius: 17px; overflow: hidden; box-shadow: 0 6px 25px #34201c12; border: 1px solid #eaded8; background: white; }
+  .shot img { display: block; width: 100%; height: auto; }
+  figcaption { padding: 15px 2px; display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+  figcaption span { font-size: 13px; font-weight: 650; }
+  a { color: #a3403c; text-underline-offset: 3px; }
+  .download { font-size: 12px; white-space: nowrap; }
+  footer { margin-top: 26px; border-top: 1px solid #eaded8; padding-top: 24px; display: flex; gap: 20px; justify-content: space-between; font-size: 13px; }
+  @media (max-width: 900px) { .grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px; } }
+  @media (max-width: 500px) { header { gap: 12px; } header img { width: 70px; height: 80px; } .wrap { padding-top: 24px; } nav button { padding: 10px 12px; } .meta { flex-direction: column; gap: 4px; } figcaption { flex-direction: column; gap: 8px; } footer { flex-direction: column; gap: 10px; } }
+</style>
+<div class="wrap">
+  <header>
+    <img src="store/stickers/ginger.png" alt="得意的橘猫">
+    <div><div class="eyebrow">MEOW · STORE PREVIEW</div><h1>猫猫，来桌面报到。</h1><p>每页一只新猫，加入小组件介绍。</p></div>
+  </header>
+  <div class="controls">
+    <nav aria-label="设备">
+      <button data-device="iphone" aria-pressed="true">iPhone</button>
+      <button data-device="ipad" aria-pressed="false">iPad</button>
+      <button data-device="android-phone" aria-pressed="false">Android 手机</button>
+      <button data-device="android-tablet" aria-pressed="false">Android 平板</button>
+    </nav>
+    <label><span hidden>截图语言</span><select id="language" aria-label="截图语言"><option value="zh-Hans">简体中文</option><option value="en">English</option><option value="ja">日本語</option></select></label>
+  </div>
+  <div class="meta"><span id="dimensions" aria-live="polite"></span><span>点击截图看原图 · PNG 可单独下载</span></div>
+  <main class="grid" id="shots" aria-label="商店截图"></main>
+  <footer><p>本次预览：猫咪声板、逗猫、小组件播放、声音与角色搭配。</p><a href="widget-preview.html?v=2">打开小组件交互预览 ↗</a></footer>
+</div>
+<script>
+  const devices = { iphone: '1320 × 2868', ipad: '2064 × 2752', 'android-phone': '1242 × 2208', 'android-tablet': '1600 × 2560' };
+  const names = ['27 只猫，27 种心情', '点猫互动', '桌面一点就喵', '声音、角色自由搭配'];
+  const files = ['1-1-grid', '2-2-selected', '3-3-widget', '4-4-configuration'];
+  const params = new URLSearchParams(location.search);
+  let device = Object.hasOwn(devices, params.get('device')) ? params.get('device') : 'iphone';
+  const language = document.querySelector('#language');
+  if (['en','zh-Hans','ja'].includes(params.get('lang'))) language.value = params.get('lang');
+  function render() {
+    document.querySelectorAll('[data-device]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.device === device)));
+    document.querySelector('#dimensions').textContent = `${devices[device]} px · 4 张 · ${language.selectedOptions[0].text}`;
+    const grid = document.querySelector('#shots');
+    grid.replaceChildren(...files.map((file, index) => {
+      const path = `store/screenshots/${device}/${language.value}/${file}.png`;
+      const figure = document.createElement('figure');
+      const link = document.createElement('a');
+      link.href = path; link.target = '_blank'; link.rel = 'noopener'; link.className = 'shot';
+      const image = document.createElement('img');
+      image.src = path; image.alt = names[index]; image.decoding = 'async';
+      const [width,height] = devices[device].split(' × ').map(Number);
+      image.width = width; image.height = height; link.append(image);
+      const caption = document.createElement('figcaption');
+      const label = document.createElement('span'); label.textContent = `0${index+1} · ${names[index]}`;
+      const download = document.createElement('a'); download.href = path; download.download = `${device}-${language.value}-${file}.png`; download.textContent = '下载 PNG'; download.className = 'download';
+      caption.append(label,download); figure.append(link,caption); return figure;
+    }));
+    history.replaceState(null,'',`?device=${device}&lang=${language.value}`);
+  }
+  document.querySelectorAll('[data-device]').forEach(button => button.addEventListener('click', () => { device = button.dataset.device; render(); }));
+  language.addEventListener('change',render);
+  render();
+</script>
+</html>

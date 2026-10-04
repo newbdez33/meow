@@ -14,9 +14,18 @@ The Android version, a native Kotlin + Jetpack Compose port, lives in
 Version **2.1 (build 5)** has passed App Review, confirmed on September 29,
 2026. Release history and remaining checks are in [TODO.md](TODO.md).
 
+Widget release status, checked on October 4, 2026 at 11:03 JST:
+**Android 1.1 (3)** is live on Google Play in 178 countries and regions.
+**iOS 2.2 (6)** is available in TestFlight and is waiting for App Review,
+with automatic release after approval. See the [release and validation
+record](docs/specs/2026-10-03-widget-design.md#production-review-submission-2026-10-04).
+
 ## Features
 
 - 27 illustrated cats with bundled sounds. Playback works offline.
+- Home-screen widgets with independent sound and character choices: iOS 17+
+  System Small and resizable Android widgets. Live on Android and available
+  in iOS TestFlight; remaining device checks are tracked in [TODO.md](TODO.md).
 - English, Simplified Chinese, and Japanese.
 - No account or sign-in required.
 - Banner ads with Google UMP consent and App Tracking Transparency support.
@@ -67,6 +76,13 @@ on relaunch, and restore.
   and use an English device with network access and tracking requests
   enabled. Set `TEST_RUNNER_MEOW_REVIEW_MANUAL_LAUNCH=1` to tap the icon
   yourself during a physical-device recording.
+- [WidgetTests](meowTests/WidgetTests.swift) covers the catalogue, bundled
+  resources, stale IDs, intent playback, replacement, and cleanup.
+- [WidgetLauncherTests](meowUITests/WidgetLauncherTests.swift) checks warm and
+  cold widget taps without foregrounding the app. Opt in on an English
+  disposable simulator with `TEST_RUNNER_MEOW_WIDGET_LAUNCHER_TEST=1` and
+  keep simulator signing enabled. See the [widget design and validation
+  record](docs/specs/2026-10-03-widget-design.md) for the command and limits.
 
 Compose store screenshots with [render_store_screenshots.swift](tool/render_store_screenshots.swift)
 and [store-copy.json](design/store-copy.json). For the command below, place
@@ -78,17 +94,37 @@ swift tool/render_store_screenshots.swift \
   design/store-copy.json /tmp/meow-captures /tmp/meow-store-screenshots
 ```
 
-Each language/device set contains two images. Keep price references,
-including "free", out of store screenshots.
+Each language/device set contains four images: the grid, a selected cat,
+the Home Screen widget, and its configuration. Add native captures named
+`<lang>-3-widget.png` and `<lang>-4-configuration.png` beside the two app
+captures. The renderer puts a transparent cat sticker in each page's upper
+left corner and checks text fit. Keep price references, including "free",
+out of store screenshots.
+
+The current set is in [design/store/screenshots](design/store/screenshots).
+[Store preview](design/store-preview.html) switches between four device
+sizes and three copy languages. The iOS widget scenes currently use English
+system UI. Android widget captions and configuration use the selected app
+language. The [sticker generation record](design/store/stickers/generation.json)
+contains the built-in `image_gen` prompts and original file paths; the
+transparent PNGs are stored beside it. The submitted widget listing copy is in
+[widget-introduction.json](design/store/widget-introduction.json) and the
+[Play listing](design/store/play/copy.md).
+
+The [widget record](docs/specs/2026-10-03-widget-design.md#local-records-and-reproduction)
+also lists the private release archive, raw capture location, and artwork
+export command. These records are outside the feature worktree so its removal
+does not remove the release evidence.
 
 ## Repository
 
 | Path | Purpose |
 | --- | --- |
 | `meow/` | SwiftUI app, audio, ads, purchases, and localized resources |
-| `meowTests/` | StoreKit tests |
-| `meowUITests/` | Purchase UI, screenshot, and ATT tests |
-| `design/` and `tool/` | Store copy, artwork, and screenshot composition |
+| `MeowWidget/` and `WidgetShared/` | Widget extension, App Intents, catalogue, and shared artwork |
+| `meowTests/` | StoreKit and widget tests |
+| `meowUITests/` | Purchase UI, screenshot, ATT, and Home Screen widget tests |
+| `design/` and `tool/` | Store copy, artwork, widget preview, and asset export tools |
 | [`hosting/`](hosting/README.md) | App website, privacy policy, and `app-ads.txt` |
 | [`TODO.md`](TODO.md) | Implementation history and release follow-up |
 

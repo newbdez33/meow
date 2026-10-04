@@ -46,3 +46,26 @@
 "tip_unavailable" = "App Store に接続できません。あとでもう一度お試しください。";
 "tip_failed" = "購入が完了しませんでした。あとでもう一度お試しください。";
 "share_button" = "アプリを共有";
+
+/* Home-screen widgets */
+"widget_title" = "ニャーウィジェット";
+"widget_description" = "声とキャラクターを選んで、タップで再生。";
+"widget_sound" = "声";
+"widget_character" = "キャラクター";
+"widget_save" = "保存";
+"widget_cancel" = "キャンセル";
+"widget_audition" = "試聴";
+"widget_play" = "%@を再生";
+"widget_stop" = "停止";
+"widget_channel" = "ウィジェットの再生";
+"widget_ginger" = "ドヤ顔";
+"widget_black" = "ピリ辛";
+"widget_gray" = "のんびり";
+"widget_sleepy" = "ねむねむ";
+"widget_pumpkin" = "かぼちゃ";
+"widget_ghost" = "おばけ";
+"widget_classic" = "クラシック";
+"widget_manage" = "ウィジェット";
+"widget_empty" = "ホーム画面のウィジェット一覧から「ニャー」を追加してください。";
+"widget_save_error" = "保存できませんでした。もう一度お試しください。";
+"widget_instance" = "ウィジェット %@";

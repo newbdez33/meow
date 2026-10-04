@@ -1,0 +1,54 @@
+{
+  "tool": "Built-in image_gen",
+  "date": "2026-10-04",
+  "images": [
+    {
+      "id": "ginger",
+      "source": "/Users/jacky/.codex/generated_images/01a0ffa9-d28c-76f0-b6bb-11f0d49e0c19/exec-fd91959b-1a87-4c04-9813-db927fe827dc.png",
+      "output": "ginger.png",
+      "request": {
+        "prompt": "Use case: background-extraction.\nAsset type: transparent cat sticker for the top-left corner of Meow store screenshots.\nInput image 1 is the exact edit target, an approved Meow mascot.\nRemove only the flat pastel background and return one clean transparent PNG cutout of the entire cat, including both ears, face, whiskers and paws. Keep the exact pose, facial expression, proportions, fur colors, markings, dark outline and flat cartoon style unchanged. Center the original silhouette with a small transparent margin. Preserve all colored details inside the character. No new outline, no white border, no shadow, no text, no objects, no tile or checkerboard. The background must be actual alpha transparency.",
+        "referenced_image_paths": [
+          "/Volumes/shit/orca/workspaces/meow/drum/design/imagegen/widget-characters/ginger.png"
+        ],
+        "transparent_background": true
+      }
+    },
+    {
+      "id": "black",
+      "source": "/Users/jacky/.codex/generated_images/01a0ffa9-d28c-76f0-b6bb-11f0d49e0c19/exec-11e62f13-6934-42db-b43a-231c6a1fb13d.png",
+      "output": "black.png",
+      "request": {
+        "prompt": "Use case: background-extraction.\nAsset type: transparent cat sticker for the top-left corner of Meow store screenshots.\nInput image 1 is the exact edit target, an approved Meow mascot.\nRemove only the flat pastel background and return one clean transparent PNG cutout of the entire cat, including both ears, face, whiskers and paws. Keep the exact pose, facial expression, proportions, fur colors, markings, dark outline and flat cartoon style unchanged. Center the original silhouette with a small transparent margin. Preserve all colored details inside the character. No new outline, no white border, no shadow, no text, no objects, no tile or checkerboard. The background must be actual alpha transparency.",
+        "referenced_image_paths": [
+          "/Volumes/shit/orca/workspaces/meow/drum/design/imagegen/widget-characters/black.png"
+        ],
+        "transparent_background": true
+      }
+    },
+    {
+      "id": "gray",
+      "source": "/Users/jacky/.codex/generated_images/01a0ffa9-d28c-76f0-b6bb-11f0d49e0c19/exec-0effc160-14f3-4c7f-bb17-8b13ad176dd4.png",
+      "output": "gray.png",
+      "request": {
+        "prompt": "Use case: background-extraction.\nAsset type: transparent cat sticker for the top-left corner of Meow store screenshots.\nInput image 1 is the exact edit target, an approved Meow mascot.\nRemove only the flat pastel background and return one clean transparent PNG cutout of the entire cat, including both ears, face, whiskers and paws. Keep the exact pose, facial expression, proportions, fur colors, markings, dark outline and flat cartoon style unchanged. Center the original silhouette with a small transparent margin. Preserve all colored details inside the character. No new outline, no white border, no shadow, no text, no objects, no tile or checkerboard. The background must be actual alpha transparency.",
+        "referenced_image_paths": [
+          "/Volumes/shit/orca/workspaces/meow/drum/design/imagegen/widget-characters/gray.png"
+        ],
+        "transparent_background": true
+      }
+    },
+    {
+      "id": "sleepy",
+      "source": "/Users/jacky/.codex/generated_images/01a0ffa9-d28c-76f0-b6bb-11f0d49e0c19/exec-027ecad9-1a19-438b-a27b-9bd28d9846ab.png",
+      "output": "sleepy.png",
+      "request": {
+        "prompt": "Use case: background-extraction.\nAsset type: transparent cat sticker for the top-left corner of Meow store screenshots.\nInput image 1 is the exact edit target, an approved Meow mascot.\nRemove only the flat pastel background and return one clean transparent PNG cutout of the entire cat, including both ears, face, whiskers and paws. Keep the exact pose, facial expression, proportions, fur colors, markings, dark outline and flat cartoon style unchanged. Center the original silhouette with a small transparent margin. Preserve all colored details inside the character. No new outline, no white border, no shadow, no text, no objects, no tile or checkerboard. The background must be actual alpha transparency.",
+        "referenced_image_paths": [
+          "/Volumes/shit/orca/workspaces/meow/drum/design/imagegen/widget-characters/sleepy.png"
+        ],
+        "transparent_background": true
+      }
+    }
+  ]
+}

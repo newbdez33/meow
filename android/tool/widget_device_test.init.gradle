@@ -1,0 +1,18 @@
+// Use with -I tool/widget_device_test.init.gradle to preserve the Play install.
+gradle.beforeProject { project ->
+    if (project.path == ':app') {
+        project.plugins.withId('com.android.application') {
+            project.extensions.getByName('androidComponents').finalizeDsl { android ->
+                android.buildTypes.getByName('debug').applicationIdSuffix = '.widgettest'
+                android.buildTypes.getByName('debug').versionNameSuffix = '-widget-test'
+                def manifest = project.layout.buildDirectory.file('widget-device-test/AndroidManifest.xml').get().asFile
+                manifest.parentFile.mkdirs()
+                manifest.text = '''<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <application android:label="Meow Widget Test" tools:replace="android:label" />
+</manifest>
+'''
+                android.sourceSets.getByName('debug').manifest.srcFile(manifest)
+            }
+        }
+    }
+}

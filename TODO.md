@@ -310,10 +310,10 @@ Goal: the same app on Google Play as `jp.jacky.meow`. Design in
       "Meow simulator" in AdMob is now only `~8527399220`.
 - [ ] Owner, AdMob: confirm the ad-serving review finished and app-ads.txt
       shows verified for the Android app after the crawler runs.
-- [ ] Next Android build: bump `versionCode` to 3 (carries the `Store.purchase`
-      fix and the direct `androidx.fragment:fragment:1.9.1` dependency that
-      answers Play Console's "fragment:1.1.0 is outdated" notice of
-      2026-10-02) and consider the review's nine minors:
+- [x] 2026-10-03: Android 1.1 (3) is available to internal testers. It carries
+      the `Store.purchase` fix and the direct `androidx.fragment:fragment:1.9.1`
+      dependency that answers Play Console's outdated Fragment notice.
+- [ ] Consider the Android review's nine minors:
       1. `MediaPlayerSoundPlayer` exposes no `isPlaying`, so the fast-tap test
          proves only "never throws"; audible playback was checked by hand.
       2. `android/tool/import_strings.py` does not escape a leading `@`/`?`
@@ -339,15 +339,97 @@ Goal: the same app on Google Play as `jp.jacky.meow`. Design in
       https://play.google.com/store/apps/details?id=jp.jacky.meow, which
       answers 404 until Google publishes the app.
 
-## 6. Home-screen widget (idea, added 2026-10-03, design not yet approved)
+## 6. Home-screen widget (design approved 2026-10-03)
 
-Goal: a small home-screen widget showing a white cat head on a green
-background, styled like an app icon. The owner picks one of the app's cat
-sounds when adding the widget; tapping the widget plays that sound.
+Goal: a small home-screen widget with a selectable cat illustration,
+styled like an app icon. The owner independently picks one of the app's
+cat sounds and a character; tapping the widget plays that sound.
 
-- [ ] Design for the owner to approve: iOS, Android or both; the artwork (a
-      new white-cat-head-on-green image); how the sound is picked (iOS: an
-      `AppIntentConfiguration` widget; Android: a configuration activity);
-      whether the sound plays without opening the app (iOS 17+:
-      `AudioPlaybackIntent` on a widget `Button`; Android: a click that
-      plays the sound from a broadcast receiver or service).
+The owner requested both iOS and Android. Approved design:
+[`docs/specs/2026-10-03-widget-design.md`](docs/specs/2026-10-03-widget-design.md).
+Interactive preview: [`design/widget-preview.html`](design/widget-preview.html),
+with the existing 27 sounds, six new character illustrations based on the
+app's cats, and the original white cat head. Sound and artwork are separate
+per-widget choices.
+
+- [x] Owner approved on 2026-10-03: iOS 17+ System Small (2 × 2); Android compact 1 × 1,
+      resizable to 2 × 2; one sound/character pair per widget; tap to play without opening
+      the app. iOS uses system configuration; Android uses an auditionable
+      configuration activity and a media playback foreground service.
+- [x] Native implementation: seven characters and 27 sounds; shared playback
+      ownership; iOS App Intent configuration; Android atomic configuration,
+      separate audition controls, resizing, and per-instance restore.
+- [x] Simulator checks on 2026-10-03: iOS 27 passed 11 unit tests and one
+      Home Screen UI test; Android API 36 passed 34 unit tests and 18
+      instrumented tests. Both played after process termination without
+      foregrounding the app. Playback completion released the audio session
+      or foreground service. Android rapid taps and launcher resizing were
+      also checked. Debug builds, Android lint, and the unsigned iOS device
+      Release build passed. See the design document for commands and screenshots.
+- [x] 2026-10-03: physical Galaxy S22 Ultra acceptance through `jx` (Android
+      16 / One UI 8). The separate `Meow Widget Test` package preserves the
+      Play install. All 18 instrumented tests passed after the task-stack fix.
+      Samsung widget addition, reconfiguration, two independent instances,
+      1 × 1 / 2 × 2 layouts, cold playback, rapid taps, notification/media
+      pause, zero volume, dark appearance, and 200% text were checked.
+      Launcher configuration now uses a separate task so Save/Cancel returns
+      to Home; the in-app path still returns to the widget list. Evidence:
+      `android/build/widget-s22-20261003/` (ignored). Original volume and font
+      scale were restored; two test widgets remain on the second Home page.
+- [x] 2026-10-03 23:54 JST: Android 1.1 (3) published to the existing Google
+      Play internal testing track. Signed AAB validation, minified app cold
+      start, and the widget-list screen passed on API 36. Release notes are
+      available in Chinese, English, and Japanese. See `android/README.md`
+      for the AAB hash and tester link.
+- [x] 2026-10-04: iOS 2.2 (6) is available in the existing TestFlight
+      `Internal` group. Signed device archive and upload passed; processing
+      is `VALID`, with `IN_BETA_TESTING` confirmed through the API. Build ID:
+      `b9fe487a-2e20-448f-b352-52f515e690b2`. What to Test is localized in
+      en-US, zh-Hans, and ja. Production submission followed as recorded below.
+- [ ] Remaining device validation: physical-device playback on iOS 17 and current iOS;
+      Android API 24/31/35 and physical Pixel coverage; calls, Bluetooth route
+      changes, silent mode, and audio focus denial. S22 playback was checked
+      in the owner's existing vibrate mode, not silent mode.
+- [ ] Track the intermittent silent iOS widget tap reported on 2026-10-04.
+      The owner confirmed that a later tap worked. Release simulator checks
+      passed for black / `m_001` (three warm taps and three cold starts), but
+      no physical-device logs were available to establish the cause.
+- [x] 2026-10-04: prepared four store screenshot pages with a different new
+      cat sticker in the upper left, plus Home Screen playback and widget
+      configuration pages. Exported 48 opaque PNGs across iPhone, iPad,
+      Android phone/tablet, and three copy languages. Native widget scenes
+      use simulator captures; iOS system UI remains English. Preview:
+      `design/store-preview.html`. The owner approved the assets and copy
+      for the production submissions below.
+- [x] 2026-10-04: submitted iOS 2.2 (6) and Android 1.1 (3) for production
+      review after owner approval. iOS is WAITING_FOR_REVIEW under
+      `a84a06df-d477-4f76-8dec-d3658ceb0ac5`, with all 24 screenshots
+      processed and three localized descriptions and release notes.
+      Play showed Changes in review for the release and 15 localized listing
+      changes at 08:42 JST, with automatic checks still running. Its 24 new screenshot
+      assets fill the phone, 7-inch, and 10-inch sets; AI artwork is declared.
+      Both retain automatic release after approval. No new binary was built.
+      Submission evidence: `android/build/review-20261004/` (ignored).
+- [x] 2026-10-04 11:03 JST: Google Play confirmed Android 1.1 (3) is Active
+      in Production across 178 countries and regions. Publishing overview
+      reports publication on October 4, with no unpublished changes. iOS
+      2.2 (6) remains WAITING_FOR_REVIEW. Private build, test, and submission
+      records were copied outside this worktree and verified with SHA-256;
+      see the [archive record](docs/specs/2026-10-03-widget-design.md#local-records-and-reproduction).
+- [ ] Complete native visual/accessibility checks: iOS system configuration,
+      system tinting, dark appearance, large text, and screen readers on both
+      platforms. Check multiple live iOS instances, reboot, and system backup/
+      restore on devices.
+
+## 7. Selectable cat-head app icons (requested 2026-10-04)
+
+Goal: let users choose their favorite Meow cat as the app icon on iOS and
+Android.
+
+- [ ] Redesign the default and alternate app icons with large cat heads that
+      fill the icon, using Duolingo's close framing as a reference. Reduce
+      empty space and keep each cat's face clear at Home Screen icon sizes.
+- [ ] Add an app icon picker with previews of representative Meow cats,
+      including the new widget characters. Apply the chosen cat to the
+      installed app icon, remember the choice, and allow a return to the
+      default. Keep this choice separate from each widget's character.

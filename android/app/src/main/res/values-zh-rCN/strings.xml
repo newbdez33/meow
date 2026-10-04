@@ -43,4 +43,25 @@
     <string name="tip_unavailable">现在连不上 Google Play，请稍后再试。</string>
     <string name="tip_failed">购买没有完成，请稍后再试。</string>
     <string name="share_button">分享 App</string>
+    <string name="widget_title">猫咪小组件</string>
+    <string name="widget_description">选择声音和角色，轻点小组件即可播放。</string>
+    <string name="widget_sound">声音</string>
+    <string name="widget_character">角色</string>
+    <string name="widget_save">保存小组件</string>
+    <string name="widget_cancel">取消</string>
+    <string name="widget_audition">试听声音</string>
+    <string name="widget_play">播放%1$s</string>
+    <string name="widget_stop">停止</string>
+    <string name="widget_channel">小组件播放</string>
+    <string name="widget_ginger">得意</string>
+    <string name="widget_black">炸毛</string>
+    <string name="widget_gray">淡定</string>
+    <string name="widget_sleepy">困困</string>
+    <string name="widget_pumpkin">南瓜</string>
+    <string name="widget_ghost">阿飘</string>
+    <string name="widget_classic">经典</string>
+    <string name="widget_manage">小组件</string>
+    <string name="widget_empty">在主屏幕的小组件列表中添加「猫叫模拟器」。</string>
+    <string name="widget_save_error">未能保存小组件，请重试。</string>
+    <string name="widget_instance">小组件 %1$s</string>
 </resources>

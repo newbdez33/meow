@@ -43,4 +43,25 @@
     <string name="tip_unavailable">Can\'t reach Google Play right now. Try again later.</string>
     <string name="tip_failed">The purchase didn\'t go through. Try again later.</string>
     <string name="share_button">Share the app</string>
+    <string name="widget_title">Meow widget</string>
+    <string name="widget_description">Choose a sound and a character. Tap your widget to play.</string>
+    <string name="widget_sound">Sound</string>
+    <string name="widget_character">Character</string>
+    <string name="widget_save">Save widget</string>
+    <string name="widget_cancel">Cancel</string>
+    <string name="widget_audition">Preview sound</string>
+    <string name="widget_play">Play %1$s</string>
+    <string name="widget_stop">Stop</string>
+    <string name="widget_channel">Widget playback</string>
+    <string name="widget_ginger">Smug</string>
+    <string name="widget_black">Spicy</string>
+    <string name="widget_gray">Chill</string>
+    <string name="widget_sleepy">Sleepy</string>
+    <string name="widget_pumpkin">Pumpkin</string>
+    <string name="widget_ghost">Boo!</string>
+    <string name="widget_classic">Classic</string>
+    <string name="widget_manage">Widgets</string>
+    <string name="widget_empty">Add Meow from the widget gallery on your home screen.</string>
+    <string name="widget_save_error">Could not save this widget. Try again.</string>
+    <string name="widget_instance">Widget %1$s</string>
 </resources>

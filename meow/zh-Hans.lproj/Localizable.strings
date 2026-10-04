@@ -46,3 +46,26 @@
 "tip_unavailable" = "现在连不上 App Store，请稍后再试。";
 "tip_failed" = "购买没有完成，请稍后再试。";
 "share_button" = "分享 App";
+
+/* Home-screen widgets */
+"widget_title" = "猫咪小组件";
+"widget_description" = "选择声音和角色，轻点小组件即可播放。";
+"widget_sound" = "声音";
+"widget_character" = "角色";
+"widget_save" = "保存小组件";
+"widget_cancel" = "取消";
+"widget_audition" = "试听声音";
+"widget_play" = "播放%@";
+"widget_stop" = "停止";
+"widget_channel" = "小组件播放";
+"widget_ginger" = "得意";
+"widget_black" = "炸毛";
+"widget_gray" = "淡定";
+"widget_sleepy" = "困困";
+"widget_pumpkin" = "南瓜";
+"widget_ghost" = "阿飘";
+"widget_classic" = "经典";
+"widget_manage" = "小组件";
+"widget_empty" = "在主屏幕的小组件列表中添加「猫叫模拟器」。";
+"widget_save_error" = "未能保存小组件，请重试。";
+"widget_instance" = "小组件 %@";
