@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.PanTool
+import androidx.compose.material.icons.outlined.Widgets
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -52,6 +53,7 @@ fun MeowScreen(
     onShare: () -> Unit,
     onTip: () -> Unit,
     onPrivacyOptions: () -> Unit,
+    onWidgets: () -> Unit = {},
     banner: @Composable () -> Unit = {},
 ) {
     var selected by rememberSaveable { mutableIntStateOf(-1) }
@@ -65,6 +67,9 @@ fun MeowScreen(
                     actionIconContentColor = Color.White,
                 ),
                 actions = {
+                    IconButton(onClick = onWidgets, modifier = Modifier.testTag("widgets")) {
+                        Icon(Icons.Outlined.Widgets, contentDescription = stringResource(R.string.widget_manage))
+                    }
                     if (!state.isAdFree) {
                         IconButton(onClick = onTip, modifier = Modifier.testTag("tip")) {
                             Image(

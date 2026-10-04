@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+
     <application
         android:name=".MeowApplication"
         android:allowBackup="true"
@@ -13,6 +16,24 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="${admobAppId}" />
+
+        <service android:name=".widget.WidgetPlaybackService" android:exported="false"
+            android:foregroundServiceType="mediaPlayback" />
+        <receiver android:name=".widget.MeowWidgetProvider" android:exported="false" android:label="@string/widget_title">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.intent.action.LOCALE_CHANGED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/meow_widget" />
+        </receiver>
+        <!-- Launcher configuration must not reuse the main app's task. -->
+        <activity android:name=".widget.WidgetConfigurationActivity" android:exported="true"
+            android:taskAffinity="" android:excludeFromRecents="true" android:label="@string/widget_title">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".MainActivity"

@@ -3,24 +3,78 @@
     "appName": "Meow",
     "appleLocale": "en-US",
     "shots": [
-      ["27 cats, 27 moods", "Tap one and it meows back.", "1-grid"],
-      ["Tease the cat, amuse the kid", "Snoring, hissing, a hungry kitten, a lion.", "2-selected"]
+      [
+        "27 cats, 27 moods",
+        "Tap one and it meows back.",
+        "1-grid"
+      ],
+      [
+        "Tease the cat, amuse the kid",
+        "Snoring, hissing, a hungry kitten, a lion.",
+        "2-selected"
+      ],
+      [
+        "One tap.\nA little meow.",
+        "Play your favorite sound from a Home Screen widget.",
+        "3-widget"
+      ],
+      [
+        "Your cat.\nYour favorite meow.",
+        "Mix 27 sounds with 7 characters.",
+        "4-configuration"
+      ]
     ]
   },
   "zh-Hans": {
     "appName": "猫叫模拟器",
     "appleLocale": "zh-Hans",
     "shots": [
-      ["27 只猫，27 种心情", "点一下，它就喵给你听。", "1-grid"],
-      ["逗猫，逗娃", "打呼噜、发怒、撒娇、狮子远亲……", "2-selected"]
+      [
+        "27 只猫，27 种心情",
+        "点一下，它就喵给你听。",
+        "1-grid"
+      ],
+      [
+        "逗猫，逗娃",
+        "打呼噜、发怒、撒娇、狮子远亲……",
+        "2-selected"
+      ],
+      [
+        "桌面一点，\n它就喵。",
+        "把喜欢的猫放上桌面，轻点就能播放。",
+        "3-widget"
+      ],
+      [
+        "声音和猫猫，\n随你搭。",
+        "27 种叫声 × 7 款角色，自由搭配。",
+        "4-configuration"
+      ]
     ]
   },
   "ja": {
     "appName": "ニャー",
     "appleLocale": "ja",
     "shots": [
-      ["27匹の猫、27通りの気分", "タップすると、にゃあと鳴き返します。", "1-grid"],
-      ["猫をからかう、子どもをあやす", "いびき、怒り声、甘え声、ライオン。", "2-selected"]
+      [
+        "27匹の猫、27通りの気分",
+        "タップすると、にゃあと鳴き返します。",
+        "1-grid"
+      ],
+      [
+        "猫をからかう、子どもをあやす",
+        "いびき、怒り声、甘え声、ライオン。",
+        "2-selected"
+      ],
+      [
+        "ホーム画面から、\nにゃー。",
+        "好きな猫を置いて、タップで鳴き声を再生。",
+        "3-widget"
+      ],
+      [
+        "鳴き声も、\n見た目もお好みで。",
+        "27種類の鳴き声と7種類のキャラクター。",
+        "4-configuration"
+      ]
     ]
   }
 }

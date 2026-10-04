@@ -46,3 +46,26 @@
 "tip_unavailable" = "Can't reach the App Store right now. Try again later.";
 "tip_failed" = "The purchase didn't go through. Try again later.";
 "share_button" = "Share the app";
+
+/* Home-screen widgets */
+"widget_title" = "Meow widget";
+"widget_description" = "Choose a sound and a character. Tap your widget to play.";
+"widget_sound" = "Sound";
+"widget_character" = "Character";
+"widget_save" = "Save widget";
+"widget_cancel" = "Cancel";
+"widget_audition" = "Preview sound";
+"widget_play" = "Play %@";
+"widget_stop" = "Stop";
+"widget_channel" = "Widget playback";
+"widget_ginger" = "Smug";
+"widget_black" = "Spicy";
+"widget_gray" = "Chill";
+"widget_sleepy" = "Sleepy";
+"widget_pumpkin" = "Pumpkin";
+"widget_ghost" = "Boo!";
+"widget_classic" = "Classic";
+"widget_manage" = "Widgets";
+"widget_empty" = "Add Meow from the widget gallery on your home screen.";
+"widget_save_error" = "Could not save this widget. Try again.";
+"widget_instance" = "Widget %@";

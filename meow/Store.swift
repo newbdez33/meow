@@ -23,7 +23,8 @@ final class Store: ObservableObject {
 
     private var updates: Task<Void, Never>?
 
-    init() {
+    private func observeTransactionsIfNeeded() {
+        guard updates == nil else { return }
         updates = Task { [weak self] in
             for await result in Transaction.updates {
                 await self?.apply(result)
@@ -37,6 +38,7 @@ final class Store: ObservableObject {
 
     /// Reads the current entitlement and fetches both products. Call once at launch.
     func load() async {
+        observeTransactionsIfNeeded()
         await refreshEntitlement()
         let products = (try? await Product.products(for: Self.productIDs)) ?? []
         coffee = products.first { $0.id == Self.coffeeProductID }

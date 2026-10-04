@@ -10,19 +10,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 
-/** Owns the app-wide objects: the store and the ads controller. */
+/** Owns shared playback and lazily creates the store and ads controller. */
 class MeowApplication : Application() {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    lateinit var store: Store
-        private set
-
-    lateinit var ads: AdsController
-        private set
-
-    override fun onCreate() {
-        super.onCreate()
-        store = Store(PlayBillingGateway(this), RsaPurchaseVerifier(BuildConfig.PLAY_LICENSE_KEY), scope)
-        ads = AdsController(UmpConsentGateway(this, BuildConfig.CONSENT_DEBUG_EEA))
-    }
+    val audio by lazy { AudioPlayback(this) }
+    val store by lazy { Store(PlayBillingGateway(this), RsaPurchaseVerifier(BuildConfig.PLAY_LICENSE_KEY), scope) }
+    val ads by lazy { AdsController(UmpConsentGateway(this, BuildConfig.CONSENT_DEBUG_EEA)) }
 }

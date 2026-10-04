@@ -1,6 +1,8 @@
 package jp.jacky.meow
 
 import android.app.Activity
+import android.content.Intent
+import jp.jacky.meow.widget.WidgetConfigurationActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -46,6 +48,7 @@ fun MeowApp(ads: AdsController, store: Store, sounds: SoundPlayer, activity: Act
         onShare = { shareApp(activity) },
         onTip = { showTip = true },
         onPrivacyOptions = { scope.launch { ads.presentPrivacyOptions(activity) } },
+        onWidgets = { activity.startActivity(Intent(activity, WidgetConfigurationActivity::class.java)) },
         banner = { Banner(bannerAdView) },
     )
     if (showTip) {

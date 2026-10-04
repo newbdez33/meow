@@ -1,0 +1,43 @@
+{
+  "tool": "Built-in image_gen",
+  "date": "2026-10-03",
+  "common": "Use case: stylized-concept. Create exactly one square, production-ready mascot illustration for a selectable Meow home-screen widget skin. The supplied image is the identity reference for a character already in this cat soundboard app. Reimagine its composition and expression as an expressive modern app mascot, not a faithful enlargement. Bold flat 2D cartoon, chunky simple shapes, clean dark rounded contour where needed, minimal flat shading, oversized readable facial features. Cheeky expressive collectible mascot energy, comparable to emotional language-learning app widgets, but this is an original cat character, not an owl. One character only, a strong silhouette recognizable at 56 pixels. Fill roughly 78% of the square with the cat, centered, keeping ears inside the frame; keep the bottom 12% visually quiet for a label that the app will draw later. The background must fill the whole square with one flat opaque color; do not draw a rounded tile outline or put the icon in a phone mockup. No text, letters, numbers, watermark, badges, scenery, gradients, glossy 3D, fur texture, or drop shadows. Preserve the source character's coat colors and distinctive markings.",
+  "variants": [
+    {
+      "id": "ginger",
+      "reference": "c04",
+      "title": "Smug",
+      "prompt": "Character: an orange tabby with cream muzzle and dark caramel forehead/cheek stripes. Expression: deeply self-satisfied, half-lidded mischievous eyes, one slightly raised eyebrow, tiny crooked smile. Composition: oversized frontal head with two plump orange paws tucked under the chin, like the cat is leaning over a ledge. The face should feel funny and lovable, not mean. Background: warm blush pink #F1C1B6. Keep the orange coat rich and legible."
+    },
+    {
+      "id": "black",
+      "reference": "c02",
+      "title": "Spicy",
+      "prompt": "Character: the app's mischievous charcoal-black cat with sharply pointed ears, big yellow eyes, hot pink inner ears/nose/tongue, and small white fangs. Expression: dramatic harmless outrage, squinted yellow eyes and a wide hissing open mouth, pink tongue visible, cheek fur puffed. Composition: oversized head filling the frame with two front paws raised slightly beside the cheeks. Background: pale mint green #B8E5A9. The black silhouette must be solid and clear, and the expression playful."
+    },
+    {
+      "id": "gray",
+      "reference": "c01",
+      "title": "Chill",
+      "prompt": "Character: the app's chubby blue-gray tabby, darker gray forehead stripes, lighter gray muzzle and chest, rounded cheeks. Expression: supreme contentment, eyes squeezed closed in a little smile, chin nestled into its soft round body. Composition: large frontal cat head and small hint of chubby upper chest, big cheeks filling the square. Background: pale butter yellow #F3E4A5. Make the grin readable and endearing."
+    },
+    {
+      "id": "sleepy",
+      "reference": "c17",
+      "title": "Sleepy",
+      "prompt": "Character: the app's sleepy beige/gray tabby from the laptop drawing, pale cream cheeks and muzzle with warm gray stripes on forehead. Expression: hilariously exhausted and floppy, completely closed relaxed eyes, cheek squashed sideways against one front paw, small peaceful smile. Composition: huge slightly tilted head resting on two front paws; omit the laptop and all props to make the expression readable. Background: soft lavender #D5C9EF. This is a sleepy cat, not a sad or sick one."
+    },
+    {
+      "id": "pumpkin",
+      "reference": "c16",
+      "title": "Pumpkin",
+      "prompt": "Character: the app's tiny black cat hiding in an orange pumpkin, giant round yellow eyes, black pointed ears, tiny pink nose, little pumpkin lid tilted on its head. Expression: comically startled and wide-eyed, as if caught hiding. Composition: close-up cat head and paws peeking over the upper rim of one large orange pumpkin; enlarge the cat's head so it dominates, show only the upper pumpkin bowl in the lower third. Background: fresh sage green #A9CDA3. Keep pumpkin and cat one clear compact silhouette."
+    },
+    {
+      "id": "ghost",
+      "reference": "c23",
+      "title": "Boo!",
+      "prompt": "Character: the app's cat dressed as a cream-white ghost sheet, clear cat ears under cloth, huge yellow eyes in black oval openings, distinctive black tail curling out of the sheet. Expression: adorably unconvincing attempt to look spooky, one yellow eye slightly larger, tiny cheeky smile visible under the eye holes. Composition: large ghost-cat head with short draped shoulders; black tail curls visibly up beside one cheek, not below the frame. Background: muted periwinkle blue #949BD0. Keep it cute and graphic, never scary."
+    }
+  ]
+}

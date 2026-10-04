@@ -6,11 +6,11 @@
 //
 
 import SwiftUI
-import AVFoundation
 
 struct ContentView: View {
     @EnvironmentObject private var ads: AdsController
     @EnvironmentObject private var store: Store
+    @Environment(\.scenePhase) private var scenePhase
     @State private var showingSheet = false
     @State private var showingTip = false
     @State private var selectedIndex = -1
@@ -47,16 +47,11 @@ struct ContentView: View {
                                 URL(string: "https://itunes.apple.com/app/id826362662")!,
                                 UIImage(named:"AppIcon40x40") ?? UIImage()])
         })
-        .onAppear {
-            do {
-                try AVAudioSession.sharedInstance().setCategory(.playback, options: .mixWithOthers)
-            } catch {
-                print(error)
-            }
-        }
-        .task {
+        .task(id: scenePhase) {
+            guard scenePhase == .active else { return }
             await store.load()
-            guard !store.isAdFree, let viewController = UIApplication.shared.keyRootViewController else { return }
+            guard scenePhase == .active, !Task.isCancelled, !store.isAdFree,
+                  let viewController = UIApplication.shared.keyRootViewController else { return }
             await ads.start(from: viewController)
         }
     }

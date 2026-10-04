@@ -1,6 +1,6 @@
 import AppKit
 
-// Compose the store screenshots: a plain colored canvas, the app name, a title, a caption,
+// Compose the store screenshots: a colored canvas, a cat sticker, the app name, a title, a caption,
 // and the unchanged capture in a rounded frame.
 // Usage: swift tool/render_store_screenshots.swift <copy.json> <captures> <output> [device ...]
 //   Devices default to "iphone ipad" (App Store, captures from meowUITests/StoreScreenshotTests);
@@ -18,6 +18,7 @@ struct Layout {
     let height: Int
     let margin: CGFloat
     let appName: (y: CGFloat, size: CGFloat)
+    let sticker: (y: CGFloat, size: CGFloat)
     let title: (y: CGFloat, height: CGFloat, size: CGFloat, minimum: CGFloat)
     let caption: (y: CGFloat, height: CGFloat, size: CGFloat, minimum: CGFloat)
     let imageHeight: CGFloat
@@ -26,19 +27,19 @@ struct Layout {
 }
 
 let layouts: [String: Layout] = [
-    "iphone": Layout(width: 1320, height: 2868, margin: 104, appName: (76, 38),
-                     title: (192, 272, 100, 76), caption: (490, 148, 49, 39),
-                     imageHeight: 2098, frameRadius: 56, imageRadius: 42),
-    "ipad": Layout(width: 2064, height: 2752, margin: 156, appName: (70, 48),
-                   title: (202, 302, 124, 94), caption: (518, 160, 61, 48),
-                   imageHeight: 1940, frameRadius: 40, imageRadius: 26),
+    "iphone": Layout(width: 1320, height: 2868, margin: 104, appName: (130, 38), sticker: (48, 224),
+                     title: (308, 280, 100, 76), caption: (608, 126, 49, 39),
+                     imageHeight: 2020, frameRadius: 56, imageRadius: 42),
+    "ipad": Layout(width: 2064, height: 2752, margin: 156, appName: (142, 48), sticker: (44, 260),
+                   title: (342, 302, 124, 94), caption: (662, 128, 61, 48),
+                   imageHeight: 1850, frameRadius: 40, imageRadius: 26),
     // Google Play refuses screenshots longer than twice their width, hence 9:16 and 10:16.
-    "android-phone": Layout(width: 1242, height: 2208, margin: 98, appName: (70, 36),
-                            title: (180, 256, 94, 72), caption: (460, 140, 46, 37),
+    "android-phone": Layout(width: 1242, height: 2208, margin: 98, appName: (114, 36), sticker: (34, 200),
+                            title: (258, 240, 94, 72), caption: (514, 112, 46, 37),
                             imageHeight: 1480, frameRadius: 52, imageRadius: 40),
-    "android-tablet": Layout(width: 1600, height: 2560, margin: 120, appName: (66, 44),
-                             title: (190, 280, 112, 86), caption: (490, 150, 56, 44),
-                             imageHeight: 1820, frameRadius: 40, imageRadius: 26),
+    "android-tablet": Layout(width: 1600, height: 2560, margin: 120, appName: (128, 44), sticker: (38, 236),
+                             title: (314, 280, 112, 86), caption: (614, 132, 56, 44),
+                             imageHeight: 1700, frameRadius: 40, imageRadius: 26),
 ]
 
 enum RenderError: Error {
@@ -52,6 +53,9 @@ let outputRoot = URL(fileURLWithPath: CommandLine.arguments[3])
 let devices = CommandLine.arguments.count > 4 ? Array(CommandLine.arguments[4...]) : ["iphone", "ipad"]
 let copies = try JSONDecoder().decode([String: Copy].self, from: Data(contentsOf: copyURL))
 let languages = ["en", "zh-Hans", "ja"]
+let stickerRoot = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
+    .appendingPathComponent("../design/store/stickers")
+let stickers = ["ginger", "black", "gray", "sleepy"]
 
 func rgb(_ r: Int, _ g: Int, _ b: Int) -> NSColor {
     NSColor(srgbRed: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: 1)
@@ -61,6 +65,7 @@ let paper = rgb(0xFF, 0xFF, 0xFF)
 let blush = rgb(0xFF, 0xF6, 0xF7)
 let butter = rgb(0xFF, 0xFF, 0xE0)
 let coral = rgb(0xE7, 0x6A, 0x66)
+let lavender = rgb(0xEE, 0xE8, 0xFA)
 
 func font(_ language: String, size: CGFloat, bold: Bool) -> NSFont {
     let candidates: [String]
@@ -112,6 +117,10 @@ func render(language: String, copy: Copy, device: String, order: Int, shot: [Str
     guard let image = NSImage(contentsOf: sourceRoot.appendingPathComponent(source)) else {
         throw RenderError.missingImage(source)
     }
+    let stickerName = stickers[order % stickers.count] + ".png"
+    guard let sticker = NSImage(contentsOf: stickerRoot.appendingPathComponent(stickerName)) else {
+        throw RenderError.missingImage(stickerName)
+    }
     let context = CGContext(data: nil, width: width, height: height, bitsPerComponent: 8,
                             bytesPerRow: width * 4, space: CGColorSpace(name: CGColorSpace.sRGB)!,
                             bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue)!
@@ -120,15 +129,19 @@ func render(language: String, copy: Copy, device: String, order: Int, shot: [Str
     context.translateBy(x: 0, y: CGFloat(height))
     context.scaleBy(x: 1, y: -1)
     NSGraphicsContext.current = NSGraphicsContext(cgContext: context, flipped: true)
-    let dark = order % 3 == 2
-    (dark ? coral : order % 3 == 1 ? butter : blush).setFill()
+    let dark = order % 4 == 2
+    [blush, butter, coral, lavender][order % 4].setFill()
     NSBezierPath(rect: CGRect(origin: .zero, size: size)).fill()
     let foreground = dark ? paper : ink
     let accent = dark ? paper : coral
     let margin = layout.margin
     let textWidth = CGFloat(width) - 2 * margin
+    sticker.draw(in: CGRect(x: margin - 18, y: layout.sticker.y, width: layout.sticker.size, height: layout.sticker.size),
+                 from: .zero, operation: .sourceOver, fraction: 1, respectFlipped: true,
+                 hints: [.interpolation: NSImageInterpolation.high])
+    let brandX = margin + layout.sticker.size + 30
     try text(copy.appName, language: language,
-             rect: CGRect(x: margin, y: layout.appName.y, width: textWidth, height: 88),
+             rect: CGRect(x: brandX, y: layout.appName.y, width: CGFloat(width) - margin - brandX, height: 88),
              size: layout.appName.size, minimum: 26, bold: true, color: accent.withAlphaComponent(dark ? 0.85 : 1))
     try text(shot[0], language: language,
              rect: CGRect(x: margin, y: layout.title.y, width: textWidth, height: layout.title.height),

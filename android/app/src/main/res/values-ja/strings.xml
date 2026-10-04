@@ -43,4 +43,25 @@
     <string name="tip_unavailable">Google Play に接続できません。あとでもう一度お試しください。</string>
     <string name="tip_failed">購入が完了しませんでした。あとでもう一度お試しください。</string>
     <string name="share_button">アプリを共有</string>
+    <string name="widget_title">ニャーウィジェット</string>
+    <string name="widget_description">声とキャラクターを選んで、タップで再生。</string>
+    <string name="widget_sound">声</string>
+    <string name="widget_character">キャラクター</string>
+    <string name="widget_save">保存</string>
+    <string name="widget_cancel">キャンセル</string>
+    <string name="widget_audition">試聴</string>
+    <string name="widget_play">%1$sを再生</string>
+    <string name="widget_stop">停止</string>
+    <string name="widget_channel">ウィジェットの再生</string>
+    <string name="widget_ginger">ドヤ顔</string>
+    <string name="widget_black">ピリ辛</string>
+    <string name="widget_gray">のんびり</string>
+    <string name="widget_sleepy">ねむねむ</string>
+    <string name="widget_pumpkin">かぼちゃ</string>
+    <string name="widget_ghost">おばけ</string>
+    <string name="widget_classic">クラシック</string>
+    <string name="widget_manage">ウィジェット</string>
+    <string name="widget_empty">ホーム画面のウィジェット一覧から「ニャー」を追加してください。</string>
+    <string name="widget_save_error">保存できませんでした。もう一度お試しください。</string>
+    <string name="widget_instance">ウィジェット %1$s</string>
 </resources>
