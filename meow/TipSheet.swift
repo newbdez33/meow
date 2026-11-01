@@ -15,11 +15,28 @@ struct TipSheet: View {
     @MainActor private static var lastCat: String?
 
     @EnvironmentObject private var store: Store
+    @Environment(\.dismiss) private var dismiss
     @State private var cat = TipSheet.cats[0]
     @State private var isPurchasing = false
     @State private var didFail = false
 
     var body: some View {
+        AppNavigation {
+            content
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button { dismiss() } label: {
+                            Label("close_button", systemImage: "xmark")
+                        }
+                        .accessibilityIdentifier("closeTip")
+                    }
+                }
+        }
+        .onAppear { cat = Self.nextCat() }
+        .modifier(HalfHeightSheet())
+    }
+
+    private var content: some View {
         ScrollView {
             VStack(spacing: 18) {
                 TipHero(cat: cat)
@@ -78,8 +95,6 @@ struct TipSheet: View {
             .padding(28)
             .padding(.top, 8)
         }
-        .onAppear { cat = Self.nextCat() }
-        .modifier(HalfHeightSheet())
     }
 
     /// A random cat that is never the one shown last time.
@@ -102,7 +117,7 @@ struct TipSheet: View {
     }
 }
 
-/// One treat button's content: the icon in a fixed slot on the left, the text on one line next to it.
+/// Keep the icon beside a purchase label that can wrap in a narrow sheet.
 private struct TreatLabel: View {
     let icon: String
     let title: String
@@ -117,12 +132,11 @@ private struct TreatLabel: View {
             VStack(alignment: .leading, spacing: 1) {
                 Text(title)
                     .font(.headline)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.8)
+                    .fixedSize(horizontal: false, vertical: true)
                 if let note {
                     Text(note)
                         .font(.caption)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
             Spacer(minLength: 0)

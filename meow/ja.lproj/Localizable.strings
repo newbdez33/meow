@@ -69,3 +69,13 @@
 "widget_empty" = "ホーム画面のウィジェット一覧から「ニャー」を追加してください。";
 "widget_save_error" = "保存できませんでした。もう一度お試しください。";
 "widget_instance" = "ウィジェット %@";
+
+/* Soundboard */
+"soundboard_title" = "今の気分は？";
+"soundboard_hint" = "猫をタップして、声を聞いてみよう。";
+"soundboard_play_hint" = "この猫の声を再生します。";
+"soundboard_welcome_title" = "猫とひと休み";
+"soundboard_welcome" = "あなたの猫仲間";
+"soundboard_selected" = "選んだ声";
+"soundboard_replay" = "もう一度";
+"close_button" = "閉じる";

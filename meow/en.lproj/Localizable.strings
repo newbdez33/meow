@@ -69,3 +69,13 @@
 "widget_empty" = "Add Meow from the widget gallery on your home screen.";
 "widget_save_error" = "Could not save this widget. Try again.";
 "widget_instance" = "Widget %@";
+
+/* Soundboard */
+"soundboard_title" = "Pick a mood";
+"soundboard_hint" = "Tap a cat to hear its voice.";
+"soundboard_play_hint" = "Plays this cat sound.";
+"soundboard_welcome_title" = "A little company";
+"soundboard_welcome" = "Your kitty kit";
+"soundboard_selected" = "Selected sound";
+"soundboard_replay" = "Play again";
+"close_button" = "Close";

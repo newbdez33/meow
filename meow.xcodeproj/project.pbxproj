@@ -45,9 +45,6 @@
 		850F687924B204F5009DC99B /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850F687824B204F5009DC99B /* Sounds.swift */; };
 		850F688124B20D59009DC99B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 850F688324B20D59009DC99B /* InfoPlist.strings */; };
 		850F688A24B2CB1E009DC99B /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850F688924B2CB1E009DC99B /* Banner.swift */; };
-		858F807D24B354010026935F /* GridStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858F807A24B354010026935F /* GridStack.swift */; };
-		858F807E24B354010026935F /* GridCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858F807B24B354010026935F /* GridCalculator.swift */; };
-		858F807F24B354010026935F /* Array+chunked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858F807C24B354010026935F /* Array+chunked.swift */; };
 		858F808124B354700026935F /* AppActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858F808024B3546F0026935F /* AppActivityView.swift */; };
 		85A0000525136FB10031DB2E /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 85A0000325136FB10031DB2E /* GoogleMobileAds */; };
 		85A0000625136FB10031DB2E /* GoogleUserMessagingPlatform in Frameworks */ = {isa = PBXBuildFile; productRef = 85A0000425136FB10031DB2E /* GoogleUserMessagingPlatform */; };
@@ -71,6 +68,8 @@
 		00501970DEC45F67CCEDE872 /* Localizable.strings in Widget Resources */ = {isa = PBXBuildFile; fileRef = 850F687524B1F03E009DC99B /* Localizable.strings */; };
 		64CE872866953E5DA6D12EAC /* MeowWidget in Embed Extensions */ = {isa = PBXBuildFile; fileRef = 94042FF809068ACC543770DE /* MeowWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy,);}; };
 		85D0000225136FB10031DB2E /* WidgetLauncherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D0000125136FB10031DB2E /* WidgetLauncherTests.swift */; };
+		85E0000225136FB10031DB2E /* SoundboardLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0000125136FB10031DB2E /* SoundboardLayoutTests.swift */; };
+		85E0000425136FB10031DB2E /* SoundboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0000325136FB10031DB2E /* SoundboardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,9 +135,6 @@
 		850F688424B20D5E009DC99B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		850F688524B20D5F009DC99B /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		850F688924B2CB1E009DC99B /* Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
-		858F807A24B354010026935F /* GridStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridStack.swift; sourceTree = "<group>"; };
-		858F807B24B354010026935F /* GridCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridCalculator.swift; sourceTree = "<group>"; };
-		858F807C24B354010026935F /* Array+chunked.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+chunked.swift"; sourceTree = "<group>"; };
 		858F808024B3546F0026935F /* AppActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppActivityView.swift; sourceTree = "<group>"; };
 		85A0000725136FB10031DB2E /* AdsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsController.swift; sourceTree = "<group>"; };
 		85B0000225136FB10031DB2E /* meowTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = meowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -158,6 +154,8 @@
 		C39794919E7AB404AF96B1CE /* Widget Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		94042FF809068ACC543770DE /* MeowWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MeowWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		85D0000125136FB10031DB2E /* WidgetLauncherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetLauncherTests.swift; sourceTree = "<group>"; };
+		85E0000125136FB10031DB2E /* SoundboardLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundboardLayoutTests.swift; sourceTree = "<group>"; };
+		85E0000325136FB10031DB2E /* SoundboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundboardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,9 +217,9 @@
 			isa = PBXGroup;
 			children = (
 				850F686B24B1B08A009DC99B /* extensions */,
-				858F807924B354010026935F /* gridstack */,
 				850F67EB24B0C510009DC99B /* App.swift */,
 				850F67ED24B0C510009DC99B /* ContentView.swift */,
+				85E0000325136FB10031DB2E /* SoundboardView.swift */,
 				858F808024B3546F0026935F /* AppActivityView.swift */,
 				850F686924B1AB18009DC99B /* Cat.swift */,
 				850F687824B204F5009DC99B /* Sounds.swift */,
@@ -291,16 +289,6 @@
 			path = extensions;
 			sourceTree = "<group>";
 		};
-		858F807924B354010026935F /* gridstack */ = {
-			isa = PBXGroup;
-			children = (
-				858F807A24B354010026935F /* GridStack.swift */,
-				858F807B24B354010026935F /* GridCalculator.swift */,
-				858F807C24B354010026935F /* Array+chunked.swift */,
-			);
-			path = gridstack;
-			sourceTree = "<group>";
-		};
 		85B0000325136FB10031DB2E /* meowTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -313,6 +301,7 @@
 		85C0000325136FB10031DB2E /* meowUITests */ = {
 			isa = PBXGroup;
 			children = (
+				85E0000125136FB10031DB2E /* SoundboardLayoutTests.swift */,
 				85D0000125136FB10031DB2E /* WidgetLauncherTests.swift */,
 				85C0000425136FB10031DB2E /* TipSheetScreenshotTests.swift */,
 				85C0001025136FB10031DB2E /* StoreScreenshotTests.swift */,
@@ -503,18 +492,16 @@
 				9398ABC2241CD42383897737 /* WidgetIntents.swift in App Sources */,
 				1A2565E6A9A3A2AFC079A469 /* WidgetCatalog.swift in App Sources */,
 				850F67EE24B0C510009DC99B /* ContentView.swift in Sources */,
+				85E0000425136FB10031DB2E /* SoundboardView.swift in Sources */,
 				850F686D24B1B09B009DC99B /* Color.swift in Sources */,
 				850F687924B204F5009DC99B /* Sounds.swift in Sources */,
-				858F807F24B354010026935F /* Array+chunked.swift in Sources */,
 				850F688A24B2CB1E009DC99B /* Banner.swift in Sources */,
 				85A0000825136FB10031DB2E /* AdsController.swift in Sources */,
 				85B0001325136FB10031DB2E /* TipSheet.swift in Sources */,
 				85B0001125136FB10031DB2E /* Store.swift in Sources */,
-				858F807D24B354010026935F /* GridStack.swift in Sources */,
 				850F67EC24B0C510009DC99B /* App.swift in Sources */,
 				858F808124B354700026935F /* AppActivityView.swift in Sources */,
 				850F686A24B1AB18009DC99B /* Cat.swift in Sources */,
-				858F807E24B354010026935F /* GridCalculator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -531,6 +518,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85E0000225136FB10031DB2E /* SoundboardLayoutTests.swift in Sources */,
 				85D0000225136FB10031DB2E /* WidgetLauncherTests.swift in Sources */,
 				85C0000525136FB10031DB2E /* TipSheetScreenshotTests.swift in Sources */,
 				85C0001125136FB10031DB2E /* StoreScreenshotTests.swift in Sources */,

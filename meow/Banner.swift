@@ -23,13 +23,14 @@ private final class LazyBannerView: BannerView {
 
 private struct BannerViewContainer: UIViewRepresentable {
     let adUnitID: String
+    let width: CGFloat
 
     func makeCoordinator() -> Coordinator {
         Coordinator()
     }
 
     func makeUIView(context: Context) -> BannerView {
-        let banner = LazyBannerView(adSize: AdSizeBanner)
+        let banner = LazyBannerView(adSize: inlineAdaptiveBanner(width: width, maxHeight: 50))
         banner.adUnitID = adUnitID
         banner.delegate = context.coordinator
         return banner
@@ -51,15 +52,26 @@ private struct BannerViewContainer: UIViewRepresentable {
 struct Banner: View {
     @EnvironmentObject private var ads: AdsController
     @EnvironmentObject private var store: Store
+    @State private var bannerWidth: CGFloat = 0
 
     var body: some View {
         if ads.canRequestAds && !store.isAdFree {
-            HStack {
-                Spacer()
-                BannerViewContainer(adUnitID: AdsController.bannerAdUnitID)
-                    .frame(width: AdSizeBanner.size.width, height: AdSizeBanner.size.height, alignment: .center)
-                Spacer()
+            GeometryReader { geometry in
+                Group {
+                    if bannerWidth > 0 {
+                        BannerViewContainer(adUnitID: AdsController.bannerAdUnitID, width: bannerWidth)
+                            .id(bannerWidth)
+                    }
+                }
+                .task(id: geometry.size.width.rounded(.down)) {
+                    // Wait for resizing to settle before requesting another ad.
+                    try? await Task.sleep(nanoseconds: 300_000_000)
+                    guard !Task.isCancelled else { return }
+                    bannerWidth = geometry.size.width.rounded(.down)
+                }
             }
+            .frame(height: 50)
+            .clipped()
         }
     }
 }

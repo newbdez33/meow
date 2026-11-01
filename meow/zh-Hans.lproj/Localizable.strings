@@ -69,3 +69,13 @@
 "widget_empty" = "在主屏幕的小组件列表中添加「猫叫模拟器」。";
 "widget_save_error" = "未能保存小组件，请重试。";
 "widget_instance" = "小组件 %@";
+
+/* Soundboard */
+"soundboard_title" = "今天什么心情";
+"soundboard_hint" = "点一只猫，听听它的声音。";
+"soundboard_play_hint" = "播放这只猫的声音。";
+"soundboard_welcome_title" = "猫咪来陪你";
+"soundboard_welcome" = "你的猫咪伙伴";
+"soundboard_selected" = "已选声音";
+"soundboard_replay" = "再听一次";
+"close_button" = "关闭";
