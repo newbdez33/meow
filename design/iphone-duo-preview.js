@@ -13,6 +13,7 @@ const $ = (selector) => document.querySelector(selector);
 const parameters = new URLSearchParams(location.search);
 const state = {
   pose: Object.hasOwn(poses, parameters.get("pose")) ? parameters.get("pose") : "open",
+  layout: parameters.get("layout") === "spotlight" ? "spotlight" : "dual-grid",
   language: ["en", "zh-Hans", "ja"].includes(parameters.get("lang")) ? parameters.get("lang") : "zh-Hans",
   theme: parameters.get("theme") === "dark" ? "dark" : "light",
   text: parameters.get("text") === "large" ? "large" : "standard",
@@ -20,12 +21,17 @@ const state = {
 };
 const device = $("#device");
 const scrollArea = $("#sound-scroll");
+const leadingScrollArea = $("#leading-scroll");
+const scrollAreas = [leadingScrollArea, scrollArea];
 const player = new Audio();
 player.preload = "none";
 let data;
 let scale = 1;
 let playAttempt = 0;
 let sheetOpener;
+let catButtons = [];
+let gridsAreSplit = false;
+let activeScrollArea = scrollArea;
 const note = "HTML 交互稿 · 系统栏、折痕与窗口尺寸为设计示意；原生截图见下方。";
 
 function copy(key) {
@@ -33,7 +39,7 @@ function copy(key) {
 }
 
 function updateURL() {
-  const next = new URLSearchParams({ pose: state.pose, lang: state.language, theme: state.theme, text: state.text });
+  const next = new URLSearchParams({ pose: state.pose, layout: state.layout, lang: state.language, theme: state.theme, text: state.text });
   if (state.selected !== null) next.set("cat", String(state.selected));
   history.replaceState(null, "", `?${next}`);
 }
@@ -48,26 +54,59 @@ function fitDevice() {
   $("#device-space").style.height = `${height * scale}px`;
 }
 
-function visibleCat() {
-  const bounds = scrollArea.getBoundingClientRect();
-  return [...$("#cat-grid").children].find((card) => {
+function visibleCat(area) {
+  const bounds = area.getBoundingClientRect();
+  return [...area.querySelector(".cat-grid").children].find((card) => {
     const frame = card.getBoundingClientRect();
     return frame.bottom > bounds.top + 16 * scale && frame.top < bounds.bottom;
   });
 }
 
+function arrangeGrids(split) {
+  $(".spotlight").hidden = split;
+  $("#leading-gallery").hidden = !split;
+  const midpoint = Math.ceil(catButtons.length / 2);
+  if (split !== gridsAreSplit) {
+    $("#leading-grid").replaceChildren(...(split ? catButtons.slice(0, midpoint) : []));
+    $("#cat-grid").replaceChildren(...(split ? catButtons.slice(midpoint) : catButtons));
+    gridsAreSplit = split;
+  }
+  $("#leading-range").textContent = `01–${midpoint}`;
+  $("#trailing-range").textContent = `${midpoint + 1}–${catButtons.length}`;
+  $("#trailing-range").hidden = !split;
+  $("#gallery-title").textContent = split
+    ? { en: "More meows", "zh-Hans": "更多猫叫", ja: "もっとニャー" }[state.language]
+    : copy("soundboard_title");
+}
+
 function applyLayout(retainScroll = true) {
-  const anchor = retainScroll ? visibleCat() : null;
+  const areas = scrollAreas.filter((area) => area.clientHeight > 0);
+  const anchors = retainScroll ? areas.map((area) => ({ area, card: visibleCat(area) })) : [];
+  anchors.sort((a, b) => Number(a.area === activeScrollArea) - Number(b.area === activeScrollArea));
+  for (const anchor of anchors) {
+    anchor.offset = anchor.card ? (anchor.card.getBoundingClientRect().top - anchor.area.getBoundingClientRect().top) / scale : 0;
+  }
   const pose = poses[state.pose];
+  const split = state.layout === "dual-grid" && ["open", "book", "tabletop"].includes(state.pose);
+  arrangeGrids(split);
   device.dataset.pose = state.pose;
+  device.dataset.layout = state.layout;
   device.dataset.theme = state.theme;
   device.dataset.text = state.text;
   device.style.setProperty("--screen-w", `${pose.width}px`);
   device.style.setProperty("--screen-h", `${pose.height}px`);
-  $("#pose-caption").textContent = pose.caption;
+  $("#pose-caption").textContent = split
+    ? (state.pose === "tabletop" ? "桌面 · 上下两屏都能点猫播放" : `${state.pose === "book" ? "书本" : "展开"} · 左右两屏都能点猫播放`)
+    : pose.caption;
+  $("#layout-note").textContent = state.layout === "dual-grid"
+    ? "27 个猫叫分布两屏，分别滚动，共享播放状态；闭合时合为一个列表。"
+    : "一边展示已选猫咪，一边选择声音。";
   $("#dimensions").textContent = `${pose.width} × ${pose.height} pt · 设计尺寸`;
   document.querySelectorAll("button[data-pose]").forEach((button) => {
     button.setAttribute("aria-pressed", String(button.dataset.pose === state.pose));
+  });
+  document.querySelectorAll("button[data-layout]").forEach((button) => {
+    button.setAttribute("aria-pressed", String(button.dataset.layout === state.layout));
   });
   $("#language").value = state.language;
   $("#theme").value = state.theme;
@@ -76,9 +115,13 @@ function applyLayout(retainScroll = true) {
   const parent = state.text === "large" ? scrollArea : $("#gallery");
   if (replay.parentNode !== parent) parent.append(replay);
   fitDevice();
-  if (anchor && scrollArea.scrollTop > 0) {
+  if (anchors.length) {
     requestAnimationFrame(() => {
-      scrollArea.scrollTop += (anchor.getBoundingClientRect().top - scrollArea.getBoundingClientRect().top) / scale - 16;
+      for (const { card, offset } of anchors) {
+        if (!card) continue;
+        const area = card.closest(".sound-scroll");
+        area.scrollTop += (card.getBoundingClientRect().top - area.getBoundingClientRect().top) / scale - offset;
+      }
     });
   }
   updateURL();
@@ -121,6 +164,7 @@ function translate() {
 async function play(id) {
   const attempt = ++playAttempt;
   state.selected = id;
+  activeScrollArea = catButtons[id].closest(".sound-scroll");
   updateSelected();
   updateURL();
   player.pause();
@@ -162,7 +206,7 @@ async function initialize() {
   const selected = parameters.has("cat") ? Number(parameters.get("cat")) : null;
   if (Number.isInteger(selected) && selected >= 0 && selected < data.sounds.length) state.selected = selected;
 
-  $("#cat-grid").replaceChildren(...data.sounds.map((sound) => {
+  catButtons = data.sounds.map((sound) => {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "cat";
@@ -176,11 +220,20 @@ async function initialize() {
     button.append(image, label);
     button.addEventListener("click", () => play(sound.id));
     return button;
-  }));
+  });
+  $("#cat-grid").replaceChildren(...catButtons);
 
   document.querySelectorAll("button[data-pose]").forEach((button) => {
     button.addEventListener("click", () => { state.pose = button.dataset.pose; applyLayout(); });
   });
+  document.querySelectorAll("button[data-layout]").forEach((button) => {
+    button.addEventListener("click", () => { state.layout = button.dataset.layout; applyLayout(); });
+  });
+  for (const area of scrollAreas) {
+    area.addEventListener("pointerdown", () => { activeScrollArea = area; });
+    area.addEventListener("wheel", () => { activeScrollArea = area; }, { passive: true });
+    area.addEventListener("focusin", () => { activeScrollArea = area; });
+  }
   $("#language").addEventListener("change", (event) => { state.language = event.target.value; translate(); applyLayout(); });
   $("#theme").addEventListener("change", (event) => { state.theme = event.target.value; applyLayout(); });
   $("#text-size").addEventListener("change", (event) => { state.text = event.target.value; applyLayout(); });
@@ -191,7 +244,7 @@ async function initialize() {
     player.removeAttribute("src");
     player.load();
     state.selected = null;
-    scrollArea.scrollTop = 0;
+    for (const area of scrollAreas) area.scrollTop = 0;
     updateSelected();
     updateURL();
     $("#preview-status").textContent = note;

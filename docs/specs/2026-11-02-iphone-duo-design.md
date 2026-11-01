@@ -162,6 +162,13 @@ tables, and prices from the local StoreKit configuration. Language, appearance,
 text size, and selection are preserved in the URL. Purchase and restore
 buttons show preview feedback only.
 
+The preview now defaults to a second design, `dual-grid`: the first 14 sounds
+appear in the leading pane and the other 13 in the trailing pane. Both grids
+play audio through one player and keep one selection. Closed and split windows
+merge all 27 cards into one list. The design switch restores the original
+`spotlight` option for comparison. The selected design is also stored in the
+URL. This alternative is HTML-only until design review is complete.
+
 System bars, folds, window sizes, and large text are design approximations.
 This page does not replace native device validation. Browser checks covered
 selection across layouts, audio playback requests and replay, sheet dismissal,
