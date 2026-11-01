@@ -143,6 +143,31 @@ last cat at large text sizes, scroll retention after rotation, and support
 sheet dismissal with selection retained. These tests compile but have not
 run in this environment.
 
+### Interactive HTML review
+
+Run the preview on macOS with Python 3:
+
+```sh
+python3 tool/serve_iphone_duo_preview.py --bind 127.0.0.1 --port 8801
+```
+
+Open `http://127.0.0.1:8801/`. To review from another device on a Tailnet,
+set `--bind` to the host's Tailscale IP address. The server exports only the
+preview, its required app assets, and the native screenshots to a temporary
+directory. Restart it after source changes.
+
+The HTML review supports closed, open, book, tabletop, and left/right split
+layouts. It uses all 27 app images and audio files, the three native string
+tables, and prices from the local StoreKit configuration. Language, appearance,
+text size, and selection are preserved in the URL. Purchase and restore
+buttons show preview feedback only.
+
+System bars, folds, window sizes, and large text are design approximations.
+This page does not replace native device validation. Browser checks covered
+selection across layouts, audio playback requests and replay, sheet dismissal,
+and the last cat at large text on a 390 px viewport. No console errors or
+horizontal page overflow were observed.
+
 ### Remaining device review
 
 - [ ] Closed, open flat, book, and tabletop: verify pane placement, side
