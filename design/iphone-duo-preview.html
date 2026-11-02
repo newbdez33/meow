@@ -91,6 +91,13 @@
     .device[data-fit="true"] .cat { justify-content: center; min-height: 44px; padding: 6px; gap: 4px; border-radius: 18px; }
     .device[data-fit="true"] .cat img { width: var(--cat-image); height: var(--cat-image); }
     .device[data-fit="true"] .replay { display: none; }
+    .ad-slot { position: relative; grid-column: 1 / -1; min-width: 0; min-height: 72px; display: grid; place-items: center; padding: 12px; border: 1px dashed #cfc6c0; border-radius: 18px; background: #f5f3f0; color: #8a8078; text-align: center; }
+    .ad-badge { position: absolute; left: 10px; top: 8px; font-size: 10px; line-height: 1.2; }
+    .ad-placeholder { font-size: calc(14px * var(--text-scale)); line-height: 1.3; }
+    .device[data-theme="dark"] .ad-slot { border-color: #514a45; background: #211e1c; color: #b8ada5; }
+    .device[data-text="large"] .ad-slot { min-height: 110px; }
+    .device[data-fit="true"][data-pose="tabletop"] #cat-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)) 50px; }
+    .device[data-fit="true"][data-pose="tabletop"] .ad-slot { min-height: 50px; padding: 6px; border-radius: 12px; }
     .system-bar { position: absolute; right: 0; top: 0; bottom: 0; width: var(--bar); display: flex; flex-direction: column; align-items: center; padding: 20px 10px; gap: 16px; border-left: 1px solid var(--line); }
     .clock { font-size: 14px; font-weight: 700; }
     .camera { width: 20px; height: 45px; background: #111; border: 1px solid #363636; border-radius: 18px; }
@@ -149,7 +156,7 @@
     <section class="intro"><div><h1>iPhone Duo · 设计确认</h1><p>点一只猫，听听它的声音。切换屏幕形态，继续刚才的选择。</p></div><span class="review-tag">可交互预览</span></section>
     <div class="comparison">
       <nav class="poses" aria-label="设计方案"><button data-layout="spotlight" aria-pressed="false">大猫展示</button><button data-layout="dual-grid" aria-pressed="true">双屏猫叫</button></nav>
-      <p id="layout-note">27 个猫叫全部可见。点猫播放，再点一次重播。</p>
+      <p id="layout-note">一屏放满 15 个猫叫；另一屏放 12 个，最后一整行留给广告。</p>
     </div>
     <div class="controls">
       <nav class="poses" aria-label="屏幕形态"><button data-pose="closed" aria-pressed="false">闭合</button><button data-pose="open" aria-pressed="true">展开</button><button data-pose="book" aria-pressed="false">书本</button><button data-pose="tabletop" aria-pressed="false">桌面</button><button data-pose="split-left" aria-pressed="false">左分屏</button><button data-pose="split-right" aria-pressed="false">右分屏</button></nav>
@@ -165,13 +172,13 @@
             <div class="cat-grid" id="leading-grid"></div>
           </div>
         </section>
-        <section class="gallery" id="gallery" aria-labelledby="gallery-title"><div class="sound-scroll" id="sound-scroll"><div class="gallery-heading"><div class="gallery-title"><h2 id="gallery-title"></h2><span class="sound-range" id="trailing-range" hidden></span></div><p data-copy="soundboard_hint"></p></div><div class="cat-grid" id="cat-grid"></div></div><div class="replay" id="replay" hidden><img id="replay-image" alt=""><span class="replay-name" id="replay-name"></span><button id="replay-button" aria-label="再听一次"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10a9 9 0 1 1 1.5 8M3 4v6h6"/></svg><span class="replay-label" data-copy="soundboard_replay"></span></button></div></section>
+        <section class="gallery" id="gallery" aria-labelledby="gallery-title"><div class="sound-scroll" id="sound-scroll"><div class="gallery-heading"><div class="gallery-title"><h2 id="gallery-title"></h2><span class="sound-range" id="trailing-range" hidden></span></div><p data-copy="soundboard_hint"></p></div><div class="cat-grid" id="cat-grid"><aside class="ad-slot" id="ad-slot" aria-label="广告展示位" hidden><span class="ad-badge" id="ad-badge">广告</span><span class="ad-placeholder" id="ad-placeholder">横幅广告位</span></aside></div></div><div class="replay" id="replay" hidden><img id="replay-image" alt=""><span class="replay-name" id="replay-name"></span><button id="replay-button" aria-label="再听一次"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10a9 9 0 1 1 1.5 8M3 4v6h6"/></svg><span class="replay-label" data-copy="soundboard_replay"></span></button></div></section>
       </div>
       <aside class="system-bar" aria-label="系统栏示意"><span class="clock" aria-hidden="true">9:41</span><span class="camera" aria-hidden="true"></span><span class="app-wordmark" data-copy="title"></span><div class="system-actions"><button class="glass-button" id="support-button" aria-label="去掉广告"><img src="assets/navCan.png" alt=""></button><button class="glass-button" id="share-button" aria-label="分享 App"><img src="assets/navCat.png" alt=""></button></div><span class="system-indicator" aria-hidden="true"></span></aside>
       <span class="home-indicator" aria-hidden="true"></span><span class="fold" aria-hidden="true"></span>
       <div class="sheet-overlay" id="sheet" hidden><section class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="sheet-title"><div class="sheet-top"><button class="sheet-close" id="close-sheet" aria-label="关闭">×</button></div><div class="sheet-content"><div id="support-content"><div class="tip-hero"><img src="assets/tipMug.png" alt=""><img src="assets/c04.png" alt=""><img src="assets/tipCan.png" alt=""></div><h2 id="sheet-title" data-copy="tip_title"></h2><p data-copy="tip_body"></p><button class="treat primary" id="can-purchase"><img src="assets/tipCan.png" alt=""><span><span id="can-price"></span><small data-copy="tip_can_note"></small></span></button><button class="treat" id="coffee-purchase"><img src="assets/tipMug.png" alt=""><span id="coffee-price"></span></button><button class="restore" id="restore" data-copy="tip_restore"></button></div><div id="share-content" hidden><img src="assets/navCat.png" width="80" height="80" alt=""><h2 data-copy="title"></h2><p data-copy="subtitle"></p><a href="https://apps.apple.com/app/id826362662" target="_blank" rel="noopener">App Store ↗</a></div><p id="sheet-status" aria-live="polite"></p></div></section></div>
     </div></div></div></section>
-    <p class="stage-note" id="preview-status" aria-live="polite">HTML 交互稿 · 系统栏、折痕与窗口尺寸为设计示意；原生截图见下方。</p>
+    <p class="stage-note" id="preview-status" aria-live="polite">HTML 交互稿 · 系统栏、折痕、广告与窗口尺寸为设计示意；原生截图见下方。</p>
     <details class="evidence"><summary>对照原生截图 · iOS 27.0</summary><p>这些是本 PR「大猫展示」方案的 iPhone / iPad 实际截图。「双屏猫叫」为新增 HTML 方案，Duo 折叠姿态尚待对应运行时验证。</p><div class="captures"><button class="capture" data-capture="compact-en.png"><img src="captures/compact-en.png" alt="英文 iPhone 紧凑布局" loading="lazy"><span>iPhone · English</span></button><button class="capture" data-capture="regular-en.png"><img src="captures/regular-en.png" alt="英文 iPad 双窗格布局" loading="lazy"><span>iPad · English</span></button><button class="capture" data-capture="regular-zh-dark.png"><img src="captures/regular-zh-dark.png" alt="中文 iPad 暗色布局" loading="lazy"><span>iPad · 中文 / 深色</span></button><button class="capture" data-capture="compact-ja-accessibility.png"><img src="captures/compact-ja-accessibility.png" alt="日文 iPhone 辅助大字号布局" loading="lazy"><span>iPhone · 日本語 / 辅助字号</span></button></div></details>
   </main>
   <dialog id="capture-dialog" aria-label="原生截图"><button id="close-capture">关闭</button><img id="capture-image" alt="原生截图"></dialog>

@@ -20,6 +20,7 @@ const state = {
   selected: null,
 };
 const device = $("#device");
+const adSlot = $("#ad-slot");
 const scrollArea = $("#sound-scroll");
 const leadingScrollArea = $("#leading-scroll");
 const scrollAreas = [leadingScrollArea, scrollArea];
@@ -32,7 +33,7 @@ let sheetOpener;
 let catButtons = [];
 let gridsAreSplit = false;
 let activeScrollArea = scrollArea;
-const note = "HTML 交互稿 · 系统栏、折痕与窗口尺寸为设计示意；原生截图见下方。";
+const note = "HTML 交互稿 · 系统栏、折痕、广告与窗口尺寸为设计示意；原生截图见下方。";
 
 function copy(key) {
   return data.strings[state.language][key] ?? key;
@@ -56,7 +57,7 @@ function fitDevice() {
 
 function visibleCat(area) {
   const bounds = area.getBoundingClientRect();
-  return [...area.querySelector(".cat-grid").children].find((card) => {
+  return [...area.querySelectorAll(".cat")].find((card) => {
     const frame = card.getBoundingClientRect();
     return frame.bottom > bounds.top + 16 * scale && frame.top < bounds.bottom;
   });
@@ -65,14 +66,15 @@ function visibleCat(area) {
 function arrangeGrids(split) {
   $(".spotlight").hidden = split;
   $("#leading-gallery").hidden = !split;
-  const midpoint = Math.ceil(catButtons.length / 2);
+  const leadingCount = 15;
   if (split !== gridsAreSplit) {
-    $("#leading-grid").replaceChildren(...(split ? catButtons.slice(0, midpoint) : []));
-    $("#cat-grid").replaceChildren(...(split ? catButtons.slice(midpoint) : catButtons));
+    $("#leading-grid").replaceChildren(...(split ? catButtons.slice(0, leadingCount) : []));
+    $("#cat-grid").replaceChildren(...(split ? catButtons.slice(leadingCount) : catButtons), adSlot);
     gridsAreSplit = split;
   }
-  $("#leading-range").textContent = `01–${midpoint}`;
-  $("#trailing-range").textContent = `${midpoint + 1}–${catButtons.length}`;
+  adSlot.hidden = state.layout !== "dual-grid";
+  $("#leading-range").textContent = `01–${leadingCount}`;
+  $("#trailing-range").textContent = `${leadingCount + 1}–${catButtons.length}`;
   $("#trailing-range").hidden = !split;
   $("#gallery-title").textContent = split
     ? { en: "More meows", "zh-Hans": "更多猫叫", ja: "もっとニャー" }[state.language]
@@ -103,7 +105,7 @@ function applyLayout(retainScroll = true) {
     ? "一边展示已选猫咪，一边选择声音。"
     : !split ? "闭合与分屏时合为一个列表，滚动选择 27 个猫叫。"
     : state.text === "large" ? "辅助大字号保留滚动，让图标和文字保持清晰。"
-    : "27 个猫叫全部可见。点猫播放，再点一次重播。";
+    : "一屏放满 15 个猫叫；另一屏放 12 个，最后一整行留给广告。";
   $("#dimensions").textContent = `${pose.width} × ${pose.height} pt · 设计尺寸`;
   document.querySelectorAll("button[data-pose]").forEach((button) => {
     button.setAttribute("aria-pressed", String(button.dataset.pose === state.pose));
@@ -147,6 +149,14 @@ function updateSelected() {
 
 function translate() {
   $("#screen").lang = state.language;
+  const adCopy = {
+    en: { badge: "Ad", placeholder: "Banner ad" },
+    "zh-Hans": { badge: "广告", placeholder: "横幅广告位" },
+    ja: { badge: "広告", placeholder: "バナー広告枠" },
+  }[state.language];
+  $("#ad-badge").textContent = adCopy.badge;
+  $("#ad-placeholder").textContent = adCopy.placeholder;
+  adSlot.setAttribute("aria-label", adCopy.placeholder);
   document.querySelectorAll("[data-copy]").forEach((element) => {
     element.textContent = copy(element.dataset.copy);
   });
@@ -224,7 +234,7 @@ async function initialize() {
     button.addEventListener("click", () => play(sound.id));
     return button;
   });
-  $("#cat-grid").replaceChildren(...catButtons);
+  $("#cat-grid").replaceChildren(...catButtons, adSlot);
 
   document.querySelectorAll("button[data-pose]").forEach((button) => {
     button.addEventListener("click", () => { state.pose = button.dataset.pose; applyLayout(); });

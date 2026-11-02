@@ -162,10 +162,14 @@ tables, and prices from the local StoreKit configuration. Language, appearance,
 text size, and selection are preserved in the URL. Purchase and restore
 buttons show preview feedback only.
 
-The preview now defaults to a second design, `dual-grid`: the first 14 sounds
-appear in the leading pane and the other 13 in the trailing pane. At standard
-text size, each pane uses three columns and five rows in open/book poses, or
-five columns and three rows in tabletop. All 27 cards fit without scrolling.
+The preview now defaults to a second design, `dual-grid`: the first 15 sounds
+fill the leading pane, and the other 12 appear in the trailing pane. At standard
+text size, open/book poses use three columns and five rows per pane. The trailing
+pane's last row spans all three columns for an ad placeholder, aligned with the
+leading pane's last row of cats. In tabletop, the leading pane uses five columns
+and three rows; the trailing pane uses four columns and three rows, followed by
+a 50 px ad row. All 27 cards and the ad slot fit without scrolling. The preview
+does not request or display live ads.
 Tapping the selected card replays its sound, so this layout omits the separate
 replay strip. Both grids play audio through one player and keep one selection.
 Large text retains scrolling and the replay strip. Closed and split windows
@@ -173,9 +177,10 @@ merge all 27 cards into one scrolling list. The design switch restores the origi
 `spotlight` option for comparison. The selected design is also stored in the
 URL. This alternative is HTML-only until design review is complete.
 
-Browser checks confirmed that all 27 cards and their labels stay within the
-panes without scrolling in open, book, and tabletop poses in all three
-languages at standard text size. The smallest card was 110 by 108 CSS pixels
+Browser checks confirmed that all 27 cards, their labels, and the ad placeholder
+stay within the panes without scrolling in open, book, and tabletop poses in
+all three languages at standard text size. The ad row aligns with the last
+cat row in open and book poses. The smallest card was 110 by 108 CSS pixels
 in book pose and 121 by 89 in tabletop. Large text still allows scrolling
 and replay. These measurements describe the HTML mockup, not native hit targets.
 
