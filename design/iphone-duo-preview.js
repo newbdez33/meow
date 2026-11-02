@@ -93,14 +93,17 @@ function applyLayout(retainScroll = true) {
   device.dataset.layout = state.layout;
   device.dataset.theme = state.theme;
   device.dataset.text = state.text;
+  device.dataset.fit = String(split && state.text === "standard");
   device.style.setProperty("--screen-w", `${pose.width}px`);
   device.style.setProperty("--screen-h", `${pose.height}px`);
   $("#pose-caption").textContent = split
     ? (state.pose === "tabletop" ? "桌面 · 上下两屏都能点猫播放" : `${state.pose === "book" ? "书本" : "展开"} · 左右两屏都能点猫播放`)
     : pose.caption;
-  $("#layout-note").textContent = state.layout === "dual-grid"
-    ? "27 个猫叫分布两屏，分别滚动，共享播放状态；闭合时合为一个列表。"
-    : "一边展示已选猫咪，一边选择声音。";
+  $("#layout-note").textContent = state.layout !== "dual-grid"
+    ? "一边展示已选猫咪，一边选择声音。"
+    : !split ? "闭合与分屏时合为一个列表，滚动选择 27 个猫叫。"
+    : state.text === "large" ? "辅助大字号保留滚动，让图标和文字保持清晰。"
+    : "27 个猫叫全部可见。点猫播放，再点一次重播。";
   $("#dimensions").textContent = `${pose.width} × ${pose.height} pt · 设计尺寸`;
   document.querySelectorAll("button[data-pose]").forEach((button) => {
     button.setAttribute("aria-pressed", String(button.dataset.pose === state.pose));

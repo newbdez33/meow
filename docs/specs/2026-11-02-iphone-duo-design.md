@@ -163,11 +163,21 @@ text size, and selection are preserved in the URL. Purchase and restore
 buttons show preview feedback only.
 
 The preview now defaults to a second design, `dual-grid`: the first 14 sounds
-appear in the leading pane and the other 13 in the trailing pane. Both grids
-play audio through one player and keep one selection. Closed and split windows
-merge all 27 cards into one list. The design switch restores the original
+appear in the leading pane and the other 13 in the trailing pane. At standard
+text size, each pane uses three columns and five rows in open/book poses, or
+five columns and three rows in tabletop. All 27 cards fit without scrolling.
+Tapping the selected card replays its sound, so this layout omits the separate
+replay strip. Both grids play audio through one player and keep one selection.
+Large text retains scrolling and the replay strip. Closed and split windows
+merge all 27 cards into one scrolling list. The design switch restores the original
 `spotlight` option for comparison. The selected design is also stored in the
 URL. This alternative is HTML-only until design review is complete.
+
+Browser checks confirmed that all 27 cards and their labels stay within the
+panes without scrolling in open, book, and tabletop poses in all three
+languages at standard text size. The smallest card was 110 by 108 CSS pixels
+in book pose and 121 by 89 in tabletop. Large text still allows scrolling
+and replay. These measurements describe the HTML mockup, not native hit targets.
 
 System bars, folds, window sizes, and large text are design approximations.
 This page does not replace native device validation. Browser checks covered

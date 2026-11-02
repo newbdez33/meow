@@ -83,6 +83,14 @@
     .device[data-text="large"] .replay > img { display: none; }
     .device[data-text="large"] .replay-name { flex-basis: 100%; }
     .device[data-text="large"] .replay .replay-label { display: block; font-size: 34px; }
+    .device[data-fit="true"] { --fit-columns: 3; --fit-rows: 5; --cat-image: 56px; }
+    .device[data-fit="true"][data-pose="tabletop"] { --fit-columns: 5; --fit-rows: 3; --cat-image: 40px; }
+    .device[data-fit="true"] .sound-scroll { display: flex; flex-direction: column; overflow: hidden; }
+    .device[data-fit="true"] .gallery-heading { flex-shrink: 0; margin-bottom: 12px; }
+    .device[data-fit="true"] .cat-grid { flex: 1; min-height: 0; grid-template-columns: repeat(var(--fit-columns), minmax(0, 1fr)); grid-template-rows: repeat(var(--fit-rows), minmax(0, 1fr)); gap: 8px; }
+    .device[data-fit="true"] .cat { justify-content: center; min-height: 44px; padding: 6px; gap: 4px; border-radius: 18px; }
+    .device[data-fit="true"] .cat img { width: var(--cat-image); height: var(--cat-image); }
+    .device[data-fit="true"] .replay { display: none; }
     .system-bar { position: absolute; right: 0; top: 0; bottom: 0; width: var(--bar); display: flex; flex-direction: column; align-items: center; padding: 20px 10px; gap: 16px; border-left: 1px solid var(--line); }
     .clock { font-size: 14px; font-weight: 700; }
     .camera { width: 20px; height: 45px; background: #111; border: 1px solid #363636; border-radius: 18px; }
@@ -141,7 +149,7 @@
     <section class="intro"><div><h1>iPhone Duo · 设计确认</h1><p>点一只猫，听听它的声音。切换屏幕形态，继续刚才的选择。</p></div><span class="review-tag">可交互预览</span></section>
     <div class="comparison">
       <nav class="poses" aria-label="设计方案"><button data-layout="spotlight" aria-pressed="false">大猫展示</button><button data-layout="dual-grid" aria-pressed="true">双屏猫叫</button></nav>
-      <p id="layout-note">27 个猫叫分布两屏，分别滚动，共享播放状态。</p>
+      <p id="layout-note">27 个猫叫全部可见。点猫播放，再点一次重播。</p>
     </div>
     <div class="controls">
       <nav class="poses" aria-label="屏幕形态"><button data-pose="closed" aria-pressed="false">闭合</button><button data-pose="open" aria-pressed="true">展开</button><button data-pose="book" aria-pressed="false">书本</button><button data-pose="tabletop" aria-pressed="false">桌面</button><button data-pose="split-left" aria-pressed="false">左分屏</button><button data-pose="split-right" aria-pressed="false">右分屏</button></nav>
