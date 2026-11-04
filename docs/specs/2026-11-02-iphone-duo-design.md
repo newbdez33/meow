@@ -172,11 +172,16 @@ buttons show preview feedback only.
 The preview defaults to `dual-grid`: the first 15 sounds
 fill the leading pane, and the other 12 appear in the trailing pane. At standard
 text size, open/book poses use three columns and five rows per pane. The trailing
-pane's last row spans all three columns for an ad placeholder, aligned with the
+pane's last row spans all three columns for an ad slot, aligned with the
 leading pane's last row of cats. In tabletop, the leading pane uses five columns
 and three rows; the trailing pane uses four columns and three rows, followed by
 a 50 px ad row. All 27 cards and the ad slot fit without scrolling. The preview
-does not request or display live ads.
+does not request or display live ads. It shows a local 50 px sample banner
+centered in the ad row, matching the native banner's height limit. The ad
+preview control switches between the sample and a blank row; `ad=sample`
+and `ad=empty` preserve that choice in the URL. Compact layouts show the
+sample above the cat grid. The creative is marked as a sample in all three
+languages, and its action only shows preview feedback.
 Tapping the selected card replays its sound, so this layout omits the separate
 replay strip. Both grids play audio through one player and keep one selection.
 Large text retains scrolling and the replay strip. Closed and split windows
@@ -184,10 +189,13 @@ merge all 27 cards into one scrolling list. The design switch restores the origi
 `spotlight` option for comparison. The selected design is also stored in the
 URL. The native app now implements the dual-grid design with content-fit fallback.
 
-Browser checks confirmed that all 27 cards, their labels, and the ad placeholder
+Browser checks confirmed that all 27 cards, their labels, and the sample banner
 stay within the panes without scrolling in open, book, and tabletop poses in
 all three languages at standard text size. The ad row aligns with the last
-cat row in open and book poses. The smallest card was 110 by 108 CSS pixels
+cat row in open and book poses. Banner height is 50 CSS pixels in all nine
+pose/language combinations, with no text overflow. The blank state preserves
+row alignment after reload. Dark appearance and a 390 px page viewport were
+also checked. The smallest card was 110 by 108 CSS pixels
 in book pose and 121 by 89 in tabletop. Large text still allows scrolling
 and replay. These measurements describe the HTML mockup, not native hit targets.
 

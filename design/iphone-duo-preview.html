@@ -91,13 +91,20 @@
     .device[data-fit="true"] .cat { justify-content: center; min-height: 44px; padding: 6px; gap: 4px; border-radius: 18px; }
     .device[data-fit="true"] .cat img { width: var(--cat-image); height: var(--cat-image); }
     .device[data-fit="true"] .replay { display: none; }
-    .ad-slot { position: relative; grid-column: 1 / -1; min-width: 0; min-height: 72px; display: grid; place-items: center; padding: 12px; border: 1px dashed #cfc6c0; border-radius: 18px; background: #f5f3f0; color: #8a8078; text-align: center; }
-    .ad-badge { position: absolute; left: 10px; top: 8px; font-size: 10px; line-height: 1.2; }
-    .ad-placeholder { font-size: calc(14px * var(--text-scale)); line-height: 1.3; }
-    .device[data-theme="dark"] .ad-slot { border-color: #514a45; background: #211e1c; color: #b8ada5; }
-    .device[data-text="large"] .ad-slot { min-height: 110px; }
+    .ad-slot { grid-column: 1 / -1; min-width: 0; min-height: 50px; display: grid; align-items: center; }
+    .sound-scroll > .ad-slot { margin-bottom: 18px; }
+    .ad-creative { display: flex; align-items: center; gap: 9px; width: 100%; height: 50px; padding: 6px 8px; border: 1px solid #c7d9e6; border-radius: 6px; background: #eef6fb; color: #173b56; }
+    .ad-creative > img { width: 34px; height: 34px; object-fit: contain; flex-shrink: 0; }
+    .ad-copy { flex: 1; min-width: 0; }
+    .ad-eyebrow { display: flex; align-items: center; gap: 5px; font-size: 9px; line-height: 12px; color: #4a687d; }
+    .ad-badge { border: 1px solid currentColor; border-radius: 2px; padding: 0 3px; font-size: 8px; line-height: 11px; }
+    .ad-title { display: block; margin-top: 2px; font-size: 13px; line-height: 16px; font-weight: 650; white-space: nowrap; }
+    .ad-action { flex-shrink: 0; border: 0; border-radius: 4px; padding: 7px 10px; background: #246b9c; color: #fff; font-size: 12px; line-height: 16px; font-weight: 650; }
+    .device[data-theme="dark"] .ad-creative { border-color: #365166; background: #1c3040; color: #e5f3fd; }
+    .device[data-theme="dark"] .ad-eyebrow { color: #abc8db; }
+    .device[data-theme="dark"] .ad-action { background: #a9d8f5; color: #163b55; }
+    .ad-note { margin: 12px 0 0; color: #81716b; font-size: 12px; line-height: 1.6; }
     .device[data-fit="true"][data-pose="tabletop"] #cat-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)) 50px; }
-    .device[data-fit="true"][data-pose="tabletop"] .ad-slot { min-height: 50px; padding: 6px; border-radius: 12px; }
     .system-bar { position: absolute; right: 0; top: 0; bottom: 0; width: var(--bar); display: flex; flex-direction: column; align-items: center; padding: 20px 10px; gap: 16px; border-left: 1px solid var(--line); }
     .clock { font-size: 14px; font-weight: 700; }
     .camera { width: 20px; height: 45px; background: #111; border: 1px solid #363636; border-radius: 18px; }
@@ -146,7 +153,7 @@
     dialog::backdrop { background: #181314cc; }
     dialog img { max-width: 100%; max-height: 82vh; display: block; margin: 10px auto 0; object-fit: contain; }
     dialog button { float: right; border: 0; background: #eae2db; border-radius: 20px; padding: 9px 16px; }
-    @media (max-width: 700px) { .page { padding: 20px 16px 28px; } .brand span { display: none; } .intro { margin-top: 24px; } .review-tag { display: none; } .controls { justify-content: flex-start; } .poses { width: 100%; } .poses button { flex: 1 0 auto; padding: 9px 11px; } .settings { width: 100%; } .settings select { flex: 1; min-width: 0; } .captures { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 700px) { .page { padding: 20px 16px 28px; } .brand span { display: none; } .intro { margin-top: 24px; } .review-tag { display: none; } .controls { justify-content: flex-start; } .poses { width: 100%; } .poses button { flex: 1 0 auto; padding: 9px 11px; } .settings { width: 100%; } .settings select { flex: 1; min-width: 100px; } .captures { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     @media (prefers-reduced-motion: no-preference) { .cat { transition: background .16s, box-shadow .16s; } }
   </style>
 </head>
@@ -160,8 +167,9 @@
     </div>
     <div class="controls">
       <nav class="poses" aria-label="屏幕形态"><button data-pose="closed" aria-pressed="false">闭合</button><button data-pose="open" aria-pressed="true">展开</button><button data-pose="book" aria-pressed="false">书本</button><button data-pose="tabletop" aria-pressed="false">桌面</button><button data-pose="split-left" aria-pressed="false">左分屏</button><button data-pose="split-right" aria-pressed="false">右分屏</button></nav>
-      <div class="settings"><select id="language" aria-label="App 语言"><option value="zh-Hans">简体中文</option><option value="en">English</option><option value="ja">日本語</option></select><select id="theme" aria-label="App 外观"><option value="light">浅色</option><option value="dark">深色</option></select><select id="text-size" aria-label="App 字号"><option value="standard">标准字号</option><option value="large">辅助大字号</option></select><button class="reset" id="reset">重置</button></div>
+      <div class="settings"><select id="language" aria-label="App 语言"><option value="zh-Hans">简体中文</option><option value="en">English</option><option value="ja">日本語</option></select><select id="theme" aria-label="App 外观"><option value="light">浅色</option><option value="dark">深色</option></select><select id="text-size" aria-label="App 字号"><option value="standard">标准字号</option><option value="large">辅助大字号</option></select><select id="ad-state" aria-label="广告预览"><option value="sample">显示示例广告</option><option value="empty">广告位留白</option></select><button class="reset" id="reset">重置</button></div>
     </div>
+    <p class="ad-note" id="ad-note">50 pt 高的模拟横幅，居中放在预留广告行；不请求真实广告。</p>
     <div class="stage-caption"><span id="pose-caption">正在加载预览…</span><span id="dimensions"></span></div>
     <section class="stage" aria-label="交互设计稿"><div class="device-space" id="device-space"><div class="device" id="device" data-pose="open" data-theme="light" data-text="standard"><div class="screen" id="screen">
       <div class="app-panes">
@@ -172,7 +180,7 @@
             <div class="cat-grid" id="leading-grid"></div>
           </div>
         </section>
-        <section class="gallery" id="gallery" aria-labelledby="gallery-title"><div class="sound-scroll" id="sound-scroll"><div class="gallery-heading"><div class="gallery-title"><h2 id="gallery-title"></h2><span class="sound-range" id="trailing-range" hidden></span></div><p data-copy="soundboard_hint"></p></div><div class="cat-grid" id="cat-grid"><aside class="ad-slot" id="ad-slot" aria-label="广告展示位" hidden><span class="ad-badge" id="ad-badge">广告</span><span class="ad-placeholder" id="ad-placeholder">横幅广告位</span></aside></div></div><div class="replay" id="replay" hidden><img id="replay-image" alt=""><span class="replay-name" id="replay-name"></span><button id="replay-button" aria-label="再听一次"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10a9 9 0 1 1 1.5 8M3 4v6h6"/></svg><span class="replay-label" data-copy="soundboard_replay"></span></button></div></section>
+        <section class="gallery" id="gallery" aria-labelledby="gallery-title"><div class="sound-scroll" id="sound-scroll"><div class="gallery-heading"><div class="gallery-title"><h2 id="gallery-title"></h2><span class="sound-range" id="trailing-range" hidden></span></div><p data-copy="soundboard_hint"></p></div><div class="cat-grid" id="cat-grid"><aside class="ad-slot" id="ad-slot" aria-label="模拟广告"><div class="ad-creative" id="ad-creative"><img src="assets/tipCan.png" alt=""><div class="ad-copy"><div class="ad-eyebrow"><span class="ad-badge" id="ad-badge">广告</span><span id="ad-preview-label">示例素材</span></div><strong class="ad-title" id="ad-title">给猫咪加一份小惊喜</strong></div><button class="ad-action" id="ad-action" type="button">看看</button></div></aside></div></div><div class="replay" id="replay" hidden><img id="replay-image" alt=""><span class="replay-name" id="replay-name"></span><button id="replay-button" aria-label="再听一次"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10a9 9 0 1 1 1.5 8M3 4v6h6"/></svg><span class="replay-label" data-copy="soundboard_replay"></span></button></div></section>
       </div>
       <aside class="system-bar" aria-label="系统栏示意"><span class="clock" aria-hidden="true">9:41</span><span class="camera" aria-hidden="true"></span><span class="app-wordmark" data-copy="title"></span><div class="system-actions"><button class="glass-button" id="support-button" aria-label="去掉广告"><img src="assets/navCan.png" alt=""></button><button class="glass-button" id="share-button" aria-label="分享 App"><img src="assets/navCat.png" alt=""></button></div><span class="system-indicator" aria-hidden="true"></span></aside>
       <span class="home-indicator" aria-hidden="true"></span><span class="fold" aria-hidden="true"></span>

@@ -17,6 +17,7 @@ const state = {
   language: ["en", "zh-Hans", "ja"].includes(parameters.get("lang")) ? parameters.get("lang") : "zh-Hans",
   theme: parameters.get("theme") === "dark" ? "dark" : "light",
   text: parameters.get("text") === "large" ? "large" : "standard",
+  ad: parameters.get("ad") === "empty" ? "empty" : "sample",
   selected: null,
 };
 const device = $("#device");
@@ -40,7 +41,7 @@ function copy(key) {
 }
 
 function updateURL() {
-  const next = new URLSearchParams({ pose: state.pose, layout: state.layout, lang: state.language, theme: state.theme, text: state.text });
+  const next = new URLSearchParams({ pose: state.pose, layout: state.layout, lang: state.language, theme: state.theme, text: state.text, ad: state.ad });
   if (state.selected !== null) next.set("cat", String(state.selected));
   history.replaceState(null, "", `?${next}`);
 }
@@ -72,7 +73,10 @@ function arrangeGrids(split) {
     $("#cat-grid").replaceChildren(...(split ? catButtons.slice(leadingCount) : catButtons), adSlot);
     gridsAreSplit = split;
   }
-  adSlot.hidden = state.layout !== "dual-grid";
+  if (split) $("#cat-grid").append(adSlot);
+  else scrollArea.insertBefore(adSlot, $("#cat-grid"));
+  adSlot.hidden = state.ad === "empty" && !(split && state.text === "standard");
+  $("#ad-creative").hidden = state.ad === "empty";
   $("#leading-range").textContent = `01–${leadingCount}`;
   $("#trailing-range").textContent = `${leadingCount + 1}–${catButtons.length}`;
   $("#trailing-range").hidden = !split;
@@ -116,6 +120,10 @@ function applyLayout(retainScroll = true) {
   $("#language").value = state.language;
   $("#theme").value = state.theme;
   $("#text-size").value = state.text;
+  $("#ad-state").value = state.ad;
+  $("#ad-note").textContent = state.ad === "sample"
+    ? (split ? "50 pt 高的模拟横幅，居中放在预留广告行；不请求真实广告。" : "50 pt 高的模拟横幅，放在猫咪列表上方；不请求真实广告。")
+    : "当前隐藏示例广告；双屏标准字号保留广告行，方便对照空白效果。";
   const replay = $("#replay");
   const parent = state.text === "large" ? scrollArea : $("#gallery");
   if (replay.parentNode !== parent) parent.append(replay);
@@ -150,13 +158,15 @@ function updateSelected() {
 function translate() {
   $("#screen").lang = state.language;
   const adCopy = {
-    en: { badge: "Ad", placeholder: "Banner ad" },
-    "zh-Hans": { badge: "广告", placeholder: "横幅广告位" },
-    ja: { badge: "広告", placeholder: "バナー広告枠" },
+    en: { badge: "Ad", preview: "Sample creative", title: "A little treat for your cat", action: "View" },
+    "zh-Hans": { badge: "广告", preview: "示例素材", title: "给猫咪加一份小惊喜", action: "看看" },
+    ja: { badge: "広告", preview: "サンプル", title: "猫に小さなごほうびを", action: "見る" },
   }[state.language];
   $("#ad-badge").textContent = adCopy.badge;
-  $("#ad-placeholder").textContent = adCopy.placeholder;
-  adSlot.setAttribute("aria-label", adCopy.placeholder);
+  $("#ad-preview-label").textContent = adCopy.preview;
+  $("#ad-title").textContent = adCopy.title;
+  $("#ad-action").textContent = adCopy.action;
+  adSlot.setAttribute("aria-label", `${adCopy.badge} · ${adCopy.preview}`);
   document.querySelectorAll("[data-copy]").forEach((element) => {
     element.textContent = copy(element.dataset.copy);
   });
@@ -250,6 +260,10 @@ async function initialize() {
   $("#language").addEventListener("change", (event) => { state.language = event.target.value; translate(); applyLayout(); });
   $("#theme").addEventListener("change", (event) => { state.theme = event.target.value; applyLayout(); });
   $("#text-size").addEventListener("change", (event) => { state.text = event.target.value; applyLayout(); });
+  $("#ad-state").addEventListener("change", (event) => { state.ad = event.target.value; applyLayout(false); });
+  $("#ad-action").addEventListener("click", () => {
+    $("#preview-status").textContent = "这是模拟广告，仅用于确认横幅尺寸和位置，不会打开广告网站。";
+  });
   $("#replay-button").addEventListener("click", () => { if (state.selected !== null) play(state.selected); });
   $("#reset").addEventListener("click", () => {
     ++playAttempt;
