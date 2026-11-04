@@ -7,6 +7,52 @@ final class SoundboardLayoutTests: XCTestCase {
         super.tearDown()
     }
 
+    func testExpandedLayoutShowsEveryCatWithoutScrolling() throws {
+        guard UIDevice.current.userInterfaceIdiom == .pad else {
+            throw XCTSkip("The expanded layout requires a regular-width window")
+        }
+        let app = launch()
+        XCTAssertTrue(app.buttons["cat-0"].waitForExistence(timeout: 15), app.debugDescription)
+        for orientation in [UIDeviceOrientation.portrait, .landscapeLeft] {
+            XCUIDevice.shared.orientation = orientation
+            let ready = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+                let frame = app.windows.firstMatch.frame
+                return (frame.width > frame.height) == (orientation == .landscapeLeft)
+                    && app.otherElements["fittedLeadingGrid"].exists
+                    && app.otherElements["fittedTrailingGrid"].exists
+            }, object: app)
+            let result = XCTWaiter.wait(for: [ready], timeout: 5)
+            let capture = XCTAttachment(screenshot: app.screenshot())
+            capture.name = "Expanded soundboard \(orientation.rawValue)"
+            capture.lifetime = .keepAlways
+            add(capture)
+            XCTAssertEqual(result, .completed,
+                           "Both panes must use the fitted layout after rotation")
+            for id in 0..<27 {
+                let cat = app.buttons["cat-\(id)"]
+                XCTAssertTrue(cat.isHittable, "Cat \(id) must fit without scrolling")
+                XCTAssertTrue(app.windows.firstMatch.frame.contains(cat.frame),
+                              "Cat \(id) must stay inside the window")
+            }
+            if orientation == .landscapeLeft {
+                for row in 0..<4 {
+                    let leading = app.buttons["cat-\(row * 3)"].frame
+                    let trailing = app.buttons["cat-\(15 + row * 3)"].frame
+                    XCTAssertEqual(leading.minY, trailing.minY, accuracy: 1)
+                    XCTAssertEqual(leading.height, trailing.height, accuracy: 1,
+                                   "The ad row must stay reserved when ads are disabled")
+                }
+            }
+            for id in [14, 26] {
+                let cat = app.buttons["cat-\(id)"]
+                cat.tap()
+                XCTAssertTrue(cat.isSelected)
+                cat.tap()
+                XCTAssertTrue(cat.isSelected)
+            }
+        }
+    }
+
     func testSelectionAndReplaySurviveRotation() throws {
         let app = launch()
         let cat = app.buttons["cat-4"]
@@ -17,10 +63,15 @@ final class SoundboardLayoutTests: XCTestCase {
         for orientation in [UIDeviceOrientation.landscapeLeft, .portrait] {
             XCUIDevice.shared.orientation = orientation
             let replay = app.buttons["replaySound"]
-            XCTAssertTrue(replay.waitForExistence(timeout: 5))
-            XCTAssertTrue(replay.isHittable)
-            replay.tap()
-            XCTAssertEqual(app.staticTexts["selectedSoundName"].label, "I'm cute")
+            if replay.exists {
+                XCTAssertTrue(waitForHittable(replay))
+                replay.tap()
+                XCTAssertEqual(app.staticTexts["selectedSoundName"].label, "I'm cute")
+            } else {
+                XCTAssertTrue(waitForHittable(cat))
+                cat.tap()
+            }
+            XCTAssertTrue(cat.isSelected)
         }
     }
 
@@ -48,6 +99,9 @@ final class SoundboardLayoutTests: XCTestCase {
     }
 
     func testScrollPositionSurvivesRotation() throws {
+        guard UIDevice.current.userInterfaceIdiom != .pad else {
+            throw XCTSkip("The expanded grid does not scroll at standard text size")
+        }
         let app = launch()
         let grid = app.scrollViews["soundGrid"]
         XCTAssertTrue(grid.waitForExistence(timeout: 15))
@@ -86,7 +140,12 @@ final class SoundboardLayoutTests: XCTestCase {
         XCUIDevice.shared.orientation = .landscapeLeft
         XCTAssertTrue(restore.waitForExistence(timeout: 5))
         app.buttons["closeTip"].tap()
-        XCTAssertEqual(app.staticTexts["selectedSoundName"].label, "I'm Good")
+        XCTAssertTrue(cat.isSelected)
+    }
+
+    private func waitForHittable(_ element: XCUIElement) -> Bool {
+        let ready = XCTNSPredicateExpectation(predicate: NSPredicate(format: "hittable == true"), object: element)
+        return XCTWaiter.wait(for: [ready], timeout: 5) == .completed
     }
 
     private func launch(largeText: Bool = false) -> XCUIApplication {

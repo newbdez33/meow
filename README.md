@@ -11,25 +11,25 @@ to hear its sound: purring, snoring, hissing, a kitten, or even a lion.
 The Android version, a native Kotlin + Jetpack Compose port, lives in
 [android/](android/README.md).
 
-Version **2.1 (build 5)** has passed App Review, confirmed on September 29,
-2026. Release history and remaining checks are in [TODO.md](TODO.md).
+**iOS 2.2 (6)** is live on the App Store, confirmed on November 4, 2026.
+The Duo layout is available in **TestFlight 2.3 (7)** for the Internal group.
+See the [Duo design and validation record](docs/specs/2026-11-02-iphone-duo-design.md).
 
-Widget release status, checked on October 4, 2026 at 11:03 JST:
-**Android 1.1 (3)** is live on Google Play in 178 countries and regions.
-**iOS 2.2 (6)** is available in TestFlight and is waiting for App Review,
-with automatic release after approval. See the [release and validation
-record](docs/specs/2026-10-03-widget-design.md#production-review-submission-2026-10-04).
+**Android 1.1 (3)** was confirmed live on Google Play in 178 countries and
+regions on October 4, 2026. The [widget release record](docs/specs/2026-10-03-widget-design.md#production-review-submission-2026-10-04)
+and [TODO.md](TODO.md) contain the release history and remaining checks.
 
 ## Features
 
 - 27 illustrated cats with bundled sounds. Playback works offline.
-- An adaptive soundboard: a compact grid, or a cat spotlight beside the grid
-  on wider displays. iPhone Duo uses the system fold-aware arrangement on
-  iOS 27.1+. Selection stays with the soundboard; iOS 17+ also retains the
-  visible grid item during layout changes.
+- An adaptive soundboard: one compact grid, or two panes with 15 and 12 cats
+  and a reserved ad row. Standard text fits without scrolling when space
+  allows; large text keeps scrolling and replay. iPhone Duo uses the system
+  fold-aware arrangement on iOS 27.1+. Selection survives layout changes,
+  and iOS 17+ also retains scroll anchors.
 - Home-screen widgets with independent sound and character choices: iOS 17+
-  System Small and resizable Android widgets. Live on Android and available
-  in iOS TestFlight; remaining device checks are tracked in [TODO.md](TODO.md).
+  System Small and resizable Android widgets. Available on both stores;
+  remaining device checks are tracked in [TODO.md](TODO.md).
 - English, Simplified Chinese, and Japanese.
 - No account or sign-in required.
 - Banner ads with Google UMP consent and App Tracking Transparency support.

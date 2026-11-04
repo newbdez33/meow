@@ -3,55 +3,60 @@ import SwiftUI
 struct SoundboardView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.verticalSizeClass) private var verticalSizeClass
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
-    // Both values belong to the soundboard, so changing the pane layout keeps them.
     @State private var selectedSound: CatSound?
     @State private var visibleSoundID: Int?
+    @State private var leadingSoundID: Int?
+    @State private var trailingSoundID: Int?
+
+    private var isExpanded: Bool {
+        horizontalSizeClass == .regular && verticalSizeClass != .compact
+    }
 
     var body: some View {
         Group {
-            if horizontalSizeClass == .regular && verticalSizeClass != .compact {
+            if isExpanded {
                 expanded
             } else {
-                gallery
+                SoundGallery(pane: .all, stacked: false, selectedSound: selectedSound,
+                             visibleSoundID: $visibleSoundID, play: play)
             }
         }
         .background(Color(uiColor: .systemBackground))
+        .onChange(of: isExpanded) { expanded in
+            if !expanded {
+                visibleSoundID = selectedSound?.id ?? trailingSoundID ?? leadingSoundID
+            }
+        }
     }
 
-    @ViewBuilder
     private var expanded: some View {
-        if #available(iOS 27.1, *) {
-            ArrangementView {
-                CatSpotlight(sound: selectedSound)
-            } secondary: {
-                gallery
-            }
-            .arrangementViewStyle(.split)
-        } else {
-            GeometryReader { geometry in
-                if geometry.size.width > geometry.size.height {
-                    HStack(spacing: 0) {
-                        CatSpotlight(sound: selectedSound)
-                        gallery
-                    }
-                } else {
-                    VStack(spacing: 0) {
-                        CatSpotlight(sound: selectedSound)
-                        gallery
-                    }
+        GeometryReader { geometry in
+            let stacked = geometry.size.height > geometry.size.width
+            if #available(iOS 27.1, *) {
+                ArrangementView {
+                    pane(.leading, stacked: stacked, visibleSoundID: $leadingSoundID)
+                } secondary: {
+                    pane(.trailing, stacked: stacked, visibleSoundID: $trailingSoundID)
+                }
+                .arrangementViewStyle(.split)
+            } else if stacked {
+                VStack(spacing: 0) {
+                    pane(.leading, stacked: true, visibleSoundID: $leadingSoundID)
+                    pane(.trailing, stacked: true, visibleSoundID: $trailingSoundID)
+                }
+            } else {
+                HStack(spacing: 0) {
+                    pane(.leading, stacked: false, visibleSoundID: $leadingSoundID)
+                    pane(.trailing, stacked: false, visibleSoundID: $trailingSoundID)
                 }
             }
         }
     }
 
-    private var gallery: some View {
-        SoundGallery(selectedSound: selectedSound, visibleSoundID: $visibleSoundID, play: play)
-            .safeAreaInset(edge: .bottom, spacing: 0) {
-                if !dynamicTypeSize.isAccessibilitySize, let selectedSound {
-                    ReplaySound(sound: selectedSound) { play(selectedSound) }
-                }
-            }
+    private func pane(_ pane: SoundPane, stacked: Bool, visibleSoundID: Binding<Int?>) -> some View {
+        SoundGallery(pane: pane, stacked: stacked, selectedSound: selectedSound,
+                     visibleSoundID: visibleSoundID, play: play)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     private func play(_ sound: CatSound) {
@@ -60,14 +65,118 @@ struct SoundboardView: View {
     }
 }
 
+private enum SoundPane {
+    case all, leading, trailing
+
+    var sounds: [CatSound] {
+        switch self {
+        case .all: return CatSound.all
+        case .leading: return Array(CatSound.all.prefix(15))
+        case .trailing: return Array(CatSound.all.dropFirst(15))
+        }
+    }
+
+    var title: LocalizedStringKey {
+        self == .trailing ? "soundboard_more" : "soundboard_title"
+    }
+
+    var scrollIdentifier: String {
+        self == .leading ? "leadingSoundGrid" : "soundGrid"
+    }
+}
+
 private struct SoundGallery: View {
+    let pane: SoundPane
+    let stacked: Bool
     let selectedSound: CatSound?
     @Binding var visibleSoundID: Int?
     let play: (CatSound) -> Void
     @ScaledMetric(relativeTo: .caption) private var minimumCellWidth = 104.0
+    @ScaledMetric(relativeTo: .caption) private var fittedCellWidth = 100.0
+    @ScaledMetric(relativeTo: .caption) private var fittedRowHeight = 96.0
+    @ScaledMetric(relativeTo: .caption) private var stackedRowHeight = 88.0
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
+        if #available(iOS 16.0, *), pane != .all, !dynamicTypeSize.isAccessibilitySize {
+            ViewThatFits {
+                fittedContent
+                scrollingGallery
+            }
+        } else {
+            scrollingGallery
+        }
+    }
+
+    private var heading: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack(alignment: .firstTextBaseline) {
+                Text(pane.title)
+                    .font(.system(.title2, design: .rounded).bold())
+                    .accessibilityAddTraits(.isHeader)
+                Spacer(minLength: 8)
+                if pane != .all, let first = pane.sounds.first, let last = pane.sounds.last {
+                    Text("\(first.id + 1)–\(last.id + 1)")
+                        .font(.caption2.monospacedDigit())
+                        .foregroundColor(.secondary)
+                        .accessibilityHidden(true)
+                }
+            }
+            Text("soundboard_hint")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+        }
+        .fixedSize(horizontal: false, vertical: true)
+    }
+
+    private var fittedColumns: Int {
+        stacked ? (pane == .leading ? 5 : 4) : 3
+    }
+
+    private var fittedContent: some View {
+        let columns = fittedColumns
+        let sounds = pane.sounds
+        let rows = (sounds.count + columns - 1) / columns
+        let minimumHeight = stacked ? stackedRowHeight : fittedRowHeight
+        return VStack(alignment: .leading, spacing: 12) {
+            heading
+            VStack(spacing: 8) {
+                ForEach(0..<rows, id: \.self) { row in
+                    HStack(spacing: 8) {
+                        ForEach(Array(sounds.dropFirst(row * columns).prefix(columns))) { sound in
+                            catButton(sound, fittedImageHeight: stacked ? 40 : 48)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        }
+                    }
+                    .frame(minHeight: minimumHeight, maxHeight: .infinity)
+                }
+                if pane == .trailing {
+                    // Keep the last row aligned while consent, ad loading, or purchases change.
+                    Color.clear
+                        .overlay { Banner() }
+                        .frame(maxWidth: .infinity)
+                        .frame(minHeight: stacked ? 50 : minimumHeight,
+                               maxHeight: stacked ? 50 : .infinity)
+                }
+            }
+            .frame(minWidth: CGFloat(columns) * fittedCellWidth + CGFloat(columns - 1) * 8)
+        }
+        .padding(16)
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier(pane == .leading ? "fittedLeadingGrid" : "fittedTrailingGrid")
+    }
+
+    private var scrollingGallery: some View {
+        positionedScroll
+            .safeAreaInset(edge: .bottom, spacing: 0) {
+                if !dynamicTypeSize.isAccessibilitySize, let sound = replaySound {
+                    ReplaySound(sound: sound) { play(sound) }
+                }
+            }
+    }
+
+    @ViewBuilder
+    private var positionedScroll: some View {
         if #available(iOS 17.0, *) {
             scrollContent
                 .scrollPosition(id: Binding(
@@ -79,91 +188,46 @@ private struct SoundGallery: View {
         }
     }
 
+    private var replaySound: CatSound? {
+        guard let selectedSound, pane.sounds.contains(selectedSound) else { return nil }
+        return selectedSound
+    }
+
     private var scrollContent: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("soundboard_title")
-                        .font(.system(.title2, design: .rounded).bold())
-                        .accessibilityAddTraits(.isHeader)
-                    Text("soundboard_hint")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                }
-
-                Banner()
-
+                heading
+                if pane == .all { Banner() }
                 if #available(iOS 17.0, *) {
                     grid.scrollTargetLayout()
                 } else {
                     grid
                 }
-
-                // Large text must scroll with the grid instead of consuming a short pane.
-                if dynamicTypeSize.isAccessibilitySize, let selectedSound {
-                    ReplaySound(sound: selectedSound) { play(selectedSound) }
+                if pane == .trailing { Banner() }
+                if dynamicTypeSize.isAccessibilitySize, let sound = replaySound {
+                    ReplaySound(sound: sound) { play(sound) }
                 }
             }
             .padding(16)
         }
-        .accessibilityIdentifier("soundGrid")
+        .accessibilityIdentifier(pane.scrollIdentifier)
     }
 
     private var grid: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: minimumCellWidth), spacing: 12)], spacing: 12) {
-            ForEach(CatSound.all) { sound in
-                Button { play(sound) } label: {
-                    Cat(sound: sound, selected: sound == selectedSound)
-                }
-                .buttonStyle(.plain)
-                .accessibilityIdentifier("cat-\(sound.id)")
-                .accessibilityLabel(Text(sound.titleKey))
-                .accessibilityHint(Text("soundboard_play_hint"))
-                .accessibilityAddTraits(sound == selectedSound ? .isSelected : [])
-            }
+            ForEach(pane.sounds) { sound in catButton(sound) }
         }
     }
-}
 
-private struct CatSpotlight: View {
-    let sound: CatSound?
-
-    var body: some View {
-        GeometryReader { geometry in
-            ScrollView {
-                VStack(spacing: 18) {
-                    ZStack {
-                        Circle()
-                            .fill(Color("lightYellow"))
-                            .frame(width: 168, height: 168)
-                        Image(sound?.imageName ?? "c04")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 112, height: 112)
-                    }
-                    .accessibilityHidden(true)
-
-                    VStack(spacing: 8) {
-                        Text(sound == nil ? "soundboard_welcome" : "soundboard_selected")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                        Text(sound?.titleKey ?? "soundboard_welcome_title")
-                            .font(.system(.largeTitle, design: .rounded).bold())
-                            .fixedSize(horizontal: false, vertical: true)
-                        Text("soundboard_hint")
-                            .font(.body)
-                            .foregroundColor(.secondary)
-                    }
-                    .multilineTextAlignment(.center)
-                }
-                .padding(24)
-                .frame(maxWidth: .infinity)
-                .frame(minHeight: max(0, geometry.size.height))
-            }
-            .background(Color("lightPink"), in: RoundedRectangle(cornerRadius: 32, style: .continuous))
+    private func catButton(_ sound: CatSound, fittedImageHeight: CGFloat? = nil) -> some View {
+        Button { play(sound) } label: {
+            Cat(sound: sound, selected: sound == selectedSound, fittedImageHeight: fittedImageHeight)
         }
-        .padding(16)
-        .accessibilityIdentifier("catSpotlight")
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("cat-\(sound.id)")
+        .accessibilityLabel(Text(sound.titleKey))
+        .accessibilityHint(Text("soundboard_play_hint"))
+        .accessibilityAddTraits(sound == selectedSound ? .isSelected : [])
     }
 }
 

@@ -2,57 +2,52 @@
 
 ## Design
 
-Keep the one-tap soundboard on a compact display. Use the extra space on a
-regular-width display for a cat spotlight, with the sound grid beside it or
-below it. The original 27 cats, sounds, coral accent, and pink and yellow
-surfaces remain the visual identity.
+Keep the one-tap soundboard on a compact display. On a regular-width display,
+put the first 15 cats in the leading pane and the remaining 12 in the trailing
+pane. Reserve the trailing pane's last row for the banner. The original 27
+cats, audio files, coral accent, and pink and yellow surfaces are unchanged.
 
 | Available space | Presentation |
 | --- | --- |
-| Compact width or compact height | Scrollable sound grid with a selected-sound replay control |
-| Regular width and height, wide | Cat spotlight on the leading side; grid and replay on the trailing side |
-| Regular width and height, tall | Cat spotlight above; grid and replay below |
-| Active fold on iOS 27.1+ | System split arrangement assigns each pane a region outside the fold |
-| Accessibility text sizes | Scaled grid columns, wrapping labels, and replay inside the scroll view |
+| Compact width or compact height | One scrolling grid with a selected-sound replay control |
+| Regular width and height, wide | Two grids with three columns and five rows; the trailing ad spans the last row |
+| Regular width and height, tall | A five-column leading grid above a four-column trailing grid and a 50-point ad row |
+| Active fold on iOS 27.1+ | System split arrangement places each pane outside the fold |
+| Small panes or accessibility text | Scrolling grids with wrapping labels and a replay control |
 
-The spotlight shows the **selected** sound. It does not claim that a short
-clip is still playing after playback ends. Tapping any cat plays it
-immediately; replay is also available on the compact display. The spotlight
-has no separate action, so the upper pane stays passive in tabletop use.
+At standard text size, both grids fit without scrolling when the panes have
+sufficient space. Tapping any cat plays it immediately; tapping it again
+replays it. Fitted layouts omit the separate replay strip. `ViewThatFits`
+selects the scrolling layout when the content cannot fit, and accessibility
+text sizes always use that layout. iOS 15 also uses scrolling grids.
 
-`SoundboardView` owns the selection and visible item ID above its layout
-branches. The audio player remains in `Sounds.shared`. Layout changes do not
-start or stop audio. On iOS 17+, `scrollPosition` tracks stable cat IDs;
-temporary nil positions during layout replacement do not erase the anchor.
-iOS 15 and 16 keep selection but do not track a grid scroll anchor.
+`SoundboardView` owns the selection and each pane's visible item ID above
+its layout branches. `Sounds.shared` remains the single audio owner. Layout
+changes do not start or stop audio. On iOS 17+, `scrollPosition` tracks stable
+cat IDs; temporary nil positions do not erase the anchor. When the window
+becomes compact, the selected cat becomes the scroll anchor. iOS 15 and 16
+keep selection but do not track scroll positions.
 
 ## Implementation
 
-- Use `NavigationStack` on iOS 16+ and retain a stack-style `NavigationView`
-  on iOS 15. The deployment target stays at iOS 15.
-- Use `ArrangementView` with the split style on iOS 27.1+. The primary pane
-  is the passive spotlight; the secondary pane has the grid and replay.
-  The arrangement is only used with regular width and noncompact height.
-  Earlier systems choose horizontal or vertical stacks from current view
-  bounds. No device model, screen size, or hinge angle drives layout.
-- Replace the old manually chunked rows with `LazyVGrid`, scaled minimum
-  cell widths, stable IDs, and selection traits for VoiceOver.
-- Keep foreground content inside the safe area. Remove the bottom-edge
-  override and the `UIRequiresFullScreen` restriction.
-- Provide toolbar labels and images so the system can supply side controls
-  and overflow representations. Keep the existing separate glass buttons.
-- Keep share and support in system sheets. Add a standard close action to
-  the support sheet, and allow purchase labels to wrap.
-- Request inline adaptive ads at the gallery's actual width, with a 50-point
-  maximum height. Wait 300 ms after width changes before requesting a new
-  size. Consent and purchase checks still gate ad requests.
-- Localize new labels in English, Simplified Chinese, and Japanese. Use
-  existing artwork and adaptive colors; no new asset dependency is required.
-
-The previous main screen used `NavigationView`, ignored the bottom safe
-area, and expanded its custom grid across the whole display. Its banner was
-fixed at 320 points. Those assumptions are replaced in `ContentView.swift`,
-`SoundboardView.swift`, `Banner.swift`, and `Info.plist`.
+- Use `NavigationStack` on iOS 16+ and a stack-style `NavigationView` on
+  iOS 15. The app deployment target stays at iOS 15; widgets require iOS 17.
+- Use `ArrangementView` with the split style on iOS 27.1+, at regular width
+  and noncompact height. Earlier systems choose horizontal or vertical stacks
+  from the current view bounds. No device model or hinge angle drives layout.
+- Use stable cat IDs, scaled minimum cell sizes, and VoiceOver selection
+  traits. Fitted grids contain independent accessible buttons. Scrolling
+  layouts use `LazyVGrid`.
+- Respect safe areas and allow resizable windows. Toolbar labels and images
+  support side controls and overflow; keep the separate glass buttons.
+- Keep share and support in system sheets. Add a close action to support
+  and allow purchase labels to wrap.
+- Request inline adaptive ads at the pane's actual width, with a 50-point
+  maximum height. Wait 300 ms after width changes before requesting another
+  size. Consent and purchase checks still gate requests. Fitted layouts
+  reserve the ad row while consent, ad loading, or purchase state changes.
+- Localize labels in English, Simplified Chinese, and Japanese. Reuse the
+  existing artwork and audio; no new asset dependency is required.
 
 ## SDK and sources
 
@@ -72,22 +67,34 @@ Primary references:
 - [ArrangementView](https://developer.apple.com/documentation/swiftui/arrangementview)
 - [SplitArrangementViewStyle](https://developer.apple.com/documentation/swiftui/splitarrangementviewstyle)
 
-## Validation on November 2, 2026
+## Validation on November 4, 2026
 
-Passed:
+Passed with Xcode 27.2 and the iOS 27.0 runtime:
 
-- Debug simulator build, including the new XCTest UI test bundle.
-- Unsigned Release device build.
-- Property list and localization syntax checks, and `git diff --check`.
-- Native launch and screenshot review on dedicated iOS 27.0 simulators:
-  iPhone 18 Pro in English, iPhone 18 Pro in Japanese at the largest
-  accessibility text size, iPad mini in English, and iPad mini in Chinese
-  with dark appearance.
+- `SoundboardLayoutTests` on iPhone 17e and iPad mini (A17 Pro): four
+  applicable tests passed on each device; one device-specific test was
+  skipped on each. Checks cover rotation, selection and replay, the last
+  cat at the largest accessibility size, compact scroll retention, and
+  support sheet dismissal.
+- The expanded-grid regression waits for rotation to finish, verifies
+  both fitted containers, and checks that all 27 buttons are hittable and
+  fully inside the window. A follow-up passed after reserving the empty ad
+  row, including row alignment checks with ads disabled.
+- All five `StoreTests` and six `WidgetTests` passed. An initial iPad
+  purchase-test run stalled; the bounded retry on iPhone passed.
+- Signed Release archive, app and extension versions **2.3 (7)**, signature
+  verification, plist/localization syntax checks, and `git diff --check`.
 
-The screenshots below show the native app. The iPad captures exercise the
-fallback stack layout on iOS 27.0. They are **not iPhone Duo pose captures**.
-They show initial states; tap, playback, rotation, and scroll restoration
-have not been verified through these captures.
+The no-scroll test first failed against the previous spotlight layout.
+Review then found that the iPad mini in landscape fell back to scrolling:
+reducing the fitted row minimum to 96 points made five rows fit. A separate
+clear container reserves the ad row even when `Banner` has no content.
+
+The native images below use the iOS 27.0 fallback stacks. They are **not
+Duo pose captures**. Ads are disabled for captures; blank space in the
+trailing pane is reserved for the banner. The compact English capture is
+from the November 2 review; the dual-grid captures and Japanese accessibility
+capture were refreshed on November 4.
 
 | Compact, English | Regular, English |
 | --- | --- |
@@ -97,51 +104,51 @@ have not been verified through these captures.
 | --- | --- |
 | ![Japanese accessibility layout](../../design/iphone-duo-review/compact-ja-accessibility.png) | ![Chinese dark layout](../../design/iphone-duo-review/regular-zh-dark.png) |
 
-### Execution limit
+### TestFlight 2.3 (7)
 
-XCTest execution was attempted but could not start. Xcode reports installed
-CoreSimulator **1171.7.0**, while it requires **1174.21.0**. It disables
-simulator destinations even though the existing iOS 27.0 runtime can launch
-the app through its installed `simctl`. Device Hub also timed out during
-Computer Use connection attempts. A local Maestro attempt could not get
-past simulator initialization. No UI test pass is claimed.
+The signed package was uploaded on November 4, 2026 at 21:26 JST. At
+21:31 JST, App Store Connect confirmed `VALID` processing status and
+`IN_BETA_TESTING` for the existing Internal group. English, Simplified
+Chinese, and Japanese test notes were saved and verified. Build ID:
+`b14a76cc-669f-4fcb-ad78-99f0e9ece24e`.
 
-No iPhone Duo / iOS 27.1+ simulator runtime was installed during this work.
-The native arrangement, vertical bar placement, and fold transitions are
-compiled but need runtime validation before release. Live adaptive ad fill
-also needs a device check; the screenshots use `-MeowNoAds`.
+[Open TestFlight in App Store Connect](https://appstoreconnect.apple.com/apps/826362662/testflight/ios).
+No production version was submitted for App Review. The public version
+remains 2.2 (6).
+
+The upload reported missing dSYMs for the prebuilt Google Mobile Ads and
+User Messaging Platform frameworks. App and widget dSYMs are present;
+the third-party symbol warnings did not block delivery.
+
+### Runtime limits
+
+No iPhone Duo / iOS 27.1+ runtime is installed. The native arrangement and
+vertical bars compile, but fold transitions, side controls, Split View,
+live adaptive ad fill, and the iOS 15 fallback still need device checks.
+The earlier CoreSimulator mismatch no longer prevents XCTest execution.
 
 ### Reproduction
 
-```sh
-xcodebuild build-for-testing \
-  -project meow.xcodeproj -scheme meow \
-  -destination 'generic/platform=iOS Simulator' \
-  -derivedDataPath /tmp/meow-duo-build CODE_SIGNING_ALLOWED=NO
-
-xcodebuild build \
-  -project meow.xcodeproj -scheme meow -configuration Release \
-  -destination 'generic/platform=iOS' \
-  -derivedDataPath /tmp/meow-duo-build CODE_SIGNING_ALLOWED=NO
-```
-
-After the simulator components are updated, run the existing unit suite and
-the four new UI regressions on an iPhone and an iPad:
+Run on an iPhone and an iPad simulator:
 
 ```sh
 xcodebuild test \
   -project meow.xcodeproj -scheme meow \
   -destination 'platform=iOS Simulator,id=<SIMULATOR_UDID>' \
   -parallel-testing-enabled NO \
+  -test-timeouts-enabled YES \
+  -default-test-execution-time-allowance 90 \
+  -maximum-test-execution-time-allowance 90 \
   -only-testing:meowTests \
-  -only-testing:meowUITests/SoundboardLayoutTests \
-  -only-testing:meowUITests/TipSheetScreenshotTests
+  -only-testing:meowUITests/SoundboardLayoutTests
 ```
 
-`SoundboardLayoutTests` checks selection and replay through rotation, the
-last cat at large text sizes, scroll retention after rotation, and support
-sheet dismissal with selection retained. These tests compile but have not
-run in this environment.
+Private release records are in
+`~/Library/Developer/Meow/releases/2026-11-04-duo/`. The upload archive is
+`Meow-2.3-7.xcarchive`; `archive-upload.log` and `upload.log` record packaging
+and delivery. Passing result bundles are `iphone-ui-final.xcresult`,
+`ipad-fit-final.xcresult`, `ipad-ad-row.xcresult`, `unit-final.xcresult`, and
+`store-final.xcresult`. Test results and signing files are not committed.
 
 ### Interactive HTML review
 
@@ -162,7 +169,7 @@ tables, and prices from the local StoreKit configuration. Language, appearance,
 text size, and selection are preserved in the URL. Purchase and restore
 buttons show preview feedback only.
 
-The preview now defaults to a second design, `dual-grid`: the first 15 sounds
+The preview defaults to `dual-grid`: the first 15 sounds
 fill the leading pane, and the other 12 appear in the trailing pane. At standard
 text size, open/book poses use three columns and five rows per pane. The trailing
 pane's last row spans all three columns for an ad placeholder, aligned with the
@@ -175,7 +182,7 @@ replay strip. Both grids play audio through one player and keep one selection.
 Large text retains scrolling and the replay strip. Closed and split windows
 merge all 27 cards into one scrolling list. The design switch restores the original
 `spotlight` option for comparison. The selected design is also stored in the
-URL. This alternative is HTML-only until design review is complete.
+URL. The native app now implements the dual-grid design with content-fit fallback.
 
 Browser checks confirmed that all 27 cards, their labels, and the ad placeholder
 stay within the panes without scrolling in open, book, and tabletop poses in

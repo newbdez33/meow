@@ -19,14 +19,17 @@ struct CatSound: Identifiable, Equatable {
 struct Cat: View {
     let sound: CatSound
     var selected = false
+    var fittedImageHeight: CGFloat?
+
+    private var isFitted: Bool { fittedImageHeight != nil }
 
     var body: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: isFitted ? 4 : 10) {
             Image(sound.imageName)
                 .renderingMode(.original)
                 .resizable()
                 .scaledToFit()
-                .frame(height: 64)
+                .frame(height: fittedImageHeight ?? 64)
                 .accessibilityHidden(true)
             Text(sound.titleKey)
                 .font(.system(.caption, design: .rounded).weight(.semibold))
@@ -35,11 +38,11 @@ struct Cat: View {
                 .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: .infinity, minHeight: 32, alignment: .top)
         }
-        .padding(12)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .background(RoundedRectangle(cornerRadius: 24, style: .continuous)
+        .padding(isFitted ? 6 : 12)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: isFitted ? .center : .top)
+        .background(RoundedRectangle(cornerRadius: isFitted ? 18 : 24, style: .continuous)
             .fill(selected ? Color("lightYellow") : Color("lightPink")))
-        .overlay(RoundedRectangle(cornerRadius: 24, style: .continuous)
+        .overlay(RoundedRectangle(cornerRadius: isFitted ? 18 : 24, style: .continuous)
             .strokeBorder(selected ? Color(hex: 0xE76A66) : .clear, lineWidth: 2))
         .overlay(alignment: .topTrailing) {
             if selected {
