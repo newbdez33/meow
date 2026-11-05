@@ -1,119 +1,86 @@
 "use strict";
 
+function hingeCatPose(progress) {
+  const opening = Math.max(0, Math.min(1, (progress - 0.5) * 2));
+  const spread = opening * opening * (3 - 2 * opening);
+  const curl = Math.max(0, 1 - progress * 2);
+  const fold = 1 - spread;
+  const hipX = 252 - 40 * fold;
+  const pawX = 92 + 244 * spread - 6 * curl;
+  const pawY = 32 + 8 * spread - 2 * curl;
+  return {
+    bodyWidth: 285 - 48 * fold,
+    upper: { hip: [hipX, 102], paw: [pawX, pawY] },
+    lower: { hip: [hipX, 138], paw: [pawX, 240 - pawY] },
+  };
+}
+
 function createHingeCatRenderer(container) {
   const image = container.querySelector("img");
   const canvas = container.querySelector("canvas");
-  let draw;
+  const context = canvas.getContext("2d");
+  let ready = false;
   let progress = 0.5;
 
-  function showStill() {
-    draw = null;
+  // The fixed paw section keeps the pads round while the black leg changes length.
+  function drawLeg(pose, source) {
+    const [hx, hy] = pose.hip;
+    const [px, py] = pose.paw;
+    const scale = 0.21;
+    const dy = (source.paw[1] - source.hip[1]) * scale;
+    const distance = Math.hypot(px - hx, py - hy);
+    const dx = Math.sqrt(Math.max(1, distance * distance - dy * dy));
+    const angle = Math.atan2(py - hy, px - hx) - Math.atan2(dy, dx);
+    const left = (source.x - source.hip[0]) * scale;
+    const top = (source.y - source.hip[1]) * scale;
+    const pawLeft = dx - (source.paw[0] - source.split) * scale;
+    const height = source.height * scale;
+    const overlap = 12;
+    context.save();
+    context.translate(hx, hy);
+    context.rotate(angle);
+    context.drawImage(image, source.x, source.y,
+      source.split - source.x + overlap, source.height,
+      left, top, pawLeft - left + overlap * scale, height);
+    context.drawImage(image, source.split, source.y,
+      source.x + source.width - source.split, source.height,
+      pawLeft, top, (source.x + source.width - source.split) * scale, height);
+    context.restore();
+  }
+
+  function draw() {
+    if (!ready || !context) return;
+    const pose = hingeCatPose(progress);
+    context.setTransform(canvas.width / 400, 0, 0, canvas.height / 240, 0, 0);
+    context.clearRect(0, 0, 400, 240);
+    drawLeg(pose.upper, {
+      x: 678, y: 214, width: 528, height: 210,
+      hip: [750, 333], paw: [1110, 306], split: 940,
+    });
+    drawLeg(pose.lower, {
+      x: 62, y: 850, width: 512, height: 212,
+      hip: [137, 932], paw: [479, 981], split: 310,
+    });
+
+    // Keep the face and front paws fixed while the belly folds toward them.
+    const headWidth = 258 * 285 / 558;
+    context.drawImage(image, 42, 183, 258, 276, 40, 50, headWidth, 140);
+    context.drawImage(image, 300, 183, 300, 276,
+      40 + headWidth, 50, pose.bodyWidth - headWidth, 140);
+    container.dataset.renderer = "canvas";
+  }
+
+  container.dataset.renderer = "image";
+  image.decode().then(() => { ready = true; draw(); }).catch(() => {});
+  canvas.addEventListener("contextlost", () => {
+    ready = false;
     container.dataset.renderer = "image";
-  }
-
-  function initialize() {
-    const gl = canvas.getContext("webgl", { alpha: true, antialias: true });
-    if (!gl) return;
-
-    function compile(type, source) {
-      const shader = gl.createShader(type);
-      gl.shaderSource(shader, source);
-      gl.compileShader(shader);
-      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        throw new Error(gl.getShaderInfoLog(shader));
-      }
-      return shader;
-    }
-
-    const vertex = compile(gl.VERTEX_SHADER, `
-      attribute vec2 point;
-      uniform float fold;
-      varying vec2 uv;
-      vec2 paw(vec2 center, vec2 movement) {
-        vec2 offset = point - center;
-        float distance = length(offset / vec2(0.21, 0.38));
-        float weight = 1.0 - smoothstep(0.18, 1.0, distance);
-        weight *= smoothstep(0.06, 0.32, abs(point.y - 0.5));
-        return movement * weight;
-      }
-      void main() {
-        uv = point;
-        vec2 position = point;
-        position += fold * (
-          paw(vec2(0.215, 0.12), vec2(0.075, 0.13)) +
-          paw(vec2(0.205, 0.88), vec2(0.075, -0.13)) +
-          paw(vec2(0.845, 0.15), vec2(-0.075, 0.12)) +
-          paw(vec2(0.845, 0.87), vec2(-0.075, -0.12))
-        );
-        float body = smoothstep(0.25, 0.42, point.x)
-          * (1.0 - smoothstep(0.75, 0.9, point.x));
-        position.y = 0.5 + (position.y - 0.5) * (1.0 - 0.08 * fold * body);
-        gl_Position = vec4((position.x * 2.0 - 1.0) * 0.94,
-          (1.0 - position.y * 2.0) * 0.94, 0.0, 1.0);
-      }
-    `);
-    const fragment = compile(gl.FRAGMENT_SHADER, `
-      precision mediump float;
-      uniform sampler2D artwork;
-      varying vec2 uv;
-      void main() { gl_FragColor = texture2D(artwork, uv); }
-    `);
-    const program = gl.createProgram();
-    gl.attachShader(program, vertex);
-    gl.attachShader(program, fragment);
-    gl.linkProgram(program);
-    gl.deleteShader(vertex);
-    gl.deleteShader(fragment);
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-      throw new Error(gl.getProgramInfoLog(program));
-    }
-    gl.useProgram(program);
-
-    const points = [];
-    const columns = 64;
-    const rows = 32;
-    for (let row = 0; row < rows; row += 1) {
-      for (let column = 0; column < columns; column += 1) {
-        const x = column / columns;
-        const y = row / rows;
-        const right = (column + 1) / columns;
-        const bottom = (row + 1) / rows;
-        points.push(x, y, right, y, x, bottom, x, bottom, right, y, right, bottom);
-      }
-    }
-    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(points), gl.STATIC_DRAW);
-    const point = gl.getAttribLocation(program, "point");
-    gl.enableVertexAttribArray(point);
-    gl.vertexAttribPointer(point, 2, gl.FLOAT, false, 0, 0);
-    gl.bindTexture(gl.TEXTURE_2D, gl.createTexture());
-    gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-    gl.viewport(0, 0, canvas.width, canvas.height);
-    const fold = gl.getUniformLocation(program, "fold");
-    draw = () => {
-      const amount = Math.max(0, (progress - 0.5) * 2);
-      const spread = amount * amount * (3 - 2 * amount);
-      const curl = Math.max(0, 1 - progress * 2);
-      gl.uniform1f(fold, 1 - spread + curl * 0.15);
-      gl.clear(gl.COLOR_BUFFER_BIT);
-      gl.drawArrays(gl.TRIANGLES, 0, points.length / 2);
-    };
-    container.dataset.renderer = "webgl";
-    draw();
-  }
-
-  showStill();
-  canvas.addEventListener("webglcontextlost", showStill);
-  image.decode().then(initialize).catch(showStill);
+  });
+  canvas.addEventListener("contextrestored", () => { ready = true; draw(); });
 
   return (value) => {
-    progress = Math.max(0, Math.min(1, value));
+    progress = Number.isFinite(value) ? Math.max(0, Math.min(1, value)) : 0.5;
     container.dataset.renderedProgress = String(progress);
-    if (draw) draw();
+    draw();
   };
 }
