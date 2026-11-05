@@ -27,7 +27,6 @@ def export_preview(repo, destination):
     shutil.copy2(repo / "design/iphone-duo-preview.html", destination / "index.html")
     shutil.copy2(repo / "design/iphone-duo-preview.js", destination / "iphone-duo-preview.js")
     shutil.copy2(repo / "design/iphone-duo-play-lab.html", destination / "play-lab.html")
-    shutil.copy2(repo / "design/iphone-duo-play-lab.js", destination / "iphone-duo-play-lab.js")
 
     def copy_image(name, category=""):
         source = repo / "meow/Assets.xcassets" / category / f"{name}.imageset"

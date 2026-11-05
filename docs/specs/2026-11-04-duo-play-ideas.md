@@ -1,5 +1,9 @@
 # Meow play ideas for iPhone Duo
 
+> Superseded on November 5, 2026. The user rejected these separate play modes.
+> Use the [three-state hinge motion design](2026-11-05-duo-hinge-motion.md).
+> The old `/play-lab.html` link now opens that preview.
+
 ## Recommendation
 
 Start with **Meow Accordion**: two cat voices form a small instrument, and

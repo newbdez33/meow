@@ -1,19 +1,21 @@
 "use strict";
 
 const poses = {
-  closed: { width: 466, height: 678, caption: "闭合 · 一点即播的猫咪网格" },
-  open: { width: 951, height: 669, caption: "展开 · 左侧看猫咪，右侧选声音" },
-  book: { width: 951, height: 669, caption: "书本 · 两个窗格避开中央折痕" },
-  tabletop: { width: 669, height: 951, caption: "桌面 · 上方展示，下方操作" },
-  "split-left": { width: 475.5, height: 669, caption: "左分屏 · 操作栏位于左侧外缘" },
-  "split-right": { width: 475.5, height: 669, caption: "右分屏 · 操作栏位于右侧外缘" },
+  closed: { width: 466, height: 678, caption: "单屏 · 一张猫叫列表，照常点按播放" },
+  open: { width: 951, height: 669, caption: "全开 · 一个标题、一张完整网格，没有中间分隔" },
+  book: { width: 951, height: 669, caption: "半开 · 左右 split，小猫随开合伸懒腰" },
+  tabletop: { width: 669, height: 951, caption: "半开 · 上下 split，小猫随开合伸懒腰" },
 };
 
 const $ = (selector) => document.querySelector(selector);
 const parameters = new URLSearchParams(location.search);
+const initialPose = Object.hasOwn(poses, parameters.get("pose")) ? parameters.get("pose") : "book";
+const initialProgress = parameters.has("fold") ? Number(parameters.get("fold"))
+  : initialPose === "closed" ? 0 : initialPose === "open" ? 100 : 50;
 const state = {
-  pose: Object.hasOwn(poses, parameters.get("pose")) ? parameters.get("pose") : "open",
-  layout: parameters.get("layout") === "spotlight" ? "spotlight" : "dual-grid",
+  pose: initialPose,
+  axis: initialPose === "tabletop" || parameters.get("axis") === "tabletop" ? "tabletop" : "book",
+  progress: Number.isFinite(initialProgress) ? Math.max(0, Math.min(100, initialProgress)) : 50,
   language: ["en", "zh-Hans", "ja"].includes(parameters.get("lang")) ? parameters.get("lang") : "zh-Hans",
   theme: parameters.get("theme") === "dark" ? "dark" : "light",
   text: parameters.get("text") === "large" ? "large" : "standard",
@@ -27,6 +29,7 @@ const leadingScrollArea = $("#leading-scroll");
 const scrollAreas = [leadingScrollArea, scrollArea];
 const player = new Audio();
 player.preload = "none";
+const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
 let data;
 let scale = 1;
 let playAttempt = 0;
@@ -34,14 +37,14 @@ let sheetOpener;
 let catButtons = [];
 let gridsAreSplit = false;
 let activeScrollArea = scrollArea;
-const note = "HTML 交互稿 · 系统栏、折痕、广告与窗口尺寸为设计示意；原生截图见下方。";
+const note = "HTML 交互稿 · 三态布局和开合动画尚未加入 TestFlight；开合比例与系统栏均为设计示意。";
 
 function copy(key) {
   return data.strings[state.language][key] ?? key;
 }
 
 function updateURL() {
-  const next = new URLSearchParams({ pose: state.pose, layout: state.layout, lang: state.language, theme: state.theme, text: state.text, ad: state.ad });
+  const next = new URLSearchParams({ pose: state.pose, fold: state.progress, axis: state.axis, lang: state.language, theme: state.theme, text: state.text, ad: state.ad });
   if (state.selected !== null) next.set("cat", String(state.selected));
   history.replaceState(null, "", `?${next}`);
 }
@@ -65,7 +68,6 @@ function visibleCat(area) {
 }
 
 function arrangeGrids(split) {
-  $(".spotlight").hidden = split;
   $("#leading-gallery").hidden = !split;
   const leadingCount = 15;
   if (split !== gridsAreSplit) {
@@ -73,9 +75,9 @@ function arrangeGrids(split) {
     $("#cat-grid").replaceChildren(...(split ? catButtons.slice(leadingCount) : catButtons), adSlot);
     gridsAreSplit = split;
   }
-  if (split) $("#cat-grid").append(adSlot);
+  if (split || state.pose === "open") $("#cat-grid").append(adSlot);
   else scrollArea.insertBefore(adSlot, $("#cat-grid"));
-  adSlot.hidden = state.ad === "empty" && !(split && state.text === "standard");
+  adSlot.hidden = state.ad === "empty" && !((split || state.pose === "open") && state.text === "standard");
   $("#ad-creative").hidden = state.ad === "empty";
   $("#leading-range").textContent = `01–${leadingCount}`;
   $("#trailing-range").textContent = `${leadingCount + 1}–${catButtons.length}`;
@@ -83,6 +85,59 @@ function arrangeGrids(split) {
   $("#gallery-title").textContent = split
     ? { en: "More meows", "zh-Hans": "更多猫叫", ja: "もっとニャー" }[state.language]
     : copy("soundboard_title");
+}
+
+function poseForProgress() {
+  // These endpoints simulate system states. Native layout uses active division regions.
+  return state.progress === 0 ? "closed" : state.progress === 100 ? "open" : state.axis;
+}
+
+function renderHinge() {
+  const partial = state.pose === "book" || state.pose === "tabletop";
+  const stage = partial ? "partial" : state.pose === "open" ? "full" : "single";
+  const label = partial ? `半开 · ${Math.round(state.progress)}% 示意`
+    : stage === "full" ? "全开 · 一个大屏" : "合拢 · 单屏";
+  $("#hinge-progress").value = String(state.progress);
+  $("#hinge-progress").setAttribute("aria-valuetext", label);
+  $("#hinge-value").textContent = label;
+  $("#fold-axis").value = state.axis;
+  $("#fold-axis").disabled = !partial;
+  for (const button of document.querySelectorAll("button[data-stage]")) {
+    button.setAttribute("aria-pressed", String(button.dataset.stage === stage));
+  }
+  const cat = $("#stretch-cat");
+  cat.hidden = !partial;
+  cat.dataset.progress = String(state.progress);
+  if (!partial) { cat.style.opacity = "0"; return; }
+
+  // Every pose is a pure function of the input, including reverse movement.
+  const bend = reducedMotion.matches ? 0.5 : state.progress / 100;
+  const headX = 109 - 50 * bend;
+  const headY = 40 + 11 * bend;
+  const start = headX + 8;
+  const end = 152 + 37 * bend;
+  const top = 21 + 15 * bend;
+  const paw = headX - 8 - 24 * bend;
+  cat.style.opacity = String(reducedMotion.matches ? 1 : Math.min(1, bend / 0.12, (1 - bend) / 0.12));
+  $("#stretch-head").setAttribute("transform", `translate(${headX} ${headY}) rotate(${-5 - 9 * bend})`);
+  $("#stretch-body").setAttribute("d", `M${start} 54 Q${start + 12} ${top} ${end - 24} ${top} Q${end} ${top} ${end} 55 L${end - 1} 65 L${start} 65Z`);
+  $("#stretch-belly").setAttribute("d", `M${start + 10} 55 Q${(start + end) / 2} 44 ${end - 8} 55 L${end - 10} 65 L${start + 10} 65Z`);
+  $("#stretch-paws").setAttribute("d", `M${start + 14} 50 L${paw} 60 Q${paw - 7} 68 ${paw + 7} 68 L${start + 18} 63 M${end - 12} 53 L${end + 5} 60 Q${end + 13} 68 ${end - 1} 68 L${end - 18} 63`);
+  $("#stretch-tail").setAttribute("d", `M${end - 7} 49 Q${end + 37} ${48 - 12 * bend} ${end + 26} ${29 - 12 * bend} Q${end + 20} ${15 - 8 * bend} ${end + 14} ${24 - 10 * bend}`);
+  $("#cat-shadow").setAttribute("cx", String((paw + end) / 2));
+  $("#cat-shadow").setAttribute("rx", String((end - paw) / 2 + 12));
+}
+
+function setProgress(value) {
+  state.progress = Math.max(0, Math.min(100, Number(value)));
+  const pose = poseForProgress();
+  if (pose !== state.pose) {
+    state.pose = pose;
+    applyLayout();
+  } else {
+    renderHinge();
+    updateURL();
+  }
 }
 
 function applyLayout(retainScroll = true) {
@@ -93,41 +148,34 @@ function applyLayout(retainScroll = true) {
     anchor.offset = anchor.card ? (anchor.card.getBoundingClientRect().top - anchor.area.getBoundingClientRect().top) / scale : 0;
   }
   const pose = poses[state.pose];
-  const split = state.layout === "dual-grid" && ["open", "book", "tabletop"].includes(state.pose);
+  const split = ["book", "tabletop"].includes(state.pose);
   arrangeGrids(split);
   device.dataset.pose = state.pose;
-  device.dataset.layout = state.layout;
+  device.dataset.layout = "dual-grid";
   device.dataset.theme = state.theme;
   device.dataset.text = state.text;
-  device.dataset.fit = String(split && state.text === "standard");
+  device.dataset.fit = String((split || state.pose === "open") && state.text === "standard");
   device.style.setProperty("--screen-w", `${pose.width}px`);
   device.style.setProperty("--screen-h", `${pose.height}px`);
-  $("#pose-caption").textContent = split
-    ? (state.pose === "tabletop" ? "桌面 · 上下两屏都能点猫播放" : `${state.pose === "book" ? "书本" : "展开"} · 左右两屏都能点猫播放`)
-    : pose.caption;
-  $("#layout-note").textContent = state.layout !== "dual-grid"
-    ? "一边展示已选猫咪，一边选择声音。"
-    : !split ? "闭合与分屏时合为一个列表，滚动选择 27 个猫叫。"
+  $("#pose-caption").textContent = pose.caption;
+  $("#layout-note").textContent = state.pose === "closed"
+    ? "原来的猫叫列表；选择与播放状态保留。小猫装饰在单屏时收起。"
     : state.text === "large" ? "辅助大字号保留滚动，让图标和文字保持清晰。"
-    : "一屏放满 15 个猫叫；另一屏放 12 个，最后一整行留给广告。";
+    : split ? "半开时保留 15＋12 个猫叫和一行广告，小猫只在折痕附近伸懒腰。"
+    : "全开后，27 只猫合为一张 6 列网格，广告占最后一行的右半侧。";
   $("#dimensions").textContent = `${pose.width} × ${pose.height} pt · 设计尺寸`;
-  document.querySelectorAll("button[data-pose]").forEach((button) => {
-    button.setAttribute("aria-pressed", String(button.dataset.pose === state.pose));
-  });
-  document.querySelectorAll("button[data-layout]").forEach((button) => {
-    button.setAttribute("aria-pressed", String(button.dataset.layout === state.layout));
-  });
   $("#language").value = state.language;
   $("#theme").value = state.theme;
   $("#text-size").value = state.text;
   $("#ad-state").value = state.ad;
   $("#ad-note").textContent = state.ad === "sample"
-    ? (split ? "50 pt 高的模拟横幅，居中放在预留广告行；不请求真实广告。" : "50 pt 高的模拟横幅，放在猫咪列表上方；不请求真实广告。")
-    : "当前隐藏示例广告；双屏标准字号保留广告行，方便对照空白效果。";
+    ? (state.pose === "closed" ? "50 pt 高的模拟横幅，放在猫咪列表上方；不请求真实广告。" : "50 pt 高的模拟横幅，居中放在预留位置；不请求真实广告。")
+    : "当前隐藏示例广告；标准字号的大屏布局保留广告空间，方便对照空白效果。";
   const replay = $("#replay");
   const parent = state.text === "large" ? scrollArea : $("#gallery");
   if (replay.parentNode !== parent) parent.append(replay);
   fitDevice();
+  renderHinge();
   if (anchors.length) {
     requestAnimationFrame(() => {
       for (const { card, offset } of anchors) {
@@ -145,9 +193,6 @@ function updateSelected() {
   document.querySelectorAll(".cat").forEach((button) => {
     button.setAttribute("aria-pressed", String(Number(button.dataset.id) === state.selected));
   });
-  $("#portrait").src = sound?.image ?? "assets/c04.png";
-  $("#spotlight-eyebrow").textContent = copy(sound ? "soundboard_selected" : "soundboard_welcome");
-  $("#spotlight-title").textContent = copy(sound?.key ?? "soundboard_welcome_title");
   $("#replay").hidden = !sound;
   if (sound) {
     $("#replay-image").src = sound.image;
@@ -246,12 +291,16 @@ async function initialize() {
   });
   $("#cat-grid").replaceChildren(...catButtons, adSlot);
 
-  document.querySelectorAll("button[data-pose]").forEach((button) => {
-    button.addEventListener("click", () => { state.pose = button.dataset.pose; applyLayout(); });
+  document.querySelectorAll("button[data-stage]").forEach((button) => {
+    button.addEventListener("click", () => setProgress({ single: 0, partial: 50, full: 100 }[button.dataset.stage]));
   });
-  document.querySelectorAll("button[data-layout]").forEach((button) => {
-    button.addEventListener("click", () => { state.layout = button.dataset.layout; applyLayout(); });
+  $("#hinge-progress").addEventListener("input", (event) => setProgress(event.target.value));
+  $("#fold-axis").addEventListener("change", (event) => {
+    state.axis = event.target.value;
+    state.pose = poseForProgress();
+    applyLayout();
   });
+  reducedMotion.addEventListener("change", renderHinge);
   for (const area of scrollAreas) {
     area.addEventListener("pointerdown", () => { activeScrollArea = area; });
     area.addEventListener("wheel", () => { activeScrollArea = area; }, { passive: true });
@@ -305,6 +354,7 @@ async function initialize() {
   $("#close-capture").addEventListener("click", () => $("#capture-dialog").close());
   $("#capture-dialog").addEventListener("click", (event) => { if (event.target === $("#capture-dialog")) event.target.close(); });
   new ResizeObserver(fitDevice).observe($(".stage"));
+  state.pose = poseForProgress();
   translate();
   applyLayout(false);
 }
