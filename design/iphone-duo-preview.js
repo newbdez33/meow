@@ -2,9 +2,9 @@
 
 const poses = {
   closed: { width: 466, height: 678, caption: "单屏 · 一张猫叫列表，照常点按播放" },
-  open: { width: 951, height: 669, caption: "全开 · 一张完整网格，奶牛猫摊开白肚皮" },
-  book: { width: 951, height: 669, caption: "半开 · 左右 split，奶牛猫四爪朝天" },
-  tabletop: { width: 669, height: 951, caption: "半开 · 上下 split，奶牛猫四爪朝天" },
+  open: { width: 951, height: 669, caption: "全开 · 一张完整网格，黑白猫摊开白肚皮" },
+  book: { width: 951, height: 669, caption: "半开 · 左右 split，黑白猫四爪朝天" },
+  tabletop: { width: 669, height: 951, caption: "半开 · 上下 split，黑白猫四爪朝天" },
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -30,6 +30,7 @@ const scrollAreas = [leadingScrollArea, scrollArea];
 const player = new Audio();
 player.preload = "none";
 const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+const renderCatArtwork = createHingeCatRenderer($("#hinge-cat"));
 let data;
 let scale = 1;
 let playAttempt = 0;
@@ -105,41 +106,14 @@ function renderHinge() {
   for (const button of document.querySelectorAll("button[data-stage]")) {
     button.setAttribute("aria-pressed", String(button.dataset.stage === stage));
   }
-  const cat = $("#cow-cat");
+  const cat = $("#hinge-cat");
   cat.hidden = stage === "single";
   cat.dataset.progress = String(state.progress);
   if (cat.hidden) { cat.style.opacity = "0"; return; }
 
-  // Every pose is a pure function of the input, including reverse movement.
   const progress = reducedMotion.matches && partial ? 0.5 : state.progress / 100;
-  const unfold = Math.max(0, (progress - 0.5) / 0.5);
-  const spread = unfold * unfold * (3 - 2 * unfold);
-  const curl = Math.max(0, 1 - progress * 2);
-  const bodyX = 180;
-  const bodyY = 107 - 20 * spread;
-  const bodyWidth = 63 + 12 * spread - 10 * curl;
-  const bodyHeight = 27 + 15 * spread;
   cat.style.opacity = String(reducedMotion.matches ? 1 : Math.min(1, progress / 0.12));
-  $("#cow-body").setAttribute("transform", `translate(${bodyX} ${bodyY}) scale(${bodyWidth} ${bodyHeight})`);
-  $("#cow-head").setAttribute("transform", `translate(${77 + 8 * curl - 5 * spread} ${105 - 16 * spread}) rotate(${5 - 19 * spread})`);
-  $("#cow-tail").setAttribute("d", `M${bodyX + bodyWidth - 4} ${bodyY + 4} Q290 ${bodyY + 19} 298 ${bodyY - 8} Q307 ${bodyY - 30} 292 ${bodyY - 33}`);
-  $("#cow-shadow").setAttribute("cy", String(bodyY + bodyHeight + 5));
-  $("#cow-shadow").setAttribute("rx", String(bodyWidth + 15));
-
-  function paw(id, anchor, raised, relaxed, rotation) {
-    const x = raised[0] + (relaxed[0] - raised[0]) * spread + (bodyX - raised[0]) * curl * 0.12;
-    const y = raised[1] + (relaxed[1] - raised[1]) * spread + 10 * curl;
-    const [ax, ay] = anchor;
-    const length = Math.hypot(x - ax, y - ay);
-    const nx = -(y - ay) / length * 10;
-    const ny = (x - ax) / length * 10;
-    $("#cow-leg-" + id).setAttribute("d", `M${ax + nx} ${ay + ny} Q${ax + nx} ${y} ${x + nx} ${y + ny} L${x - nx} ${y - ny} Q${ax - nx} ${y} ${ax - nx} ${ay - ny}Z`);
-    $("#cow-paw-" + id).setAttribute("transform", `translate(${x} ${y}) rotate(${rotation * spread})`);
-  }
-  paw("front-far", [bodyX - bodyWidth * 0.65, bodyY - 4], [123, 52], [118, 32], -35);
-  paw("back-far", [bodyX + bodyWidth * 0.65, bodyY - 4], [235, 53], [244, 33], 35);
-  paw("front-near", [bodyX - bodyWidth * 0.6, bodyY + 6], [154, 44], [117, 137], 190);
-  paw("back-near", [bodyX + bodyWidth * 0.6, bodyY + 6], [199, 44], [243, 137], 160);
+  renderCatArtwork(progress);
 }
 
 function setProgress(value) {
@@ -175,8 +149,8 @@ function applyLayout(retainScroll = true) {
   $("#layout-note").textContent = state.pose === "closed"
     ? "原来的猫叫列表；选择与播放状态保留。小猫装饰在单屏时收起。"
     : state.text === "large" ? "辅助大字号保留滚动，让图标和文字保持清晰。"
-    : split ? "半折四爪举起，继续展开就摊开白肚皮。左右分屏用四列，保留 15＋12 个猫叫和一行广告。"
-    : "全开后，27 只猫合为一张 8 列网格。奶牛猫留在顶部，完整露出白肚皮。";
+    : split ? "半折四爪举起，继续展开就摊开白肚皮。两屏保留 15＋12 个猫叫和一行广告。"
+    : "全开后，27 只猫合为一张 8 列网格。黑白猫留在顶部，完整露出白肚皮。";
   $("#dimensions").textContent = state.pose === "book" || state.pose === "open"
     ? `${pose.width} × ${pose.height} pt · 顶部 86 pt / 侧栏 84 pt`
     : `${pose.width} × ${pose.height} pt · 设计尺寸`;

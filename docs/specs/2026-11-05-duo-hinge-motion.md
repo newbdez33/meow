@@ -3,8 +3,9 @@
 ## Accepted direction
 
 Keep the soundboard. Use three presentations: single screen, partially open
-split, and fully open canvas. Add one small black-and-white cow-pattern cat
-lying on its back. Its pose follows the hinge continuously in both directions.
+split, and fully open canvas. Add one small black-and-white tuxedo cat,
+viewed directly from above as it lies on its back. Its pose follows the hinge
+continuously in both directions.
 There is no separate play mode, timer, audio effect, or camera feature.
 
 This document replaces the November 4 play concepts. The HTML is a design
@@ -27,11 +28,11 @@ presentation it uses the top navigation space; in a tabletop presentation it use
 between the panes. It is decorative, accepts no input, and covers no cat
 button or ad. Interactive controls stay outside the fold region.
 
-- Use irregular black patches on the head and flanks, a white body and belly,
-  and four distinct paws with pink pads. Keep the belly white in dark mode.
+- Use the tuxedo coat pattern: black head, ears, back, flanks, and tail; white
+  muzzle, chest, belly, and four paws with pink pads. Keep the belly white in
+  dark mode. Use a fixed overhead camera; do not show the cat in side profile.
 - At the half-open midpoint all four paws point upward. As the device opens
-  farther, the near paws move outward, the body widens, and the whole white
-  belly becomes visible. Closing reverses this exact pose sequence.
+  farther, all four paws move outward and the whole white belly opens up. Closing reverses this exact pose sequence.
 - Stop moving the device and the pose stays still. Do not start a timed
   animation on a pose transition or add an idle loop.
 - Fade the decoration only near the closed endpoint. Keep the fully open cat
@@ -102,27 +103,61 @@ The half-open direction selector also previews the horizontal fold.
 The slider is a normalized design input. Its two endpoints simulate the
 single and fully open states; interior values simulate the partially open
 state. These are browser controls, not real hardware thresholds. Within the
-partial state, only SVG paths and transforms change. There is no animation
+partial state, only the decorative image mesh changes. There is no animation
 clock, playback loop, or repeated grid layout.
+
+## Artwork revision
+
+On November 6, the user clarified the coat and camera. The earlier SVG was
+hand-drawn code, not an image generation result. It is now replaced by a
+transparent raster illustration from the built-in image generation tool.
+The tool did not expose a model version; do not describe it as version 2.6.
+
+The source is [tuxedo-cat-belly-v1.png](../../design/iphone-duo-assets/tuxedo-cat-belly-v1.png).
+The [exact generation prompt](../../design/iphone-duo-assets/tuxedo-cat-belly-prompt.md)
+records the coat, fixed overhead camera, anatomy, style, and transparency.
+The original 1774 by 887 RGBA pixels are preserved without background removal
+or recoloring. The texture is about 1.9 MB and is served by the preview exporter.
+
+The browser uses a small WebGL mesh to move the four paws inward at the
+half-open midpoint and outward when fully open. This is a 2D pose study,
+not a 3D skeleton. The same texture supplies every frame, so the cat does not
+fade between inconsistent characters. If WebGL is unavailable or its context
+is lost, the original image remains visible. Reduce Motion uses a fixed pose.
+This renderer is confined to the HTML preview.
 
 ## Validation
 
 Checked the HTML in Chrome on November 5, 2026:
 
-- Moving within the partial range changes the SVG pose without moving any cat button.
+- Moving within the partial range changes the decorative pose without moving any cat button.
   Returning to an earlier input reproduces the same pose. Leaving the control still
   preserves its pose.
 - A selected sound remains selected through partial, full, single, and
   tabletop presentations. Each presentation retains all 27 sound buttons.
 - Full open has one visible gallery heading, eight columns, no fold, and a
-  visible cow-pattern cat with a white belly.
+  visible black-and-white cat with a white belly.
 - Book, tabletop, and full-open layouts have no grid or label overflow in
   English, Simplified Chinese, or Japanese. The sample ad remains 50 px high.
 - The decorative cat overlaps no sound button or ad in either split direction.
-- Emulated Reduce Motion keeps a static SVG pose as the slider moves.
+- Emulated Reduce Motion keeps a static decorative pose as the slider moves.
   Large text hides the decoration and allows scrolling.
 - Hiding the sample ad preserves its slot. A 390 px browser viewport has no
   horizontal page overflow and keeps the opening slider reachable.
+
+Checked the raster revision locally on November 6, 2026:
+
+- The generated PNG has a transparent alpha channel and the intended tuxedo
+  coat and overhead belly view. It loads in the preview from the exported assets.
+- A 50 to 80 to 50 input sequence changes the rendered pixels, returns to the
+  exact initial screenshot pixels, and leaves every sound button in place.
+- Book, tabletop, and fully open layouts retain all 27 cards with no grid
+  overflow. The artwork overlaps no card, gallery heading, or 50 px ad.
+- Emulated Reduce Motion keeps the rendered pixels identical from 50 to 80.
+  Single-screen and accessibility-text presentations hide the decoration.
+- The local fallback check keeps the image active when WebGL is unavailable.
+  JavaScript syntax and whitespace checks pass; Chrome reports no warnings
+  or errors. No GitHub Actions run was used.
 
 Hardware sensor mapping and the new native layout transitions remain
 unimplemented. The native build was manually inspected in the Duo simulator;

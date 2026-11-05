@@ -26,6 +26,8 @@ def export_preview(repo, destination):
     assets.mkdir()
     shutil.copy2(repo / "design/iphone-duo-preview.html", destination / "index.html")
     shutil.copy2(repo / "design/iphone-duo-preview.js", destination / "iphone-duo-preview.js")
+    shutil.copy2(repo / "design/iphone-duo-cat.js", destination / "iphone-duo-cat.js")
+    shutil.copy2(repo / "design/iphone-duo-assets/tuxedo-cat-belly-v1.png", assets / "tuxedo-cat-belly-v1.png")
     shutil.copy2(repo / "design/iphone-duo-play-lab.html", destination / "play-lab.html")
 
     def copy_image(name, category=""):
