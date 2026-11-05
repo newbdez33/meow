@@ -15,7 +15,7 @@ preview; the native app and TestFlight 2.3 (7) have not changed.
 | State | Layout | Decoration |
 | --- | --- | --- |
 | Single screen | One scrolling list of the existing 27 cats | Hidden |
-| Partially open | 15 cats in one pane; 12 and the reserved ad row in the other | Hind legs fold up to either side of the head in a wide V; the face remains visible |
+| Partially open | 15 cats in one pane; 12 and the reserved ad row in the other | Lower body curls over the belly; hind legs spread beside the visible face; a small X marks the rump |
 | Fully open | One heading and one continuous eight-column grid; the ad occupies the final five cells | Cat lies flat with its complete white belly visible; no center divider |
 
 Standard text fits all 27 cats in both inner-display presentations at the
@@ -32,12 +32,16 @@ button or ad. Interactive controls stay outside the fold region.
 - Use the tuxedo coat pattern: black head, ears, back, flanks, and tail; white
   muzzle, chest, belly, and four paws with pink pads. Keep the belly white in
   dark mode. Use a fixed overhead camera; do not show the cat in side profile.
-- At the initial half-open pose, lift both hind legs high toward the head.
-  Keep the legs spread in a wide V, with one rear paw on each side of the
-  head. Leave the face and the two small front paws visible between them.
-- As the screen opens, lower the hind legs along separate paths to the rump
-  and extend the belly. Keep the face and front paws fixed. Closing reverses
-  the same motion. Do not replace this action with a four-paw contraction.
+- At the initial half-open pose, curl the entire lower body toward the head
+  like a shrimp. The black back of the rump covers the white belly and chest.
+  Keep the hind legs spread in a wide V, with one rear paw on each side of
+  the head. Leave the face and the two small front paws visible between them.
+- Put a small light-gray X on the exposed rump as a cartoon privacy mark.
+  Attach it to the lower body so it turns away with that body part.
+- As the screen opens, unfold the lower body and lower both hind legs along
+  separate paths. Reveal the white belly gradually. Keep the face and front
+  paws fixed. Closing reverses the same motion. The initial pose must hide
+  the belly, rather than only moving the legs above a flat torso.
 - Stop moving the device and the pose stays still. Do not start a timed
   animation on a pose transition or add an idle loop.
 - Fade the decoration only near the closed endpoint. Keep the fully open cat
@@ -120,22 +124,30 @@ flat black and warm-white fills, yellow eyes, and simple pink paw pads. The
 current artwork replaces the earlier soft fur rendering. Keep the camera
 strictly overhead; the head is at the left and the rump is at the right.
 
-The source is [tuxedo-cat-rig-v2.png](../../design/iphone-duo-assets/tuxedo-cat-rig-v2.png).
-The atlas contains a body with two front paws, two separate hind legs, and a
-folded pose reference. The [character reference](../../design/iphone-duo-assets/tuxedo-cat-flat-v2.png)
-and [exact prompts](../../design/iphone-duo-assets/tuxedo-cat-rig-prompts.md)
-are saved with it. These were generated with the built-in image tool, which
-did not expose a model version. Do not describe the output as version 2.6.
-The 1254 by 1254 RGBA atlas retains its original pixels and alpha.
+The [base atlas](../../design/iphone-duo-assets/tuxedo-cat-rig-v2.png)
+contains a body with two front paws and two separate hind legs. Its old
+folded reference is superseded by the
+[curled body sheet](../../design/iphone-duo-assets/tuxedo-cat-curled-v3.png):
+the left cell shows the complete curl; the right cell isolates the lower
+body. Both include the small rump X. The
+[character reference](../../design/iphone-duo-assets/tuxedo-cat-flat-v2.png),
+[base prompts](../../design/iphone-duo-assets/tuxedo-cat-rig-prompts.md), and
+[curled body prompts](../../design/iphone-duo-assets/tuxedo-cat-curled-prompts.md)
+are saved with them. These were generated with the built-in image tool,
+which did not expose a model version. Do not describe the output as version
+2.6. The 1254 by 1254 base atlas and 1774 by 887 curled sheet retain their
+original pixels and alpha.
 
-The browser draws the atlas parts with Canvas 2D. Each hind leg has a hip
-anchor and a separate paw target. The paw portion keeps a fixed size while
-the black leg changes length, so the pads do not stretch. The face and front
-paws stay fixed while the belly section shortens at the folded pose. The body
-is drawn above the hind legs, and the rear paws stay outside the face area.
-The head therefore remains visible throughout the transition.
+The browser draws the atlas parts with Canvas 2D. Both hip anchors follow
+the folded lower body, and each hind leg has a separate paw target. The paw
+portion keeps a fixed size while the black leg changes length, so the pads
+do not stretch. A black lower-body layer covers the abdomen at the initial
+pose, moves toward the rump, and narrows to zero as the cat opens. The X is
+part of that layer. It disappears at full open, when the underside faces
+the camera. The face and front paws are drawn above this layer and remain
+visible. The continuous base body prevents gaps between the head and belly.
 
-This is a layered 2D pose study. The folded pose reference is a static fallback
+This is a layered 2D pose study. The complete curled pose is a static fallback
 if Canvas 2D is unavailable or its context is lost. Reduce Motion holds the
 folded pose until the fully open state. This renderer and the detail dialog
 are confined to the HTML preview.
@@ -178,6 +190,24 @@ Checked the flat artwork and folded-leg revision locally on November 6, 2026:
   context paths pass with a stub context.
 - JavaScript syntax and whitespace checks pass. Chrome reports no warnings
   or errors. No GitHub Actions run was used.
+
+Checked the curled-body and rump-X revision locally on November 6, 2026:
+
+- The initial pose hides the white belly and chest while keeping the face
+  and four paws visible. At 75 the belly is partly visible; at 100 it is
+  fully visible and the rump mark has turned away.
+- Browser pixel samples in the abdomen are dark at 50 and warm white at
+  75 and 100. A 50 to 100 to 50 sequence restores the exact artwork pixels.
+  Reduce Motion keeps the same folded pixels from 50 to 80.
+- All 27 cards fit in book, tabletop, and fully open layouts. The ad remains
+  50 px high, with no decoration overlap on headings, cards, or the ad.
+  Button positions do not change from 50 to 75.
+- A local renderer check covers 101 inputs, lower-body hip attachment,
+  valid source rectangles, the hidden back layer at full open, context
+  loss and restoration, image failure, and unavailable drawing context.
+- The served images match the source files. JavaScript syntax and whitespace
+  checks pass. Chrome reports no warnings or errors. No GitHub Actions run
+  was used.
 
 Hardware sensor mapping and the new native layout transitions remain
 unimplemented. The native build was manually inspected in the Duo simulator;

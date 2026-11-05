@@ -3,8 +3,8 @@
 const poses = {
   closed: { width: 466, height: 678, caption: "单屏 · 一张猫叫列表，照常点按播放" },
   open: { width: 951, height: 669, caption: "全开 · 一张完整网格，黑白猫摊开白肚皮" },
-  book: { width: 951, height: 669, caption: "半开 · 左右 split，后腿分叉抬到头两侧" },
-  tabletop: { width: 669, height: 951, caption: "半开 · 上下 split，后腿分叉抬到头两侧" },
+  book: { width: 951, height: 669, caption: "半开 · 左右 split，蜷起下半身，藏住白肚皮" },
+  tabletop: { width: 669, height: 951, caption: "半开 · 上下 split，蜷起下半身，藏住白肚皮" },
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -154,7 +154,7 @@ function applyLayout(retainScroll = true) {
   $("#layout-note").textContent = state.pose === "closed"
     ? "原来的猫叫列表；选择与播放状态保留。小猫装饰在单屏时收起。"
     : state.text === "large" ? "辅助大字号保留滚动，让图标和文字保持清晰。"
-    : split ? "后腿高抬到头两侧，脸露在中间；展开时沿两侧放下。两屏保留 15＋12 个猫叫和一行广告。"
+    : split ? "下半身像虾一样蜷起，肚皮藏住、猫脸露出；展开时身体和后腿一起舒展。两屏保留 15＋12 个猫叫和一行广告。"
     : "全开后，27 只猫合为一张 8 列网格。黑白猫留在顶部，完整露出白肚皮。";
   $("#dimensions").textContent = state.pose === "book" || state.pose === "open"
     ? `${pose.width} × ${pose.height} pt · 顶部 86 pt / 侧栏 84 pt`

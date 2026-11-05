@@ -5,18 +5,28 @@ function hingeCatPose(progress) {
   const spread = opening * opening * (3 - 2 * opening);
   const curl = Math.max(0, 1 - progress * 2);
   const fold = 1 - spread;
-  const hipX = 252 - 40 * fold;
+  const back = {
+    x: 100 + 152 * spread,
+    y: 36 + 14 * spread,
+    width: 182 * fold,
+    height: 168 - 28 * spread,
+  };
+  const hipX = back.x + back.width * 0.42;
+  const hipY = 102 - 12 * fold;
   const pawX = 92 + 244 * spread - 6 * curl;
   const pawY = 32 + 8 * spread - 2 * curl;
   return {
+    spread,
+    back,
     bodyWidth: 285 - 48 * fold,
-    upper: { hip: [hipX, 102], paw: [pawX, pawY] },
-    lower: { hip: [hipX, 138], paw: [pawX, 240 - pawY] },
+    upper: { hip: [hipX, hipY], paw: [pawX, pawY] },
+    lower: { hip: [hipX, 240 - hipY], paw: [pawX, 240 - pawY] },
   };
 }
 
 function createHingeCatRenderer(container) {
   const image = container.querySelector("img");
+  const curledImage = container.querySelector("[data-curled-artwork]");
   const canvas = container.querySelector("canvas");
   const context = canvas.getContext("2d");
   let ready = false;
@@ -62,16 +72,40 @@ function createHingeCatRenderer(container) {
       hip: [137, 932], paw: [479, 981], split: 310,
     });
 
-    // Keep the face and front paws fixed while the belly folds toward them.
     const headWidth = 258 * 285 / 558;
     context.drawImage(image, 42, 183, 258, 276, 40, 50, headWidth, 140);
     context.drawImage(image, 300, 183, 300, 276,
       40 + headWidth, 50, pose.bodyWidth - headWidth, 140);
+
+    if (pose.back.width > 0) {
+      const back = pose.back;
+      // The folded torso covers the abdomen; its rump mark turns with the sprite.
+      context.fillStyle = "#242222";
+      context.beginPath();
+      context.ellipse(back.x + back.width * 0.35, 120,
+        back.width * 0.18, back.height * 0.24, 0, 0, Math.PI * 2);
+      context.fill();
+      context.drawImage(curledImage, 1120, 157, 490, 604,
+        back.x, back.y, back.width, back.height);
+    }
+
+    // Only the face and front paws sit in front of the tightly curled lower body.
+    context.save();
+    context.beginPath();
+    context.rect(40, 50, 106 + (headWidth - 106) * pose.spread, 140);
+    context.moveTo(166, 85);
+    context.ellipse(143, 85, 23, 25, 0, 0, Math.PI * 2);
+    context.moveTo(166, 165);
+    context.ellipse(143, 165, 23, 25, 0, 0, Math.PI * 2);
+    context.clip();
+    context.drawImage(image, 42, 183, 258, 276, 40, 50, headWidth, 140);
+    context.restore();
     container.dataset.renderer = "canvas";
   }
 
   container.dataset.renderer = "image";
-  image.decode().then(() => { ready = true; draw(); }).catch(() => {});
+  Promise.all([image.decode(), curledImage.decode()])
+    .then(() => { ready = true; draw(); }).catch(() => {});
   canvas.addEventListener("contextlost", () => {
     ready = false;
     container.dataset.renderer = "image";
