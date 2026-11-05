@@ -1,0 +1,37 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Meow hinge artwork export</title>
+<button id="export">Export the approved hinge frames</button>
+<p id="status">Ready.</p>
+<a id="download" download="hinge-cat-atlas.png" hidden>Download atlas</a>
+<div id="art" hidden>
+  <img src="assets/tuxedo-cat-rig-v2.png" alt="">
+  <img data-curled-artwork src="assets/tuxedo-cat-curled-v3.png" alt="">
+  <img data-thigh-artwork src="assets/tuxedo-cat-thighs-v4.png" alt="">
+  <canvas width="480" height="288"></canvas>
+</div>
+<script src="iphone-duo-cat.js"></script>
+<script>
+  const art = document.querySelector("#art");
+  const render = createHingeCatRenderer(art);
+  document.querySelector("#export").addEventListener("click", async () => {
+    await Promise.all([...art.querySelectorAll("img")].map(image => image.decode()));
+    while (art.dataset.renderer !== "canvas") {
+      await new Promise(requestAnimationFrame);
+    }
+    const atlas = document.createElement("canvas");
+    atlas.width = 480 * 8;
+    atlas.height = 288 * 7;
+    const context = atlas.getContext("2d");
+    for (let frame = 0; frame <= 50; frame++) {
+      render(0.5 + frame / 100);
+      context.drawImage(art.querySelector("canvas"), frame % 8 * 480, Math.floor(frame / 8) * 288);
+    }
+    const blob = await new Promise(resolve => atlas.toBlob(resolve, "image/png"));
+    const link = document.querySelector("#download");
+    if (link.href.startsWith("blob:")) URL.revokeObjectURL(link.href);
+    link.href = URL.createObjectURL(blob);
+    link.hidden = false;
+    document.querySelector("#status").textContent = "51 frames; 480 × 288 pixels each; 8 columns × 7 rows; transparent PNG.";
+  });
+</script>

@@ -1,6 +1,37 @@
 import StoreKitTest
 import XCTest
 
+final class DuoLayoutTests: XCTestCase {
+    func testInnerDisplayKeepsEveryCatVisible() throws {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments = ["-MeowNoAds", "-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launch()
+        XCTAssertTrue(app.buttons["cat-0"].waitForExistence(timeout: 15))
+        let window = app.windows.firstMatch.frame
+        guard min(window.width, window.height) > 600 else {
+            throw XCTSkip("This check requires an expanded app window")
+        }
+        XCTAssertTrue(app.otherElements["fittedFullGrid"].exists
+                      || (app.otherElements["fittedLeadingGrid"].exists
+                          && app.otherElements["fittedTrailingGrid"].exists), app.debugDescription)
+        for id in 0..<27 {
+            let cat = app.buttons["cat-\(id)"]
+            XCTAssertTrue(cat.isHittable, "Cat \(id) must fit without scrolling")
+            XCTAssertTrue(app.windows.firstMatch.frame.contains(cat.frame))
+        }
+        let last = app.buttons["cat-26"]
+        last.tap()
+        XCTAssertTrue(last.isSelected)
+        last.tap()
+        XCTAssertTrue(last.isSelected)
+        let capture = XCTAttachment(screenshot: app.screenshot())
+        capture.name = "Duo fitted soundboard"
+        capture.lifetime = .keepAlways
+        add(capture)
+    }
+}
+
 final class SoundboardLayoutTests: XCTestCase {
     override func tearDown() {
         XCUIDevice.shared.orientation = .portrait

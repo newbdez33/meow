@@ -9,8 +9,9 @@ icons with simple flat fills and bold outlines. Its pose follows the hinge
 continuously in both directions.
 There is no separate play mode, timer, audio effect, or camera feature.
 
-This document replaces the November 4 play concepts. The HTML is a design
-preview; the native app and TestFlight 2.3 (7) have not changed.
+This document replaces the November 4 play concepts. The accepted design is
+implemented in the native app for build 2.3 (8). The HTML remains the interactive
+artwork reference; it does not read a hardware sensor.
 
 | State | Layout | Decoration |
 | --- | --- | --- |
@@ -71,10 +72,21 @@ angle-only updates must not rebuild or repartition the grid. Physical-device
 testing must establish the comfortable motion range and any smoothing needed.
 Do not assume a fixed angle range, update rate, or angle-derived state boundary.
 
-The existing native `SoundboardView` still uses a split arrangement at regular
-width. Implementing this proposal will require removing that unconditional
-split for the fully open presentation. This preview does not claim that the
-native change has shipped.
+`SoundboardView` reads division regions, including inactive regions. An active
+region selects the system split arrangement. An inactive inner-display region
+selects a continuous grid. Ordinary phones and iPads keep their existing layouts.
+Each gallery tries a fitted layout before falling back to scrolling. Inner
+landscape panes use four columns; a full landscape canvas uses eight. Portrait
+uses five and four split columns, or six full-width columns. The ad keeps its
+50 pt slot even when no ad is available.
+
+`HingeCatView` owns the hinge observation and decorative state. It selects one
+of 51 approved poses from a transparent image atlas. Angle-only updates change
+the layer crop without repartitioning the soundboard. The observed fully open
+angle calibrates the pose range; the initial estimate is pi radians. Missing
+hinges clear the decoration. Reduce Motion uses the two static endpoints.
+Observation stops when the scene is inactive. Physical-device tuning remains
+necessary for the sensor range and update cadence.
 
 ## Geometry correction from the supplied screenshot
 
@@ -104,9 +116,10 @@ Fully open uses eight columns and four rows. The cat uses top whitespace
 instead of adding another row to the grid. These dimensions are preview
 fixtures, not device constants to hardcode in the native layout.
 
-The native crop has been reproduced, not fixed in the app by this HTML change.
-The next native change must choose a fitted candidate from the actual
-available width and height, then verify every card and the ad after folding.
+Build 2.3 (8) replaces the overflowing five-row native candidate on Duo with
+a four-row layout. Its minimum card width accounts for the asymmetric usable
+space beside the system bar. The actual geometry selects a fitted candidate
+or the scrolling fallback; no device dimensions are hardcoded.
 
 ## Preview
 
@@ -163,8 +176,15 @@ gaps between the head and belly.
 
 This is a layered 2D pose study. The complete curled pose is a static fallback
 if Canvas 2D is unavailable or its context is lost. Reduce Motion holds the
-folded pose until the fully open state. This renderer and the detail dialog
-are confined to the HTML preview.
+folded pose until the fully open state. The Canvas renderer and detail dialog remain in the HTML preview. The native
+app uses exported pixels from the same renderer, without a WebView or another
+animation implementation.
+
+To regenerate the native atlas, run the preview server and open
+`/cat-atlas.html`. Export and download the transparent PNG, then replace
+`meow/Assets.xcassets/hingeCatAtlas.imageset/hinge-cat-atlas.png`. The sheet has
+eight columns and seven rows, with 480 by 288 pixel cells. Frames 0 through 50
+sample opening values 0.50 through 1.00; the final five cells are empty.
 
 ## Validation
 
@@ -205,9 +225,35 @@ Checked the rounded roll and tapered-leg revision locally on November 6, 2026:
   JavaScript syntax and whitespace checks pass. Chrome reports no warnings
   or errors. No GitHub Actions run was used.
 
-Hardware sensor mapping and the new native layout transitions remain
-unimplemented. The native build was manually inspected in the Duo simulator;
-no new native build, native test-suite run, or TestFlight upload is claimed.
+Checked the native implementation locally on November 6, 2026:
+
+- All 16 unit tests pass on iOS 27.0: five hinge tests, five Store tests, and
+  six Widget/audio tests. The hinge checks cover calibration, reverse movement,
+  absent and closed contexts, invalid angles, Reduce Motion, and the bundled
+  atlas resolution.
+- Four applicable soundboard UI regressions pass on each of iPhone 17e and
+  iPad mini, iOS 27.0. Each device skips one inapplicable case. These cover
+  selection, replay, rotation, large text, support sheets, scroll retention,
+  and fitted iPad rows.
+- The Duo UI check passes in book, tabletop, full portrait, and full landscape
+  states on iOS 27.1. All 27 buttons are hittable and inside the window, and
+  the final button can be selected and replayed without scrolling.
+- Manual fold transitions retain the selected sound and the decorative view.
+  The cat remains visible after switching from split to full; the full portrait
+  pose uses heading whitespace to avoid the centered navigation title.
+- Checked the system Reduce Motion switch: partial holds the accepted curled
+  frame, full shows the white belly, and the closed outer screen hides the cat.
+  Restored the simulator setting after the check.
+- The first Duo Store test was stopped at a simulator account prompt. The
+  prompt was cancelled, without signing in. All purchase tests then passed
+  against the local StoreKit configuration on iOS 27.0.
+- The Release archive passes signature checks. App and widget versions are
+  2.3 (8); minimum OS versions remain 15 and 17. Both dSYMs are present.
+- Tests and builds ran locally. No GitHub Actions workflow was dispatched.
+
+The simulator verifies API wiring and layout. Physical sensor feel and live
+ad fill still require device testing. Blank ad slots in the captures are
+intentional: the UI checks launch with ads disabled.
 
 ## Sources
 

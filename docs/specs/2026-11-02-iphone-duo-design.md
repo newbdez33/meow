@@ -1,8 +1,9 @@
 # iPhone Duo soundboard
 
-This record describes the native layout in TestFlight 2.3 (7). The current
-HTML review follows the [November 5 three-state design](2026-11-05-duo-hinge-motion.md),
-which has not yet been implemented in the native app.
+This is the historical record for TestFlight 2.3 (7). Build 2.3 (8) implements
+the [three-state layout and hinge cat](2026-11-05-duo-hinge-motion.md), including
+the corrected Duo geometry. Use that record for the current implementation
+and validation; the checks below describe the earlier release.
 
 ## Design
 
