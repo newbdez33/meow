@@ -39,9 +39,14 @@ button or ad. Interactive controls stay outside the fold region.
 - Put a small light-gray X on the exposed rump as a cartoon privacy mark.
   Attach it to the lower body so it turns away with that body part.
 - As the screen opens, unfold the lower body and lower both hind legs along
-  separate paths. Reveal the white belly gradually. Keep the face and front
+  curved paths around the hips. Turn the rounded rump away as a surface;
+  do not slide or flatten it into a straight band. Reveal the white belly
+  gradually. Keep the face and front
   paws fixed. Closing reverses the same motion. The initial pose must hide
   the belly, rather than only moving the legs above a flat torso.
+- At full open, use short, tapered hind legs with rounded, fleshy thighs.
+  The broad roots must continue naturally from the rump into narrower
+  ankles. Keep the existing white paws and pads; avoid thin connecting stems.
 - Stop moving the device and the pose stays still. Do not start a timed
   animation on a pose transition or add an idle loop.
 - Fade the decoration only near the closed endpoint. Keep the fully open cat
@@ -133,19 +138,28 @@ body. Both include the small rump X. The
 [character reference](../../design/iphone-duo-assets/tuxedo-cat-flat-v2.png),
 [base prompts](../../design/iphone-duo-assets/tuxedo-cat-rig-prompts.md), and
 [curled body prompts](../../design/iphone-duo-assets/tuxedo-cat-curled-prompts.md)
-are saved with them. These were generated with the built-in image tool,
+are saved with them. The
+[tapered thigh sheet](../../design/iphone-duo-assets/tuxedo-cat-thighs-v4.png)
+and [thigh prompt](../../design/iphone-duo-assets/tuxedo-cat-thighs-prompts.md)
+add two short black thighs without replacing the original white paws.
+These were generated with the built-in image tool,
 which did not expose a model version. Do not describe the output as version
-2.6. The 1254 by 1254 base atlas and 1774 by 887 curled sheet retain their
-original pixels and alpha.
+2.6. The 1254 by 1254 base and thigh atlases and 1774 by 887 curled sheet
+retain their original pixels and alpha.
 
 The browser draws the atlas parts with Canvas 2D. Both hip anchors follow
-the folded lower body, and each hind leg has a separate paw target. The paw
-portion keeps a fixed size while the black leg changes length, so the pads
-do not stretch. A black lower-body layer covers the abdomen at the initial
-pose, moves toward the rump, and narrows to zero as the cat opens. The X is
-part of that layer. It disappears at full open, when the underside faces
-the camera. The face and front paws are drawn above this layer and remain
-visible. The continuous base body prevents gaps between the head and belly.
+the turning lower body. The rear paws move around them on curved paths and
+settle closer to the rump at full open. The new thighs gain volume as the
+legs unfold. The original paw portions keep their size, so the pads do not
+stretch. The accepted first pose uses the original drawing unchanged.
+
+The renderer reads the curled sprite's alpha contour once. Each horizontal
+section projects onto a rounded surface that turns around the body's
+cross-axis. Its far side becomes hidden, and the final thin edge fades as
+it turns behind the underside. This replaces the previous flat width
+compression and keeps the outer edge curved. The X follows the same surface.
+The face and front paws stay above it, while a continuous base body prevents
+gaps between the head and belly.
 
 This is a layered 2D pose study. The complete curled pose is a static fallback
 if Canvas 2D is unavailable or its context is lost. Reduce Motion holds the
@@ -171,43 +185,25 @@ Checked the HTML in Chrome on November 5, 2026:
 - Hiding the sample ad preserves its slot. A 390 px browser viewport has no
   horizontal page overflow and keeps the opening slider reachable.
 
-Checked the flat artwork and folded-leg revision locally on November 6, 2026:
+Checked the rounded roll and tapered-leg revision locally on November 6, 2026:
 
-- The folded pose places the rear paws on opposite sides of the head. At
-  full open they extend past the rump. The face stays visible in the middle.
-- Browser screenshots show identical face pixels at 50, 75, and 100. A
-  50 to 75 to 100 to 50 sequence restores the exact initial artwork pixels.
-  The sound buttons stay fixed while the partial-state input changes.
-- The main and enlarged sliders share the same state. Escape closes the
-  detail dialog. Its controls fit inside a 390 px browser viewport.
-- In English, all 27 cards fit in book, tabletop, and fully open layouts.
-  The decoration overlaps no gallery heading, card, or 50 px ad.
-- Emulated Reduce Motion keeps the artwork pixels fixed from 50 to 80.
-  Single-screen and accessibility-text presentations hide the decoration.
-- Local JavaScript checks cover 101 input values: paw sizes and head placement
-  stay fixed, paw targets move in the expected direction, and every source
-  rectangle stays inside the atlas. Canvas loss, restoration, and unavailable
-  context paths pass with a stub context.
-- JavaScript syntax and whitespace checks pass. Chrome reports no warnings
-  or errors. No GitHub Actions run was used.
-
-Checked the curled-body and rump-X revision locally on November 6, 2026:
-
-- The initial pose hides the white belly and chest while keeping the face
-  and four paws visible. At 75 the belly is partly visible; at 100 it is
-  fully visible and the rump mark has turned away.
-- Browser pixel samples in the abdomen are dark at 50 and warm white at
-  75 and 100. A 50 to 100 to 50 sequence restores the exact artwork pixels.
-  Reduce Motion keeps the same folded pixels from 50 to 80.
+- The 50 percent artwork pixels match the accepted curled frame from
+  `bfbbd4b` exactly. The face, four paws, hidden belly, and rump X are preserved.
+- Inspected the intermediate poses at 60, 70, 75, and 80, then the fully
+  open pose. The rump turns away with a curved edge, and the legs move around
+  the hips. Full open has short, broad-rooted thighs that taper into the
+  original white paws.
+- A 50 to 100 to 50 sequence restores the exact initial artwork pixels.
+  Reduce Motion keeps those same pixels when the input moves from 50 to 75.
 - All 27 cards fit in book, tabletop, and fully open layouts. The ad remains
   50 px high, with no decoration overlap on headings, cards, or the ad.
-  Button positions do not change from 50 to 75.
-- A local renderer check covers 101 inputs, lower-body hip attachment,
-  valid source rectangles, the hidden back layer at full open, context
+  Button positions do not change between partial-state inputs.
+- A local renderer check covers 101 inputs, curved limb paths, sprite and
+  contour source bounds, thigh introduction after the initial pose, context
   loss and restoration, image failure, and unavailable drawing context.
-- The served images match the source files. JavaScript syntax and whitespace
-  checks pass. Chrome reports no warnings or errors. No GitHub Actions run
-  was used.
+- The served renderer, HTML, and new atlas match the source files.
+  JavaScript syntax and whitespace checks pass. Chrome reports no warnings
+  or errors. No GitHub Actions run was used.
 
 Hardware sensor mapping and the new native layout transitions remain
 unimplemented. The native build was manually inspected in the Duo simulator;

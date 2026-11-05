@@ -29,6 +29,7 @@ def export_preview(repo, destination):
     shutil.copy2(repo / "design/iphone-duo-cat.js", destination / "iphone-duo-cat.js")
     shutil.copy2(repo / "design/iphone-duo-assets/tuxedo-cat-rig-v2.png", assets / "tuxedo-cat-rig-v2.png")
     shutil.copy2(repo / "design/iphone-duo-assets/tuxedo-cat-curled-v3.png", assets / "tuxedo-cat-curled-v3.png")
+    shutil.copy2(repo / "design/iphone-duo-assets/tuxedo-cat-thighs-v4.png", assets / "tuxedo-cat-thighs-v4.png")
     shutil.copy2(repo / "design/iphone-duo-play-lab.html", destination / "play-lab.html")
 
     def copy_image(name, category=""):
