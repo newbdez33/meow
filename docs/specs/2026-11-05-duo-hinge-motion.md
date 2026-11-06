@@ -263,7 +263,11 @@ Native source commit: `4f1f3c77609c861e537c5152eecd9cd2f76e7d3c`.
 The initial Xcode upload waited at SPI analysis for about 13 minutes and was
 stopped before the IPA transfer. The same archive was exported locally; the
 alternate upload completed with exit code 0 and an upload-success response.
-TestFlight processing and Internal group availability are still pending.
+App Store Connect reports `VALID`. The existing Internal group contains this
+build and reports `IN_BETA_TESTING`. Test notes are saved in English, Simplified
+Chinese, and Japanese. No production version was submitted for review.
+
+[Open TestFlight in App Store Connect](https://appstoreconnect.apple.com/apps/826362662/testflight/ios).
 
 Local archive, exported IPA, test results, upload logs, and release provenance:
 `/Users/jacky/Library/Developer/Meow/releases/2026-11-06-hinge/`.
