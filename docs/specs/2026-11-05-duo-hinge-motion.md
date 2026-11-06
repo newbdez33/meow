@@ -50,8 +50,8 @@ button or ad. Interactive controls stay outside the fold region.
   ankles. Keep the existing white paws and pads; avoid thin connecting stems.
 - Stop moving the device and the pose stays still. Do not start a timed
   animation on a pose transition or add an idle loop.
-- Fade the decoration only near the closed endpoint. Keep the fully open cat
-  visible instead of fading it out. Hide the cat on the outer single screen.
+- Hide the decoration on the outer single screen. Keep the fully open cat
+  visible with its complete white belly.
 - Under Reduce Motion, keep a static folded-leg pose within the partial state
   and show the static belly pose when fully open. At large
   accessibility text sizes, omit the decoration and keep the content readable.
@@ -254,6 +254,26 @@ Checked the native implementation locally on November 6, 2026:
 The simulator verifies API wiring and layout. Physical sensor feel and live
 ad fill still require device testing. Blank ad slots in the captures are
 intentional: the UI checks launch with ads disabled.
+
+## Build 2.3 (8)
+
+The signed IPA was uploaded with Apple's `altool` on November 6, 2026.
+Delivery ID: `9d1be1ab-f3a8-4b11-816c-99ec0a3dece9`.
+Native source commit: `4f1f3c77609c861e537c5152eecd9cd2f76e7d3c`.
+The initial Xcode upload waited at SPI analysis for about 13 minutes and was
+stopped before the IPA transfer. The same archive was exported locally; the
+alternate upload completed with exit code 0 and an upload-success response.
+TestFlight processing and Internal group availability are still pending.
+
+Local archive, exported IPA, test results, upload logs, and release provenance:
+`/Users/jacky/Library/Developer/Meow/releases/2026-11-06-hinge/`.
+
+## Native captures
+
+| Partially open | Fully open |
+| --- | --- |
+| ![Book layout](../../design/iphone-duo-review/duo-book-en.png) | ![Full landscape](../../design/iphone-duo-review/duo-full-en.png) |
+| ![Tabletop layout](../../design/iphone-duo-review/duo-tabletop-en.png) | ![Full portrait](../../design/iphone-duo-review/duo-full-portrait-en.png) |
 
 ## Sources
 

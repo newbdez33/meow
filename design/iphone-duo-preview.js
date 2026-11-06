@@ -39,7 +39,7 @@ let sheetOpener;
 let catButtons = [];
 let gridsAreSplit = false;
 let activeScrollArea = scrollArea;
-const note = "HTML 交互稿 · 三态布局和开合动画尚未加入 TestFlight；开合比例与系统栏均为设计示意。";
+const note = "原生 2.3 (8) 已上传，正在等待 TestFlight 处理；本页开合比例与系统栏为设计示意。";
 
 function copy(key) {
   return data.strings[state.language][key] ?? key;
