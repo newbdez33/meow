@@ -3,6 +3,58 @@ import XCTest
 @testable import meow
 
 @MainActor
+final class HingeCatTests: XCTestCase {
+    func testClosedAndMissingHingesHideTheCat() {
+        var progress = HingeCatProgress()
+        XCTAssertNil(progress.frame(reduceMotion: false))
+        progress.update(state: .full, radians: .pi)
+        XCTAssertEqual(progress.frame(reduceMotion: false), 50)
+        progress.update(state: .closed, radians: 0)
+        XCTAssertNil(progress.frame(reduceMotion: false))
+        progress.update(state: .partial, radians: .pi / 2)
+        XCTAssertEqual(progress.frame(reduceMotion: false), 0)
+        progress.update(state: .absent, radians: 0)
+        XCTAssertNil(progress.frame(reduceMotion: false))
+    }
+
+    func testPartialFramesUseTheObservedFullAngleAndReverse() {
+        var progress = HingeCatProgress()
+        progress.update(state: .full, radians: 3.4)
+        progress.update(state: .partial, radians: 2.55)
+        XCTAssertEqual(progress.frame(reduceMotion: false), 25)
+        progress.update(state: .partial, radians: 1.7)
+        XCTAssertEqual(progress.frame(reduceMotion: false), 0)
+        progress.update(state: .partial, radians: 2.55)
+        XCTAssertEqual(progress.frame(reduceMotion: false), 25)
+    }
+
+    func testReduceMotionUsesStaticEndpoints() {
+        var progress = HingeCatProgress()
+        for radians in [0.5, 1.8, 2.8] {
+            progress.update(state: .partial, radians: radians)
+            XCTAssertEqual(progress.frame(reduceMotion: true), 0)
+        }
+        progress.update(state: .full, radians: .pi)
+        XCTAssertEqual(progress.frame(reduceMotion: true), 50)
+    }
+
+    func testInvalidAndOutOfRangeAnglesStayInsideTheAtlas() {
+        var progress = HingeCatProgress()
+        for radians in [-10.0, 0, 1, .pi, 100, .nan, .infinity] {
+            progress.update(state: .partial, radians: radians)
+            let frame = progress.frame(reduceMotion: false)!
+            XCTAssertTrue((0...50).contains(frame))
+        }
+    }
+
+    func testApprovedAtlasIsBundledAtItsOriginalResolution() throws {
+        let image = try XCTUnwrap(UIImage(named: "hingeCatAtlas")?.cgImage)
+        XCTAssertEqual(image.width, 8 * 480)
+        XCTAssertEqual(image.height, 7 * 288)
+    }
+}
+
+@MainActor
 final class WidgetTests: XCTestCase {
     override func tearDown() async throws { await Sounds.shared.stop() }
 

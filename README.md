@@ -11,21 +11,25 @@ to hear its sound: purring, snoring, hissing, a kitten, or even a lion.
 The Android version, a native Kotlin + Jetpack Compose port, lives in
 [android/](android/README.md).
 
-Version **2.1 (build 5)** has passed App Review, confirmed on September 29,
-2026. Release history and remaining checks are in [TODO.md](TODO.md).
+**iOS 2.2 (6)** is live on the App Store, confirmed on November 4, 2026.
+The Duo layout is available in **TestFlight 2.3 (7)** for the Internal group.
+See the [Duo design and validation record](docs/specs/2026-11-02-iphone-duo-design.md).
 
-Widget release status, checked on October 4, 2026 at 11:03 JST:
-**Android 1.1 (3)** is live on Google Play in 178 countries and regions.
-**iOS 2.2 (6)** is available in TestFlight and is waiting for App Review,
-with automatic release after approval. See the [release and validation
-record](docs/specs/2026-10-03-widget-design.md#production-review-submission-2026-10-04).
+**Android 1.1 (3)** was confirmed live on Google Play in 178 countries and
+regions on October 4, 2026. The [widget release record](docs/specs/2026-10-03-widget-design.md#production-review-submission-2026-10-04)
+and [TODO.md](TODO.md) contain the release history and remaining checks.
 
 ## Features
 
 - 27 illustrated cats with bundled sounds. Playback works offline.
+- An adaptive soundboard: one compact grid, or two panes with 15 and 12 cats
+  and a reserved ad row. Standard text fits without scrolling when space
+  allows; large text keeps scrolling and replay. iPhone Duo uses the system
+  fold-aware arrangement on iOS 27.1+. Selection survives layout changes,
+  and iOS 17+ also retains scroll anchors.
 - Home-screen widgets with independent sound and character choices: iOS 17+
-  System Small and resizable Android widgets. Live on Android and available
-  in iOS TestFlight; remaining device checks are tracked in [TODO.md](TODO.md).
+  System Small and resizable Android widgets. Available on both stores;
+  remaining device checks are tracked in [TODO.md](TODO.md).
 - English, Simplified Chinese, and Japanese.
 - No account or sign-in required.
 - Banner ads with Google UMP consent and App Tracking Transparency support.
@@ -35,8 +39,10 @@ record](docs/specs/2026-10-03-widget-design.md#production-review-submission-2026
 
 ## Development
 
-The app supports iOS and iPadOS 15 or later. The project was built and
-verified with Xcode 27; test targets require iOS 17 or later.
+The app supports iOS and iPadOS 15 or later. Build with Xcode 27.1 or later
+for the arrangement APIs; test targets require iOS 17 or later. See the
+[iPhone Duo design and validation record](docs/specs/2026-11-02-iphone-duo-design.md)
+for the tested configurations and remaining device checks.
 
 1. Open `meow.xcodeproj` and select the `meow` scheme.
 2. Let Xcode resolve the Swift package dependencies. The pinned versions are
@@ -70,6 +76,10 @@ on relaunch, and restore.
 - [TipSheetScreenshotTests](meowUITests/TipSheetScreenshotTests.swift)
   checks the purchase sheet and can save the separate in-app purchase
   review screenshot.
+- [SoundboardLayoutTests](meowUITests/SoundboardLayoutTests.swift) covers
+  selection, replay, scroll position, large text, and the support sheet
+  during rotation. Run it on both a phone and an iPad, then use Device Hub
+  for the fold and Split View checks in the design record.
 - [TrackingReviewTests](meowUITests/TrackingReviewTests.swift) resets tracking
   authorization, captures ATT, declines tracking, and taps a cat. It is
   skipped unless `TEST_RUNNER_MEOW_TRACKING_REVIEW=1`. Install the app first

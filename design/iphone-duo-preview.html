@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Meow · iPhone Duo 设计确认</title>
+  <link rel="icon" href="assets/navCat.png">
+  <style>
+    :root { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans", sans-serif; color: #322b2b; background: #f7f3ef; font-synthesis: none; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    button, select, input { font: inherit; color: inherit; }
+    button, select, summary { cursor: pointer; }
+    button { -webkit-tap-highlight-color: transparent; }
+    button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid #b84642; outline-offset: 4px; }
+    a { color: #a13e3b; text-underline-offset: 4px; }
+    [hidden] { display: none !important; }
+    .page { max-width: 1260px; padding: 28px 40px 42px; margin: auto; }
+    .masthead { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding-bottom: 22px; border-bottom: 1px solid #e4dad3; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand img { width: 40px; height: 40px; }
+    .brand strong { font-size: 24px; font-family: ui-rounded, -apple-system, sans-serif; letter-spacing: -.7px; }
+    .brand span { color: #87736a; font-size: 11px; letter-spacing: .13em; border-left: 1px solid #d9ccc3; padding-left: 16px; margin-left: 4px; }
+    .pr-link { font-size: 13px; text-decoration: none; background: #fff; border: 1px solid #e3d8d0; padding: 10px 16px; border-radius: 24px; white-space: nowrap; }
+    .intro { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin: 28px 0 25px; }
+    h1 { font-size: clamp(25px, 3vw, 36px); letter-spacing: -.04em; margin: 0 0 9px; line-height: 1.2; }
+    .intro p { color: #81716b; font-size: 14px; line-height: 1.7; margin: 0; }
+    .review-tag { color: #a34f42; font-size: 12px; background: #f7e6dc; border-radius: 20px; padding: 8px 13px; white-space: nowrap; }
+    .controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; }
+    .poses { display: flex; flex-wrap: wrap; gap: 4px; padding: 5px; background: #eae2db; border-radius: 15px; }
+    .poses button { background: transparent; border: 0; padding: 10px 14px; min-height: 40px; border-radius: 11px; font-size: 13px; color: #7b6a62; }
+    .poses button[aria-pressed="true"] { background: #fff; color: #3c2c28; font-weight: 650; box-shadow: 0 2px 6px #51332110; }
+    .comparison { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-bottom: 16px; }
+    .comparison p { margin: 0; color: #81716b; font-size: 12px; line-height: 1.6; }
+    .hinge-control { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 26px; padding: 18px 22px; margin: 18px 0 0; background: #efe9e1; border: 1px solid #e2d7cb; border-radius: 18px; }
+    .hinge-label { display: flex; align-items: center; justify-content: space-between; gap: 16px; font-size: 13px; font-weight: 600; }
+    .hinge-label output { font-size: 11px; color: #967052; font-variant-numeric: tabular-nums; }
+    #hinge-progress { display: block; width: 100%; height: 32px; margin: 6px 0 0; accent-color: #ae694c; cursor: ew-resize; }
+    .hinge-scale { display: flex; justify-content: space-between; color: #958579; font-size: 10px; }
+    .hinge-copy { max-width: 250px; margin: 0; font-size: 12px; line-height: 1.7; color: #8d7769; }
+    .settings { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .settings select, .reset { border: 1px solid #dfd2c8; border-radius: 11px; padding: 10px; background: #fffaf7; min-height: 40px; font-size: 12px; }
+    .reset { background: transparent; }
+    .stage-caption { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-size: 12px; color: #8a786e; margin: 20px 0 12px; min-height: 20px; }
+    #pose-caption { color: #65544b; }
+    .stage { display: flex; justify-content: center; overflow: hidden; min-width: 0; padding: 15px 0 30px; }
+    .device-space { position: relative; flex-shrink: 0; }
+    .device { --screen-w: 951px; --screen-h: 669px; --bar: 84px; --text-scale: 1; --cell-min: 104px; --app-bg: #fff; --app-ink: #171717; --app-muted: #858589; --pink: #fff6f7; --yellow: #ffffe0; --glass: #ffffffb8; --line: #0000000d; --tint: #b84642; position: absolute; top: 0; left: 0; width: calc(var(--screen-w) + 16px); height: calc(var(--screen-h) + 16px); padding: 8px; background: #262424; border-radius: 42px; transform-origin: top left; box-shadow: 0 18px 35px #4e352d20, 0 2px 8px #30242224; }
+    .device[data-theme="dark"] { --app-bg: #080808; --app-ink: #f5f5f5; --app-muted: #aaa4a5; --pink: #2c2323; --yellow: #514b42; --glass: #242021dc; --line: #ffffff20; --tint: #ffa5a0; color-scheme: dark; }
+    .device[data-layout="dual-grid"] { --cell-min: 100px; }
+    .device[data-text="large"] { --text-scale: 2.5; --cell-min: 260px; }
+    .screen { width: var(--screen-w); height: var(--screen-h); position: relative; border-radius: 34px; overflow: hidden; color: var(--app-ink); background: var(--app-bg); font-family: ui-rounded, -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans", sans-serif; }
+    .app-navigation { position: absolute; inset: 0 var(--bar) auto 0; height: 86px; display: flex; align-items: center; padding: 0 20px; font-size: 17px; font-weight: 600; }
+    .app-panes { position: absolute; inset: 86px var(--bar) 0 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .device[data-pose="open"] .app-panes { grid-template-columns: minmax(0, 1fr); }
+    .device[data-pose="closed"] .app-panes { grid-template-columns: minmax(0, 1fr); }
+    .device[data-pose="book"] .app-panes { grid-template-columns: calc(var(--screen-w) / 2 - 20px) minmax(0, 1fr); column-gap: 40px; }
+    .device[data-pose="tabletop"] .app-panes { inset: var(--bar) 0 22px; grid-template-columns: minmax(0, 1fr); grid-template-rows: calc(var(--screen-h) / 2 - var(--bar) - 13.5px) minmax(0, 1fr); row-gap: 27px; }
+    .gallery { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+    .sound-scroll { flex: 1; min-height: 0; overflow: auto; padding: 16px; scrollbar-width: thin; scrollbar-color: #cbbdb8 transparent; overscroll-behavior: contain; }
+    .gallery-heading { margin-bottom: 18px; }
+    .gallery-title { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 6px 12px; }
+    .sound-range { font-size: calc(11px * var(--text-scale)); color: var(--app-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .gallery-heading h2 { font-size: calc(22px * var(--text-scale)); letter-spacing: -.025em; line-height: 1.2; margin: 0 0 4px; font-weight: 750; }
+    .gallery-heading p { margin: 0; font-size: calc(15px * var(--text-scale)); color: var(--app-muted); line-height: 1.4; }
+    .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(var(--cell-min), 100%), 1fr)); gap: 12px; }
+    .cat { position: relative; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 12px; border: 0; border-radius: 24px; background: var(--pink); color: var(--app-ink); min-width: 0; }
+    .cat img { width: 64px; height: 64px; object-fit: contain; flex-shrink: 0; }
+    .cat span { font-size: calc(12px * var(--text-scale)); line-height: 1.3; font-weight: 650; min-height: 32px; overflow-wrap: anywhere; }
+    .cat[aria-pressed="true"] { background: var(--yellow); box-shadow: inset 0 0 0 2px #e76a66; }
+    .cat[aria-pressed="true"]::after { content: "✓"; position: absolute; right: 8px; top: 8px; width: 17px; height: 17px; border-radius: 50%; color: white; background: #e76a66; display: grid; place-items: center; font-size: 11px; font-weight: 800; }
+    .cat:active { opacity: .7; }
+    .replay { flex-shrink: 0; display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--glass); border-top: 1px solid var(--line); backdrop-filter: blur(18px); }
+    .replay > img { width: 44px; height: 44px; object-fit: contain; }
+    .replay-name { flex: 1; font-weight: 650; font-size: calc(15px * var(--text-scale)); overflow-wrap: anywhere; line-height: 1.3; }
+    .replay button { display: flex; align-items: center; justify-content: center; gap: 10px; border: 0; border-radius: 12px; color: var(--tint); background: var(--pink); min-width: 60px; min-height: 56px; padding: 6px 12px; }
+    .replay svg { width: 22px; height: 22px; flex-shrink: 0; }
+    .replay .replay-label { display: none; }
+    .device[data-text="large"] .replay { flex-wrap: wrap; margin-top: 18px; border: 0; }
+    .device[data-text="large"] .replay > img { display: none; }
+    .device[data-text="large"] .replay-name { flex-basis: 100%; }
+    .device[data-text="large"] .replay .replay-label { display: block; font-size: 34px; }
+    .device[data-fit="true"] { --fit-columns: 4; --fit-rows: 4; --cat-image: 64px; }
+    .device[data-fit="true"][data-pose="open"] { --fit-columns: 8; }
+    .device[data-fit="true"][data-pose="book"] #gallery { --cat-image: 52px; }
+    .device[data-fit="true"][data-pose="tabletop"] { --fit-columns: 5; --fit-rows: 3; --cat-image: 32px; }
+    .device[data-fit="true"] .sound-scroll { display: flex; flex-direction: column; overflow: hidden; }
+    .device[data-fit="true"] .gallery-heading { flex-shrink: 0; margin-bottom: 12px; }
+    .device[data-fit="true"] .cat-grid { flex: 1; min-height: 0; grid-template-columns: repeat(var(--fit-columns), minmax(0, 1fr)); grid-template-rows: repeat(var(--fit-rows), minmax(0, 1fr)); gap: 8px; }
+    .device[data-fit="true"] .cat { justify-content: center; min-height: 44px; padding: 6px; gap: 4px; border-radius: 18px; }
+    .device[data-fit="true"] .cat img { width: var(--cat-image); height: var(--cat-image); }
+    .device[data-fit="true"] .replay { display: none; }
+    .device[data-pose="tabletop"][data-text="standard"] #leading-scroll { padding-bottom: 44px; }
+    .device[data-pose="tabletop"][data-text="standard"] #sound-scroll { padding-top: 44px; }
+    .ad-slot { grid-column: 1 / -1; min-width: 0; min-height: 50px; display: grid; align-items: center; }
+    .sound-scroll > .ad-slot { margin-bottom: 18px; }
+    .ad-creative { display: flex; align-items: center; gap: 9px; width: 100%; height: 50px; padding: 6px 8px; border: 1px solid #c7d9e6; border-radius: 6px; background: #eef6fb; color: #173b56; }
+    .ad-creative > img { width: 34px; height: 34px; object-fit: contain; flex-shrink: 0; }
+    .ad-copy { flex: 1; min-width: 0; }
+    .ad-eyebrow { display: flex; align-items: center; gap: 5px; font-size: 9px; line-height: 12px; color: #4a687d; }
+    .ad-badge { border: 1px solid currentColor; border-radius: 2px; padding: 0 3px; font-size: 8px; line-height: 11px; }
+    .ad-title { display: block; margin-top: 2px; font-size: 13px; line-height: 16px; font-weight: 650; white-space: nowrap; }
+    .ad-action { flex-shrink: 0; border: 0; border-radius: 4px; padding: 7px 10px; background: #246b9c; color: #fff; font-size: 12px; line-height: 16px; font-weight: 650; }
+    .device[data-theme="dark"] .ad-creative { border-color: #365166; background: #1c3040; color: #e5f3fd; }
+    .device[data-theme="dark"] .ad-eyebrow { color: #abc8db; }
+    .device[data-theme="dark"] .ad-action { background: #a9d8f5; color: #163b55; }
+    .ad-note { margin: 12px 0 0; color: #81716b; font-size: 12px; line-height: 1.6; }
+    .device[data-fit="true"][data-pose="tabletop"] #cat-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)) 50px; }
+    .device[data-pose="open"][data-fit="true"] .cat-grid > .ad-slot { grid-column: span 5; }
+    .system-bar { position: absolute; right: 0; top: 0; bottom: 0; width: var(--bar); display: flex; flex-direction: column; align-items: center; padding: 20px 10px; gap: 16px; border-left: 1px solid var(--line); }
+    .clock { font-size: 14px; font-weight: 700; }
+    .status-cluster { width: 44px; height: 44px; color: var(--app-ink); }
+    .app-wordmark { display: none; font-size: 12px; font-weight: 700; text-align: center; line-height: 1.3; max-width: 66px; }
+    .system-actions { display: flex; flex-direction: column; gap: 12px; }
+    .glass-button { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: var(--glass); box-shadow: 0 2px 12px #00000005; }
+    .glass-button img { width: 26px; height: 26px; object-fit: contain; }
+    .system-indicator { margin-top: auto; width: 20px; height: 4px; border-radius: 4px; background: var(--app-muted); opacity: .6; }
+    .device[data-pose="tabletop"] .system-bar { left: 0; bottom: auto; width: 100%; height: var(--bar); padding: 0 22px; flex-direction: row; border-left: 0; border-bottom: 1px solid var(--line); }
+    .device[data-pose="tabletop"] .system-actions { flex-direction: row; margin-left: auto; }
+    .device[data-pose="tabletop"] .status-cluster, .device[data-pose="tabletop"] .system-indicator, .device[data-pose="tabletop"] .app-navigation { display: none; }
+    .device[data-pose="tabletop"] .app-wordmark { display: block; font-size: 17px; max-width: none; position: absolute; left: 50%; transform: translateX(-50%); }
+    .home-indicator { position: absolute; bottom: 7px; left: calc(50% - 55px); width: 110px; height: 4px; border-radius: 8px; background: var(--app-muted); display: none; }
+    .device[data-pose="tabletop"] .home-indicator { display: block; }
+    .fold { position: absolute; z-index: 2; pointer-events: none; display: none; }
+    .device[data-pose="book"] .fold { display: block; top: 0; bottom: 0; left: calc(50% - 20px); width: 40px; background: linear-gradient(90deg, transparent, #9c8f7e18 38%, #8d817126 50%, #9c8f7e18 62%, transparent); border-inline: 1px dashed #ad9b8e35; }
+    .device[data-pose="tabletop"] .fold { display: block; left: 0; right: 0; top: calc(50% - 13.5px); height: 27px; background: linear-gradient(transparent, #9c8f7e18 38%, #8d817126 50%, #9c8f7e18 62%, transparent); border-block: 1px dashed #ad9b8e35; }
+    .hinge-cat { position: absolute; z-index: 3; left: 50%; top: 0; width: 192px; height: 96px; transform: translateX(-50%); pointer-events: none; }
+    .cat-artwork svg, .cat-artwork canvas { width: 100%; height: 100%; object-fit: contain; }
+    .cat-artwork svg { display: block; }
+    .cat-artwork img, .cat-artwork canvas { display: none; }
+    .cat-artwork[data-renderer="canvas"] canvas { display: block; }
+    .cat-artwork[data-renderer="canvas"] svg { display: none; }
+    .cat-detail-open { border: 0; padding: 6px 0 0; background: none; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+    #cat-detail-dialog { width: min(94vw, 700px); }
+    #cat-detail-dialog h2 { clear: both; padding-top: 12px; margin: 8px 0; font-size: 22px; }
+    .cat-study { width: 100%; aspect-ratio: 5 / 3; margin: 12px auto; }
+    #cat-detail-caption { color: #81716b; font-size: 13px; }
+    #cat-detail-progress { width: 100%; accent-color: #a96550; }
+    .device[data-pose="tabletop"] .hinge-cat { top: calc(50% - 40px); height: 80px; }
+    .device[data-text="large"] .hinge-cat { display: none; }
+    .sheet-overlay { position: absolute; z-index: 5; inset: 0; padding: 16px; background: #0004; display: flex; align-items: center; justify-content: center; }
+    .device[data-pose="book"] .sheet-overlay { padding-right: calc(var(--bar) + 16px); padding-left: calc(var(--screen-w) / 2 + 25px); }
+    .device[data-pose="tabletop"] .sheet-overlay { padding-top: calc(var(--screen-h) / 2 + 25px); }
+    .sheet-panel { position: relative; width: 100%; max-width: 400px; max-height: 100%; background: var(--app-bg); color: var(--app-ink); border-radius: 26px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 16px 40px #0002; }
+    .sheet-top { padding: 10px 14px 0; }
+    .sheet-close { border: 0; width: 36px; height: 36px; border-radius: 50%; font-size: 23px; color: var(--app-muted); background: var(--pink); }
+    .sheet-content { overflow: auto; padding: 12px 28px 28px; text-align: center; min-height: 0; }
+    .tip-hero { display: flex; align-items: flex-end; justify-content: center; margin: 8px 0 18px; }
+    .tip-hero img { width: 54px; height: 54px; object-fit: contain; }
+    .tip-hero img:nth-child(2) { width: 68px; height: 68px; margin-bottom: 8px; }
+    .sheet-content h2 { font-size: calc(22px * var(--text-scale)); margin: 10px 0 12px; }
+    .sheet-content p { font-size: calc(15px * var(--text-scale)); line-height: 1.5; color: var(--app-muted); }
+    .treat { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; padding: 13px 14px; border: 0; border-radius: 15px; background: var(--pink); color: var(--tint); margin-top: 14px; font-size: calc(16px * var(--text-scale)); font-weight: 650; }
+    .treat.primary { background: #e76a66; color: #fff; }
+    .treat img { width: 34px; height: 34px; object-fit: contain; }
+    .treat small { display: block; font-size: calc(12px * var(--text-scale)); font-weight: 400; margin-top: 3px; }
+    .restore { background: none; color: var(--tint); border: 0; padding: 20px 0 0; font-size: calc(15px * var(--text-scale)); }
+    #sheet-status { font-size: 13px; }
+    .stage-note { text-align: center; font-size: 12px; color: #918079; line-height: 1.65; margin: 3px 0 28px; }
+    .evidence { border-top: 1px solid #e4dad3; padding-top: 20px; }
+    .evidence summary { font-size: 13px; font-weight: 600; }
+    .evidence > p { color: #8b7a72; font-size: 12px; line-height: 1.7; }
+    .captures { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; margin-top: 20px; }
+    .capture { border: 0; padding: 0; background: transparent; text-align: left; }
+    .capture img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; object-position: top; border-radius: 14px; border: 1px solid #e2d8d0; }
+    .capture span { display: block; font-size: 12px; color: #81716b; padding: 10px 0; }
+    dialog { border: 0; border-radius: 18px; max-width: min(94vw, 850px); max-height: 94vh; padding: 16px; background: #f7f3ef; }
+    dialog::backdrop { background: #181314cc; }
+    dialog img { max-width: 100%; max-height: 82vh; display: block; margin: 10px auto 0; object-fit: contain; }
+    dialog button { float: right; border: 0; background: #eae2db; border-radius: 20px; padding: 9px 16px; }
+    @media (max-width: 700px) { .page { padding: 20px 16px 28px; } .brand span { display: none; } .intro { margin-top: 24px; } .review-tag { display: none; } .controls { justify-content: flex-start; } .poses { width: 100%; } .poses button { flex: 1 0 auto; padding: 9px 11px; } .settings { width: 100%; } .settings select { flex: 1; min-width: 100px; } .hinge-control { grid-template-columns: 1fr; gap: 12px; padding: 16px; } .hinge-copy { max-width: none; } .captures { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (prefers-reduced-motion: no-preference) { .cat { transition: background .16s, box-shadow .16s; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="masthead"><div class="brand"><img src="assets/navCat.png" alt=""><strong>meow</strong><span>DESIGN REVIEW / 08</span></div><a class="pr-link" href="https://github.com/newbdez33/meow/pull/11" target="_blank" rel="noopener">查看 PR #11 ↗</a></header>
+    <section class="intro"><div><h1>打开一点，白肚皮露多一点。</h1><p>单屏照常点猫。半开分成两侧。全开连成一个大屏。</p></div><span class="review-tag">三态交互预览</span></section>
+    <div class="comparison">
+      <p id="layout-note">蜷起下半身藏住肚皮，后腿分叉到头两侧；随屏展开，再慢慢露出白肚皮。</p>
+    </div>
+    <div class="controls">
+      <nav class="poses" aria-label="屏幕状态"><button data-stage="single" aria-pressed="false">单屏</button><button data-stage="partial" aria-pressed="true">半开 · split</button><button data-stage="full" aria-pressed="false">全开 · 大屏</button></nav>
+      <div class="settings"><select id="fold-axis" aria-label="半开方向"><option value="book">左右分屏</option><option value="tabletop">上下分屏</option></select><select id="language" aria-label="App 语言"><option value="zh-Hans">简体中文</option><option value="en">English</option><option value="ja">日本語</option></select><select id="theme" aria-label="App 外观"><option value="light">浅色</option><option value="dark">深色</option></select><select id="text-size" aria-label="App 字号"><option value="standard">标准字号</option><option value="large">辅助大字号</option></select><select id="ad-state" aria-label="广告预览"><option value="sample">显示示例广告</option><option value="empty">广告位留白</option></select><button class="reset" id="reset">重置选择</button></div>
+    </div>
+    <div class="hinge-control"><div><label class="hinge-label" for="hinge-progress"><span>拖动开合，看看小猫</span><output id="hinge-value" for="hinge-progress">半开</output></label><input id="hinge-progress" type="range" min="0" max="100" value="50" aria-describedby="hinge-description"><div class="hinge-scale"><span>合拢 · 单屏</span><span>半折 · 蜷起来</span><span>全开 · 白肚皮</span></div></div><p class="hinge-copy" id="hinge-description">蜷起来藏住肚皮，脸一直露出来。<br>屏幕展开，猫咪也舒展开。<br><button type="button" class="cat-detail-open" id="cat-detail-open">放大小猫</button></p></div>
+    <p class="ad-note" id="ad-note">50 pt 高的模拟横幅，居中放在预留广告行；不请求真实广告。</p>
+    <div class="stage-caption"><span id="pose-caption">正在加载预览…</span><span id="dimensions"></span></div>
+    <section class="stage" aria-label="交互设计稿"><div class="device-space" id="device-space"><div class="device" id="device" data-pose="open" data-theme="light" data-text="standard"><div class="screen" id="screen">
+      <div class="app-navigation"><span data-copy="title"></span></div>
+      <div class="app-panes">
+        <section class="gallery leading-gallery" id="leading-gallery" aria-labelledby="leading-title" hidden>
+          <div class="sound-scroll" id="leading-scroll">
+            <div class="gallery-heading"><div class="gallery-title"><h2 id="leading-title" data-copy="soundboard_title"></h2><span class="sound-range" id="leading-range"></span></div><p data-copy="soundboard_hint"></p></div>
+            <div class="cat-grid" id="leading-grid"></div>
+          </div>
+        </section>
+        <section class="gallery" id="gallery" aria-labelledby="gallery-title"><div class="sound-scroll" id="sound-scroll"><div class="gallery-heading"><div class="gallery-title"><h2 id="gallery-title"></h2><span class="sound-range" id="trailing-range" hidden></span></div><p data-copy="soundboard_hint"></p></div><div class="cat-grid" id="cat-grid"><aside class="ad-slot" id="ad-slot" aria-label="模拟广告"><div class="ad-creative" id="ad-creative"><img src="assets/tipCan.png" alt=""><div class="ad-copy"><div class="ad-eyebrow"><span class="ad-badge" id="ad-badge">广告</span><span id="ad-preview-label">示例素材</span></div><strong class="ad-title" id="ad-title">给猫咪加一份小惊喜</strong></div><button class="ad-action" id="ad-action" type="button">看看</button></div></aside></div></div><div class="replay" id="replay" hidden><img id="replay-image" alt=""><span class="replay-name" id="replay-name"></span><button id="replay-button" aria-label="再听一次"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10a9 9 0 1 1 1.5 8M3 4v6h6"/></svg><span class="replay-label" data-copy="soundboard_replay"></span></button></div></section>
+      </div>
+      <aside class="system-bar" aria-label="系统栏示意"><span class="clock" aria-hidden="true">9:41</span><svg class="status-cluster" viewBox="0 0 44 44" aria-hidden="true"><path d="M8 31A18 18 0 1 1 36 31" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M13 19Q22 11 31 19M17 23Q22 18 27 23" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="22" cy="27" r="2" fill="currentColor"/><circle cx="14" cy="37" r="1.8" fill="currentColor"/><circle cx="22" cy="39" r="1.8" fill="currentColor"/><circle cx="30" cy="37" r="1.8" fill="currentColor"/></svg><span class="app-wordmark" data-copy="title"></span><div class="system-actions"><button class="glass-button" id="support-button" aria-label="去掉广告"><img src="assets/navCan.png" alt=""></button><button class="glass-button" id="share-button" aria-label="分享 App"><img src="assets/navCat.png" alt=""></button></div><span class="system-indicator" aria-hidden="true"></span></aside>
+      <span class="home-indicator" aria-hidden="true"></span><span class="fold" aria-hidden="true"></span>
+      <div class="hinge-cat cat-artwork" id="hinge-cat" aria-hidden="true" hidden>
+        <img src="assets/tuxedo-cat-rig-v2.png" alt="" hidden>
+        <img data-curled-artwork src="assets/tuxedo-cat-curled-v3.png" alt="" hidden>
+        <img data-thigh-artwork src="assets/tuxedo-cat-thighs-v4.png" alt="" hidden>
+        <svg viewBox="140 100 660 690" focusable="false"><image href="assets/tuxedo-cat-curled-v3.png" width="1774" height="887"/></svg>
+        <canvas width="800" height="480"></canvas>
+      </div>
+      <div class="sheet-overlay" id="sheet" hidden><section class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="sheet-title"><div class="sheet-top"><button class="sheet-close" id="close-sheet" aria-label="关闭">×</button></div><div class="sheet-content"><div id="support-content"><div class="tip-hero"><img src="assets/tipMug.png" alt=""><img src="assets/c04.png" alt=""><img src="assets/tipCan.png" alt=""></div><h2 id="sheet-title" data-copy="tip_title"></h2><p data-copy="tip_body"></p><button class="treat primary" id="can-purchase"><img src="assets/tipCan.png" alt=""><span><span id="can-price"></span><small data-copy="tip_can_note"></small></span></button><button class="treat" id="coffee-purchase"><img src="assets/tipMug.png" alt=""><span id="coffee-price"></span></button><button class="restore" id="restore" data-copy="tip_restore"></button></div><div id="share-content" hidden><img src="assets/navCat.png" width="80" height="80" alt=""><h2 data-copy="title"></h2><p data-copy="subtitle"></p><a href="https://apps.apple.com/app/id826362662" target="_blank" rel="noopener">App Store ↗</a></div><p id="sheet-status" aria-live="polite"></p></div></section></div>
+    </div></div></div></section>
+    <p class="stage-note" id="preview-status" aria-live="polite">TestFlight 2.3 (8) 已可供 Internal 组测试；本页开合比例与系统栏为设计示意。</p>
+    <details class="evidence"><summary>原生截图 · TestFlight 2.3 (8)</summary><p>下方是 iPhone Duo / iOS 27.1 模拟器上的原生画面，三态布局和开合小猫均已接入。标准字号下 27 个按钮都可直接看到。截图关闭了广告请求，保留空白广告位；上方 HTML 可查看模拟广告。</p><div class="captures"><button class="capture" data-capture="duo-book-en.png"><img src="captures/duo-book-en.png" alt="Duo · 半开左右分栏" loading="lazy"><span>Duo · 半开左右分栏</span></button><button class="capture" data-capture="duo-tabletop-en.png"><img src="captures/duo-tabletop-en.png" alt="Duo · 半开上下分栏" loading="lazy"><span>Duo · 半开上下分栏</span></button><button class="capture" data-capture="duo-full-en.png"><img src="captures/duo-full-en.png" alt="Duo · 全开横屏" loading="lazy"><span>Duo · 全开横屏</span></button><button class="capture" data-capture="duo-full-portrait-en.png"><img src="captures/duo-full-portrait-en.png" alt="Duo · 全开竖屏" loading="lazy"><span>Duo · 全开竖屏</span></button></div></details>
+  </main>
+  <dialog id="capture-dialog" aria-label="原生截图"><button id="close-capture">关闭</button><img id="capture-image" alt="原生截图"></dialog>
+  <dialog id="cat-detail-dialog" aria-labelledby="cat-detail-title">
+    <button id="cat-detail-close">关闭</button>
+    <h2 id="cat-detail-title">蜷起来藏住肚皮，展开再露出来。</h2>
+    <div class="cat-study cat-artwork" id="cat-study" aria-hidden="true">
+      <img src="assets/tuxedo-cat-rig-v2.png" alt="" hidden>
+      <img data-curled-artwork src="assets/tuxedo-cat-curled-v3.png" alt="" hidden>
+      <img data-thigh-artwork src="assets/tuxedo-cat-thighs-v4.png" alt="" hidden>
+      <svg viewBox="140 100 660 690" focusable="false"><image href="assets/tuxedo-cat-curled-v3.png" width="1774" height="887"/></svg>
+      <canvas width="1200" height="720"></canvas>
+    </div>
+    <label for="cat-detail-progress" id="cat-detail-caption">拖动开合，看小猫从蜷缩到舒展。</label>
+    <input id="cat-detail-progress" type="range" min="0" max="100" value="50" aria-label="小猫开合预览">
+  </dialog>
+  <script src="iphone-duo-cat.js" defer></script>
+  <script src="iphone-duo-preview.js" defer></script>
+</body>
+</html>

@@ -13,35 +13,18 @@ struct ContentView: View {
     @Environment(\.scenePhase) private var scenePhase
     @State private var showingSheet = false
     @State private var showingTip = false
-    @State private var selectedIndex = -1
     var body: some View {
-        NavigationView {
-            VStack {
-                GridStack(minCellWidth: 110, spacing: 2, numItems: 27) { index, cellWidth in
-                    Button(action: {
-                        Sounds.playSounds(soundfile: String(format: "m_%03d", index+1))
-                        selectedIndex = index
-                    }, label: {
-                        Cat(dataIndex: index, selected: index == selectedIndex).frame(width: cellWidth, height: cellWidth, alignment: .center)
-                    })
-                    .accessibilityIdentifier("cat-\(index)")
-                }
+        AppNavigation {
+            SoundboardView()
                 .navigationTitle(Text("title"))
+                .navigationBarTitleDisplayMode(.inline)
                 .modifier(TrailingButtons(showingTip: $showingTip, showingShare: $showingSheet))
-                .background(NavigationConfigurator { nc in
-                    nc.navigationBar.barTintColor = Color(hex: 0xE76A66).uiColor()
-                    nc.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.white]
-                })
-            }
         }
-        .navigationViewStyle(StackNavigationViewStyle())
-        .edgesIgnoringSafeArea(.bottom)
+        .tint(Color(hex: 0xE76A66))
         .sheet(isPresented: $showingTip) {
             TipSheet()
         }
-        .sheet(isPresented: $showingSheet, onDismiss: {
-            print("Dismiss")
-        }, content: {
+        .sheet(isPresented: $showingSheet, content: {
             AppActivityView(activityItems: [
                                 NSLocalizedString("title", comment: "") + " - " + NSLocalizedString("subtitle", comment: ""),
                                 URL(string: "https://itunes.apple.com/app/id826362662")!,
@@ -97,12 +80,15 @@ private struct TrailingButtons: ViewModifier {
 
     private var tipButton: some View {
         Button(action: { showingTip = true }, label: {
-            Image("navCan")
-                .resizable()
-                .scaledToFit()
-                .frame(height: 26)
+            Label {
+                Text("tip_button")
+            } icon: {
+                Image("navCan")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 26, height: 26)
+            }
         })
-        .accessibilityLabel(Text("tip_button"))
         .accessibilityIdentifier("tipButton")
     }
 
@@ -111,19 +97,21 @@ private struct TrailingButtons: ViewModifier {
             guard let viewController = UIApplication.shared.keyRootViewController else { return }
             Task { await ads.presentPrivacyOptions(from: viewController) }
         }, label: {
-            Image(systemName: "hand.raised")
+            Label("privacy_options", systemImage: "hand.raised")
         })
-        .accessibilityLabel(Text("privacy_options"))
     }
 
     private var shareButton: some View {
         Button(action: { showingShare = true }, label: {
-            Image("navCat")
-                .resizable()
-                .scaledToFit()
-                .frame(height: 26)
+            Label {
+                Text("share_button")
+            } icon: {
+                Image("navCat")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 26, height: 26)
+            }
         })
-        .accessibilityLabel(Text("share_button"))
     }
 }
 
@@ -138,16 +126,15 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-struct NavigationConfigurator: UIViewControllerRepresentable {
-    var configure: (UINavigationController) -> Void = { _ in }
+struct AppNavigation<Content: View>: View {
+    @ViewBuilder var content: Content
 
-    func makeUIViewController(context: UIViewControllerRepresentableContext<NavigationConfigurator>) -> UIViewController {
-        UIViewController()
-    }
-    func updateUIViewController(_ uiViewController: UIViewController, context: UIViewControllerRepresentableContext<NavigationConfigurator>) {
-        if let nc = uiViewController.navigationController {
-            self.configure(nc)
+    var body: some View {
+        if #available(iOS 16.0, *) {
+            NavigationStack { content }
+        } else {
+            NavigationView { content }
+                .navigationViewStyle(.stack)
         }
     }
-
 }
